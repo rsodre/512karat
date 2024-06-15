@@ -78,6 +78,7 @@ trait IERC721EnumMintBurn {
 
 #[dojo::contract(allow_ref_self)]
 mod karat_token {
+    use debug::PrintTrait;
     use starknet::ContractAddress;
     use starknet::{get_contract_address, get_caller_address};
     use token::components::security::initializable::initializable_component;
@@ -226,6 +227,7 @@ mod karat_token {
     #[abi(embed_v0)]
     impl MintBurnImpl of super::IERC721EnumMintBurn<ContractState> {
         fn mint(ref world: IWorldDispatcher, to: ContractAddress, token_id: u256) {
+'KARAT_MINT'.print();
             self.erc721_mintable.mint(to, token_id);
             self.erc721_enumerable.add_token_to_all_tokens_enumeration(token_id);
             self.erc721_enumerable.add_token_to_owner_enumeration(to, token_id);

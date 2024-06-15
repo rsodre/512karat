@@ -10,6 +10,8 @@ mod models {
 }
 
 mod tests {
+    mod tester;
+    mod test_karat_mint;
     mod test_world;
 
     mod token {

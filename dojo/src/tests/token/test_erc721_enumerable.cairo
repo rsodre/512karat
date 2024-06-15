@@ -22,8 +22,6 @@ use token::components::token::erc721::erc721_enumerable::erc721_enumerable_compo
 use token::components::tests::mocks::erc721::erc721_enumerable_mock::{
     erc721_enumerable_mock, IERC721EnumerableMockDispatcher, IERC721EnumerableMockDispatcherTrait
 };
-
-
 use starknet::storage::{StorageMemberAccessTrait};
 
 use debug::PrintTrait;
