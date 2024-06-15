@@ -25,8 +25,8 @@ trait IERC721EnumMintBurnPreset {
         name: ByteArray,
         symbol: ByteArray,
         base_uri: ByteArray,
-        recipient: ContractAddress,
-        token_ids: Span<u256>
+        // recipient: ContractAddress,
+        // token_ids: Span<u256>,
     );
     fn balance_of(world: @IWorldDispatcher, account: ContractAddress) -> u256;
     fn transfer_from(ref world: IWorldDispatcher, from: ContractAddress, to: ContractAddress, token_id: u256);
@@ -48,8 +48,8 @@ trait IERC721EnumInit {
         name: ByteArray,
         symbol: ByteArray,
         base_uri: ByteArray,
-        recipient: ContractAddress,
-        token_ids: Span<u256>
+        // recipient: ContractAddress,
+        // token_ids: Span<u256>,
     );
 }
 
@@ -71,6 +71,12 @@ trait IERC721EnumMintBurn {
     fn mint(ref world: IWorldDispatcher, to: ContractAddress, token_id: u256);
     fn burn(ref world: IWorldDispatcher, token_id: u256);
 }
+
+// private/internal functions
+// #[dojo::interface]
+// trait IKaratInternal {
+//     fn mint_assets(ref world: IWorldDispatcher, recipient: ContractAddress, mut token_ids: Span<u256>);
+// }
 
 #[dojo::contract(allow_ref_self)]
 mod Karat {
@@ -169,15 +175,15 @@ mod Karat {
             name: ByteArray,
             symbol: ByteArray,
             base_uri: ByteArray,
-            recipient: ContractAddress,
-            token_ids: Span<u256>
+            // recipient: ContractAddress,
+            // token_ids: Span<u256>,
         ) {
             assert(
                 world.is_owner(get_caller_address(), get_contract_address().into()),
                 Errors::CALLER_IS_NOT_OWNER
             );
             self.erc721_metadata.initialize(name, symbol, base_uri);
-            self.mint_assets(recipient, token_ids);
+            // self.mint_assets(recipient, token_ids);
             self.initializable.initialize();
         }
     }
@@ -230,20 +236,19 @@ mod Karat {
         }
     }
 
-    #[generate_trait]
-    impl InternalImpl of InternalTrait {
-        fn mint_assets(
-            ref world: IWorldDispatcher, recipient: ContractAddress, mut token_ids: Span<u256>
-        ) {
-            loop {
-                if token_ids.len() == 0 {
-                    break;
-                }
-                let id = *token_ids.pop_front().unwrap();
-                self.erc721_mintable.mint(recipient, id);
-                self.erc721_enumerable.add_token_to_all_tokens_enumeration(id);
-                self.erc721_enumerable.add_token_to_owner_enumeration(recipient, id);
-            }
-        }
-    }
+    // impl KaratInternalImpl of super::IKaratInternal<ContractState> {
+    //     fn mint_assets(
+    //         ref world: IWorldDispatcher, recipient: ContractAddress, mut token_ids: Span<u256>
+    //     ) {
+    //         loop {
+    //             if token_ids.len() == 0 {
+    //                 break;
+    //             }
+    //             let id = *token_ids.pop_front().unwrap();
+    //             self.erc721_mintable.mint(recipient, id);
+    //             self.erc721_enumerable.add_token_to_all_tokens_enumeration(id);
+    //             self.erc721_enumerable.add_token_to_owner_enumeration(recipient, id);
+    //         }
+    //     }
+    // }
 }
