@@ -13,8 +13,19 @@ move = "./scripts/move.sh"
 
 [dependencies]
 dojo = { git = "https://github.com/dojoengine/dojo", tag = "v0.7.0" }
+token = { git = "https://github.com/rsodre/origami", branch = "karat" }
 
 [[target.dojo]]
+build-external-contracts = [
+  "token::components::security::initializable::initializable_component",
+  "token::components::token::erc721::erc721_approval::erc721_approval_component",
+  "token::components::token::erc721::erc721_balance::erc721_balance_component",
+  "token::components::token::erc721::erc721_burnable::erc721_burnable_component",
+  "token::components::token::erc721::erc721_enumerable::erc721_enumerable_component",
+  "token::components::token::erc721::erc721_metadata::erc721_metadata_component",
+  "token::components::token::erc721::erc721_mintable::erc721_mintable_component",
+  "token::components::token::erc721::erc721_owner::erc721_owner_component",
+]
 
 [tool.dojo]
 initializer_class_hash = "0xbeef"
