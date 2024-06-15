@@ -81,7 +81,7 @@ mod Karat {
     use token::components::token::erc721::erc721_balance::erc721_balance_component;
     use token::components::token::erc721::erc721_burnable::erc721_burnable_component;
     use token::components::token::erc721::erc721_enumerable::erc721_enumerable_component;
-    use token::components::token::erc721::erc721_metadata::erc721_metadata_component;
+    use karat::systems::metadata::erc721_metadata_component;
     use token::components::token::erc721::erc721_mintable::erc721_mintable_component;
     use token::components::token::erc721::erc721_owner::erc721_owner_component;
 
