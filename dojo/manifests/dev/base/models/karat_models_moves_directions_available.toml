@@ -1,0 +1,15 @@
+kind = "DojoModel"
+class_hash = "0x302ba8cd62bbc7ffdda7c0c48f3bfa8c09fe18dc766347f3503c457dbebb24a"
+original_class_hash = "0x302ba8cd62bbc7ffdda7c0c48f3bfa8c09fe18dc766347f3503c457dbebb24a"
+abi = "manifests/dev/abis/base/models/karat_models_moves_directions_available.json"
+name = "karat::models::moves::directions_available"
+
+[[members]]
+name = "player"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "directions"
+type = "Array<Direction>"
+key = false
