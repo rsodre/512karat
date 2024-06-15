@@ -1,0 +1,10 @@
+kind = "DojoContract"
+class_hash = "0x5449635383ddff487418989c891ef996259c728b7ed6acd03c46b43877798ee"
+original_class_hash = "0x5449635383ddff487418989c891ef996259c728b7ed6acd03c46b43877798ee"
+base_class_hash = "0x0"
+abi = "manifests/dev/abis/base/contracts/karat_systems_karat_Karat.json"
+reads = []
+writes = []
+computed = []
+init_calldata = []
+name = "karat::systems::karat::Karat"
