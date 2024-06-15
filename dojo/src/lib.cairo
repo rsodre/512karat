@@ -1,6 +1,6 @@
 mod systems {
     mod actions;
-    mod karat;
+    mod karat_token;
     mod metadata;
 }
 

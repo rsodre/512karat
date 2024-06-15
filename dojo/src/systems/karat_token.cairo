@@ -2,7 +2,8 @@ use starknet::{ContractAddress, ClassHash};
 use dojo::world::IWorldDispatcher;
 
 #[dojo::interface]
-trait IERC721EnumMintBurnPreset {
+// trait IERC721EnumMintBurnPreset {
+trait IKaratToken {
     // IERC721
     fn name(world: @IWorldDispatcher) -> ByteArray;
     fn symbol(world: @IWorldDispatcher) -> ByteArray;
@@ -16,9 +17,6 @@ trait IERC721EnumMintBurnPreset {
 
     // IERC721CamelOnly
     fn tokenURI(ref world: IWorldDispatcher, token_id: u256) -> ByteArray;
-
-    // IWorldProvider
-    fn world(world: @IWorldDispatcher,) -> IWorldDispatcher;
 
     fn initializer(
         ref world: IWorldDispatcher,
@@ -79,7 +77,7 @@ trait IERC721EnumMintBurn {
 // }
 
 #[dojo::contract(allow_ref_self)]
-mod Karat {
+mod karat_token {
     use starknet::ContractAddress;
     use starknet::{get_contract_address, get_caller_address};
     use token::components::security::initializable::initializable_component;
@@ -117,6 +115,10 @@ mod Karat {
     #[abi(embed_v0)]
     impl ERC721OwnerImpl = erc721_owner_component::ERC721OwnerImpl<ContractState>;
 
+    //
+    // Internal Impls
+    //
+    
     impl InitializableInternalImpl = initializable_component::InternalImpl<ContractState>;
     impl ERC721ApprovalInternalImpl = erc721_approval_component::InternalImpl<ContractState>;
     impl ERC721BalanceInternalImpl = erc721_balance_component::InternalImpl<ContractState>;
