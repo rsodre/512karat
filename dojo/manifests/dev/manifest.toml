@@ -1,0 +1,139 @@
+[world]
+kind = "WorldContract"
+class_hash = "0x3f63cecdc4964acafb921ba2934c6507d1b3c344edb64c2762cf08053169ab9"
+original_class_hash = "0x3f63cecdc4964acafb921ba2934c6507d1b3c344edb64c2762cf08053169ab9"
+abi = "manifests/dev/abis/deployments/dojo_world_world.json"
+address = "0x3e42a9746e6c8f868f71a4353ec5d198f0dd1af26f95bd51e2e005358ae14fd"
+transaction_hash = "0x6a12bc71cd1976ded6c91c8478e74ef92dce66e6ecfe26f11c1008af2b9a9c"
+block_number = 3
+seed = "karat"
+name = "dojo::world::world"
+
+[world.metadata]
+profile_name = "dev"
+rpc_url = "http://localhost:5050/"
+
+[base]
+kind = "Class"
+class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
+original_class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
+name = "dojo::base::base"
+
+[[contracts]]
+kind = "DojoContract"
+class_hash = "0x144a22c5f65c3397bc1de69269c7313ed38bf0676908cee4920d530b80e0376"
+original_class_hash = "0x144a22c5f65c3397bc1de69269c7313ed38bf0676908cee4920d530b80e0376"
+base_class_hash = "0x0"
+abi = "manifests/dev/abis/deployments/contracts/karat_systems_karat_token_karat_token.json"
+reads = []
+writes = []
+computed = []
+init_calldata = []
+name = "karat::systems::karat_token::karat_token"
+
+[[contracts]]
+kind = "DojoContract"
+class_hash = "0x3b1a61844154d0d85a8cdd2574a47ecab46956a207dd4e68ddb9ff6fa48fc88"
+original_class_hash = "0x3b1a61844154d0d85a8cdd2574a47ecab46956a207dd4e68ddb9ff6fa48fc88"
+base_class_hash = "0x0"
+abi = "manifests/dev/abis/deployments/contracts/karat_systems_minter_minter.json"
+reads = []
+writes = []
+computed = []
+init_calldata = ["$contract_address:karat::systems::karat_token::karat_token"]
+name = "karat::systems::minter::minter"
+
+[[contracts]]
+kind = "DojoContract"
+class_hash = "0x1fe5bbc5343bc12d843ab5e9878b00b925c7cebbd16bb5a728518469f4b0993"
+original_class_hash = "0x1fe5bbc5343bc12d843ab5e9878b00b925c7cebbd16bb5a728518469f4b0993"
+base_class_hash = "0x0"
+abi = "manifests/dev/abis/deployments/contracts/karat_tests_token_erc721_metadata_mock_erc721_metadata_mock.json"
+reads = []
+writes = []
+computed = []
+init_calldata = []
+name = "karat::tests::token::erc721_metadata_mock::erc721_metadata_mock"
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x302ba8cd62bbc7ffdda7c0c48f3bfa8c09fe18dc766347f3503c457dbebb24a"
+original_class_hash = "0x302ba8cd62bbc7ffdda7c0c48f3bfa8c09fe18dc766347f3503c457dbebb24a"
+abi = "manifests/dev/abis/deployments/models/karat_models_moves_directions_available.json"
+name = "karat::models::moves::directions_available"
+
+[[models.members]]
+name = "player"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "directions"
+type = "Array<Direction>"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x5f6fb131126f3aef7ecfc43a34c5ee412990658b540e5194e25c731f813bbe7"
+original_class_hash = "0x5f6fb131126f3aef7ecfc43a34c5ee412990658b540e5194e25c731f813bbe7"
+abi = "manifests/dev/abis/deployments/models/karat_models_moves_moves.json"
+name = "karat::models::moves::moves"
+
+[[models.members]]
+name = "player"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "remaining"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "last_direction"
+type = "Direction"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x4703251cf99a9b2d1a8e79b6d6560b432479e41a3308c992ad9dcbdef1a0b9"
+original_class_hash = "0x4703251cf99a9b2d1a8e79b6d6560b432479e41a3308c992ad9dcbdef1a0b9"
+abi = "manifests/dev/abis/deployments/models/karat_models_position_position.json"
+name = "karat::models::position::position"
+
+[[models.members]]
+name = "player"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "vec"
+type = "Vec2"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x44a95fb54f9ce628af8d3a9308f6da9331a3504c4e93122fd28988b41e82632"
+original_class_hash = "0x44a95fb54f9ce628af8d3a9308f6da9331a3504c4e93122fd28988b41e82632"
+abi = "manifests/dev/abis/deployments/models/karat_systems_metadata_erc_721_meta_model.json"
+name = "karat::systems::metadata::erc_721_meta_model"
+
+[[models.members]]
+name = "token"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "name"
+type = "ByteArray"
+key = false
+
+[[models.members]]
+name = "symbol"
+type = "ByteArray"
+key = false
+
+[[models.members]]
+name = "base_uri"
+type = "ByteArray"
+key = false

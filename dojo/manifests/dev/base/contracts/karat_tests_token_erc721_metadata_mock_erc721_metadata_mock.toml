@@ -1,6 +1,6 @@
 kind = "DojoContract"
-class_hash = "0x1fe5bbc5343bc12d843ab5e9878b00b925c7cebbd16bb5a728518469f4b0993"
-original_class_hash = "0x1fe5bbc5343bc12d843ab5e9878b00b925c7cebbd16bb5a728518469f4b0993"
+class_hash = "0x5cd55688e79ac25f624d8bcab54db990ae0239e79cc82a6fc0df5275ab638b2"
+original_class_hash = "0x5cd55688e79ac25f624d8bcab54db990ae0239e79cc82a6fc0df5275ab638b2"
 base_class_hash = "0x0"
 abi = "manifests/dev/abis/base/contracts/karat_tests_token_erc721_metadata_mock_erc721_metadata_mock.json"
 reads = []

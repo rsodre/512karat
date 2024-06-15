@@ -55,53 +55,51 @@
   },
   {
     "type": "impl",
-    "name": "ActionsImpl",
-    "interface_name": "karat::systems::actions::IActions"
+    "name": "IDojoInitImpl",
+    "interface_name": "karat::systems::minter::minter::IDojoInit"
   },
   {
-    "type": "enum",
-    "name": "karat::models::moves::Direction",
-    "variants": [
+    "type": "interface",
+    "name": "karat::systems::minter::minter::IDojoInit",
+    "items": [
       {
-        "name": "None",
-        "type": "()"
-      },
-      {
-        "name": "Left",
-        "type": "()"
-      },
-      {
-        "name": "Right",
-        "type": "()"
-      },
-      {
-        "name": "Up",
-        "type": "()"
-      },
-      {
-        "name": "Down",
-        "type": "()"
+        "type": "function",
+        "name": "dojo_init",
+        "inputs": [
+          {
+            "name": "token_address",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "max_supply",
+            "type": "core::integer::u128"
+          },
+          {
+            "name": "is_open",
+            "type": "core::integer::u8"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "view"
       }
     ]
   },
   {
+    "type": "impl",
+    "name": "MinterImpl",
+    "interface_name": "karat::systems::minter::IMinter"
+  },
+  {
     "type": "interface",
-    "name": "karat::systems::actions::IActions",
+    "name": "karat::systems::minter::IMinter",
     "items": [
       {
         "type": "function",
-        "name": "spawn",
-        "inputs": [],
-        "outputs": [],
-        "state_mutability": "external"
-      },
-      {
-        "type": "function",
-        "name": "move",
+        "name": "mint",
         "inputs": [
           {
-            "name": "direction",
-            "type": "karat::models::moves::Direction"
+            "name": "contract_address",
+            "type": "core::starknet::contract_address::ContractAddress"
           }
         ],
         "outputs": [],
@@ -111,19 +109,60 @@
   },
   {
     "type": "impl",
-    "name": "IDojoInitImpl",
-    "interface_name": "karat::systems::actions::actions::IDojoInit"
+    "name": "PainterImpl",
+    "interface_name": "karat::systems::minter::IPainter"
+  },
+  {
+    "type": "struct",
+    "name": "core::integer::u256",
+    "members": [
+      {
+        "name": "low",
+        "type": "core::integer::u128"
+      },
+      {
+        "name": "high",
+        "type": "core::integer::u128"
+      }
+    ]
+  },
+  {
+    "type": "struct",
+    "name": "core::byte_array::ByteArray",
+    "members": [
+      {
+        "name": "data",
+        "type": "core::array::Array::<core::bytes_31::bytes31>"
+      },
+      {
+        "name": "pending_word",
+        "type": "core::felt252"
+      },
+      {
+        "name": "pending_word_len",
+        "type": "core::integer::u32"
+      }
+    ]
   },
   {
     "type": "interface",
-    "name": "karat::systems::actions::actions::IDojoInit",
+    "name": "karat::systems::minter::IPainter",
     "items": [
       {
         "type": "function",
-        "name": "dojo_init",
-        "inputs": [],
-        "outputs": [],
-        "state_mutability": "view"
+        "name": "paint",
+        "inputs": [
+          {
+            "name": "token_id",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::byte_array::ByteArray"
+          }
+        ],
+        "state_mutability": "external"
       }
     ]
   },
@@ -176,7 +215,7 @@
   },
   {
     "type": "event",
-    "name": "karat::systems::actions::actions::Event",
+    "name": "karat::systems::minter::minter::Event",
     "kind": "enum",
     "variants": [
       {

@@ -55,8 +55,8 @@
   },
   {
     "type": "impl",
-    "name": "InitializerImpl",
-    "interface_name": "karat::systems::karat::IERC721EnumInit"
+    "name": "EnumInitImpl",
+    "interface_name": "karat::systems::karat_token::IERC721EnumInit"
   },
   {
     "type": "struct",
@@ -78,11 +78,11 @@
   },
   {
     "type": "interface",
-    "name": "karat::systems::karat::IERC721EnumInit",
+    "name": "karat::systems::karat_token::IERC721EnumInit",
     "items": [
       {
         "type": "function",
-        "name": "initializer",
+        "name": "initialize",
         "inputs": [
           {
             "name": "name",
@@ -104,8 +104,8 @@
   },
   {
     "type": "impl",
-    "name": "TransferImpl",
-    "interface_name": "karat::systems::karat::IERC721EnumTransfer"
+    "name": "EnumTransferImpl",
+    "interface_name": "karat::systems::karat_token::IERC721EnumTransfer"
   },
   {
     "type": "struct",
@@ -133,7 +133,7 @@
   },
   {
     "type": "interface",
-    "name": "karat::systems::karat::IERC721EnumTransfer",
+    "name": "karat::systems::karat_token::IERC721EnumTransfer",
     "items": [
       {
         "type": "function",
@@ -199,12 +199,12 @@
   },
   {
     "type": "impl",
-    "name": "MintBurnImpl",
-    "interface_name": "karat::systems::karat::IERC721EnumMintBurn"
+    "name": "EnumMintBurnImpl",
+    "interface_name": "karat::systems::karat_token::IERC721EnumMintBurn"
   },
   {
     "type": "interface",
-    "name": "karat::systems::karat::IERC721EnumMintBurn",
+    "name": "karat::systems::karat_token::IERC721EnumMintBurn",
     "items": [
       {
         "type": "function",
@@ -239,11 +239,11 @@
   {
     "type": "impl",
     "name": "IDojoInitImpl",
-    "interface_name": "karat::systems::karat::Karat::IDojoInit"
+    "interface_name": "karat::systems::karat_token::karat_token::IDojoInit"
   },
   {
     "type": "interface",
-    "name": "karat::systems::karat::Karat::IDojoInit",
+    "name": "karat::systems::karat_token::karat_token::IDojoInit",
     "items": [
       {
         "type": "function",
@@ -809,7 +809,7 @@
   },
   {
     "type": "event",
-    "name": "karat::systems::karat::Karat::Event",
+    "name": "karat::systems::karat_token::karat_token::Event",
     "kind": "enum",
     "variants": [
       {
