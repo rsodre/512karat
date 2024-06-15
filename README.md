@@ -13,6 +13,11 @@ sozo init dojo
 # forked nd updated to...
 # https://github.com/rsodre/origami/tree/karat
 
+# cloned origami erc721_metadata_component
+# so we can make a custom token_uri()
+
+# generated overlay files
+# $ sozo migrate --generate-overlays
 
 
 ```
