@@ -1,50 +1,50 @@
 use starknet::{ContractAddress, ClassHash};
 use dojo::world::IWorldDispatcher;
 
-#[starknet::interface]
-trait IERC721EnumMintBurnPreset<TState> {
+#[dojo::interface]
+trait IERC721EnumMintBurnPreset {
     // IERC721
-    fn name(self: @TState) -> ByteArray;
-    fn symbol(self: @TState) -> ByteArray;
-    fn token_uri(ref self: TState, token_id: u256) -> ByteArray;
-    fn owner_of(self: @TState, account: ContractAddress) -> bool;
-    fn get_approved(self: @TState, token_id: u256) -> ContractAddress;
-    fn approve(ref self: TState, to: ContractAddress, token_id: u256);
-    fn total_supply(self: @TState) -> u256;
-    fn token_by_index(self: @TState, index: u256) -> u256;
-    fn token_of_owner_by_index(self: @TState, owner: ContractAddress, index: u256) -> u256;
+    fn name(world: @IWorldDispatcher) -> ByteArray;
+    fn symbol(world: @IWorldDispatcher) -> ByteArray;
+    fn token_uri(ref world: IWorldDispatcher, token_id: u256) -> ByteArray;
+    fn owner_of(world: @IWorldDispatcher, account: ContractAddress) -> bool;
+    fn get_approved(world: @IWorldDispatcher, token_id: u256) -> ContractAddress;
+    fn approve(ref world: IWorldDispatcher, to: ContractAddress, token_id: u256);
+    fn total_supply(world: @IWorldDispatcher) -> u256;
+    fn token_by_index(world: @IWorldDispatcher, index: u256) -> u256;
+    fn token_of_owner_by_index(world: @IWorldDispatcher, owner: ContractAddress, index: u256) -> u256;
 
     // IERC721CamelOnly
-    fn tokenURI(ref self: TState, token_id: u256) -> ByteArray;
+    fn tokenURI(ref world: IWorldDispatcher, token_id: u256) -> ByteArray;
 
     // IWorldProvider
-    fn world(self: @TState,) -> IWorldDispatcher;
+    fn world(world: @IWorldDispatcher,) -> IWorldDispatcher;
 
     fn initializer(
-        ref self: TState,
+        ref world: IWorldDispatcher,
         name: ByteArray,
         symbol: ByteArray,
         base_uri: ByteArray,
         recipient: ContractAddress,
         token_ids: Span<u256>
     );
-    fn balance_of(self: @TState, account: ContractAddress) -> u256;
-    fn transfer_from(ref self: TState, from: ContractAddress, to: ContractAddress, token_id: u256);
+    fn balance_of(world: @IWorldDispatcher, account: ContractAddress) -> u256;
+    fn transfer_from(ref world: IWorldDispatcher, from: ContractAddress, to: ContractAddress, token_id: u256);
     fn safe_transfer_from(
-        ref self: TState,
+        ref world: IWorldDispatcher,
         from: ContractAddress,
         to: ContractAddress,
         token_id: u256,
         data: Span<felt252>
     );
-    fn mint(ref self: TState, to: ContractAddress, token_id: u256);
-    fn burn(ref self: TState, token_id: u256);
+    fn mint(ref world: IWorldDispatcher, to: ContractAddress, token_id: u256);
+    fn burn(ref world: IWorldDispatcher, token_id: u256);
 }
 
-#[starknet::interface]
-trait IERC721EnumInit<TState> {
+#[dojo::interface]
+trait IERC721EnumInit {
     fn initializer(
-        ref self: TState,
+        ref world: IWorldDispatcher,
         name: ByteArray,
         symbol: ByteArray,
         base_uri: ByteArray,
@@ -53,12 +53,12 @@ trait IERC721EnumInit<TState> {
     );
 }
 
-#[starknet::interface]
-trait IERC721EnumTransfer<TState> {
-    fn balance_of(self: @TState, account: ContractAddress) -> u256;
-    fn transfer_from(ref self: TState, from: ContractAddress, to: ContractAddress, token_id: u256);
+#[dojo::interface]
+trait IERC721EnumTransfer {
+    fn balance_of(world: @IWorldDispatcher, account: ContractAddress) -> u256;
+    fn transfer_from(ref world: IWorldDispatcher, from: ContractAddress, to: ContractAddress, token_id: u256);
     fn safe_transfer_from(
-        ref self: TState,
+        ref world: IWorldDispatcher,
         from: ContractAddress,
         to: ContractAddress,
         token_id: u256,
@@ -66,10 +66,10 @@ trait IERC721EnumTransfer<TState> {
     );
 }
 
-#[starknet::interface]
-trait IERC721EnumMintBurn<TState> {
-    fn mint(ref self: TState, to: ContractAddress, token_id: u256);
-    fn burn(ref self: TState, token_id: u256);
+#[dojo::interface]
+trait IERC721EnumMintBurn {
+    fn mint(ref world: IWorldDispatcher, to: ContractAddress, token_id: u256);
+    fn burn(ref world: IWorldDispatcher, token_id: u256);
 }
 
 #[dojo::contract(allow_ref_self)]
@@ -165,7 +165,7 @@ mod ERC721EnumMintBurn {
     #[abi(embed_v0)]
     impl InitializerImpl of super::IERC721EnumInit<ContractState> {
         fn initializer(
-            ref self: ContractState,
+            ref world: IWorldDispatcher,
             name: ByteArray,
             symbol: ByteArray,
             base_uri: ByteArray,
@@ -173,7 +173,7 @@ mod ERC721EnumMintBurn {
             token_ids: Span<u256>
         ) {
             assert(
-                self.world().is_owner(get_caller_address(), get_contract_address().into()),
+                world.is_owner(get_caller_address(), get_contract_address().into()),
                 Errors::CALLER_IS_NOT_OWNER
             );
             self.erc721_metadata.initialize(name, symbol, base_uri);
@@ -184,13 +184,11 @@ mod ERC721EnumMintBurn {
 
     #[abi(embed_v0)]
     impl TransferImpl of super::IERC721EnumTransfer<ContractState> {
-        fn balance_of(self: @ContractState, account: ContractAddress) -> u256 {
+        fn balance_of(world: @IWorldDispatcher, account: ContractAddress) -> u256 {
             self.erc721_balance.get_balance(account).amount.into()
         }
 
-        fn transfer_from(
-            ref self: ContractState, from: ContractAddress, to: ContractAddress, token_id: u256
-        ) {
+        fn transfer_from(ref world: IWorldDispatcher, from: ContractAddress, to: ContractAddress, token_id: u256) {
             assert(
                 self.erc721_approval.is_approved_or_owner(get_caller_address(), token_id),
                 Errors::UNAUTHORIZED
@@ -201,7 +199,7 @@ mod ERC721EnumMintBurn {
         }
 
         fn safe_transfer_from(
-            ref self: ContractState,
+            ref world: IWorldDispatcher,
             from: ContractAddress,
             to: ContractAddress,
             token_id: u256,
@@ -219,13 +217,13 @@ mod ERC721EnumMintBurn {
 
     #[abi(embed_v0)]
     impl MintBurnImpl of super::IERC721EnumMintBurn<ContractState> {
-        fn mint(ref self: ContractState, to: ContractAddress, token_id: u256) {
+        fn mint(ref world: IWorldDispatcher, to: ContractAddress, token_id: u256) {
             self.erc721_mintable.mint(to, token_id);
             self.erc721_enumerable.add_token_to_all_tokens_enumeration(token_id);
             self.erc721_enumerable.add_token_to_owner_enumeration(to, token_id);
         }
 
-        fn burn(ref self: ContractState, token_id: u256) {
+        fn burn(ref world: IWorldDispatcher, token_id: u256) {
             self.erc721_burnable.burn(token_id);
             self.erc721_enumerable.remove_token_from_all_tokens_enumeration(token_id);
             let owner = self.erc721_owner.owner_of(token_id);
@@ -236,7 +234,7 @@ mod ERC721EnumMintBurn {
     #[generate_trait]
     impl InternalImpl of InternalTrait {
         fn mint_assets(
-            ref self: ContractState, recipient: ContractAddress, mut token_ids: Span<u256>
+            ref world: IWorldDispatcher, recipient: ContractAddress, mut token_ids: Span<u256>
         ) {
             loop {
                 if token_ids.len() == 0 {
