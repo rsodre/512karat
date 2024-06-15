@@ -3,22 +3,22 @@ use karat::models::position::Position;
 
 // define the interface
 #[dojo::interface]
-trait IActions {
+trait IMinter {
     fn spawn(ref world: IWorldDispatcher);
     fn move(ref world: IWorldDispatcher, direction: Direction);
 }
 
 // dojo decorator
 #[dojo::contract]
-mod actions {
-    use super::{IActions, next_position};
+mod minter {
+    use super::{IMinter, next_position};
     use starknet::{ContractAddress, get_caller_address};
     use karat::models::{
         position::{Position, Vec2}, moves::{Moves, Direction, DirectionsAvailable}
     };
 
     #[abi(embed_v0)]
-    impl ActionsImpl of IActions<ContractState> {
+    impl MinterImpl of IMinter<ContractState> {
         fn spawn(ref world: IWorldDispatcher) {
             // Get the address of the current caller, possibly the player's address.
             let player = get_caller_address();

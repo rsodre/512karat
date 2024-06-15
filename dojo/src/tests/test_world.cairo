@@ -7,7 +7,7 @@ mod tests {
     use dojo::test_utils::{spawn_test_world, deploy_contract};
     // import test utils
     use karat::{
-        systems::{actions::{actions, IActionsDispatcher, IActionsDispatcherTrait}},
+        systems::{minter::{minter, IMinterDispatcher, IMinterDispatcherTrait}},
         models::{position::{Position, Vec2, position}, moves::{Moves, Direction, moves}}
     };
 
@@ -24,14 +24,14 @@ mod tests {
         let world = spawn_test_world(models);
 
         // deploy systems contract
-        let contract_address = world.deploy_contract('salt', actions::TEST_CLASS_HASH.try_into().unwrap(), array![].span());
-        let actions_system = IActionsDispatcher { contract_address };
+        let contract_address = world.deploy_contract('salt', minter::TEST_CLASS_HASH.try_into().unwrap(), array![].span());
+        let minter_system = IMinterDispatcher { contract_address };
 
         // call spawn()
-        actions_system.spawn();
+        minter_system.spawn();
 
         // call move with direction right
-        actions_system.move(Direction::Right);
+        minter_system.move(Direction::Right);
 
         // Check world state
         let moves = get!(world, caller, Moves);

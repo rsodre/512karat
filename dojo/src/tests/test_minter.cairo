@@ -9,7 +9,7 @@ mod tests {
 
     // karat
     use karat::{
-        systems::{actions::{actions, IActionsDispatcher, IActionsDispatcherTrait}},
+        systems::{minter::{minter, IMinterDispatcher, IMinterDispatcherTrait}},
         systems::{karat_token::{karat_token, IKaratTokenDispatcher, IKaratTokenDispatcherTrait}},
         models::{position::{Position, Vec2, position}, moves::{Moves, Direction, moves}}
     };

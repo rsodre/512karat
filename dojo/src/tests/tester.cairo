@@ -8,7 +8,7 @@ mod tester {
 
     // karat
     use karat::{
-        systems::{actions::{actions, IActionsDispatcher, IActionsDispatcherTrait}},
+        systems::{minter::{minter, IMinterDispatcher, IMinterDispatcherTrait}},
         systems::{karat_token::{karat_token, IKaratTokenDispatcher, IKaratTokenDispatcherTrait}},
         models::{position::{Position, Vec2, position}, moves::{Moves, Direction, moves}}
     };
@@ -32,7 +32,7 @@ mod tester {
     struct Systems {
         world: IWorldDispatcher,
         karat: IKaratTokenDispatcher,
-        actions: IActionsDispatcher,
+        minter: IMinterDispatcher,
         // state: erc721_enumerable_mock::ContractState,
     }
 
@@ -47,11 +47,11 @@ mod tester {
         ];
         let world = spawn_test_world(models);
 
-        let contract_address = world.deploy_contract('salt', actions::TEST_CLASS_HASH.try_into().unwrap(), array![].span());
-        let actions = IActionsDispatcher { contract_address };
-
         let contract_address = world.deploy_contract('karat', karat_token::TEST_CLASS_HASH.try_into().unwrap(), array![].span());
         let karat = IKaratTokenDispatcher { contract_address };
+
+        let contract_address = world.deploy_contract('salt', minter::TEST_CLASS_HASH.try_into().unwrap(), array![].span());
+        let minter = IMinterDispatcher { contract_address };
 
         // let mut state = erc721_enumerable_mock::contract_state_for_testing();
         // state.world_dispatcher.write(world);
@@ -62,7 +62,7 @@ mod tester {
         let systems = Systems{
             world,
             karat,
-            actions,
+            minter,
             // state,
         };
 

@@ -7,4 +7,4 @@ export RPC_URL="http://localhost:5050";
 export WORLD_ADDRESS=$(cat ./manifests/dev/manifest.json | jq -r '.world.address')
 
 # sozo execute --world <WORLD_ADDRESS> <CONTRACT> <ENTRYPOINT>
-sozo execute --world $WORLD_ADDRESS karat::systems::actions::actions spawn --wait
+sozo execute --world $WORLD_ADDRESS karat::systems::minter::minter spawn --wait

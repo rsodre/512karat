@@ -1,5 +1,5 @@
 mod systems {
-    mod actions;
+    mod minter;
     mod karat_token;
     mod metadata;
 }
@@ -11,7 +11,7 @@ mod models {
 
 mod tests {
     mod tester;
-    mod test_karat_mint;
+    mod test_minter;
     mod test_world;
 
     mod token {
