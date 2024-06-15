@@ -36,6 +36,6 @@ fn test_erc721_metadata_initialize() {
     assert(state.erc721_metadata.symbol() == "SYMBOL", 'Should be SYMBOL');
 
     state.erc721_mintable.mint(OWNER(), 1);
-    assert(state.erc721_metadata.token_uri(1) == "URI1", 'Should be URI1');
-    assert(state.erc721_metadata.tokenURI(1) == "URI1", 'Should be URI1');
+    assert(state.erc721_metadata.token_uri(1) == "URI-1", 'Should be URI-1');
+    assert(state.erc721_metadata.tokenURI(1) == "URI-1", 'Should be URI-1');
 }

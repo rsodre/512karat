@@ -106,7 +106,7 @@ mod erc721_metadata_component {
             if base_uri.len() == 0 {
                 return "";
             } else {
-                return format!("{}{}", base_uri, token_id);
+                return format!("{}-{}", base_uri, token_id);
             }
         }
 
