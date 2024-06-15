@@ -5,6 +5,7 @@ mod systems {
 }
 
 mod models {
+    mod config;
     mod moves;
     mod position;
 }

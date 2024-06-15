@@ -16,7 +16,9 @@ mod minter {
     use zeroable::Zeroable;
     use starknet::{ContractAddress, get_contract_address, get_caller_address};
     use karat::models::{
-        position::{Position, Vec2}, moves::{Moves, Direction, DirectionsAvailable}
+        config::{Config, ConfigManager, ConfigManagerTrait},
+        position::{Position, Vec2},
+        moves::{Moves, Direction, DirectionsAvailable},
     };
 
     // params passed from overlays files
@@ -30,6 +32,12 @@ mod minter {
     ) {
         'dojo_init()...'.print();
         assert(token_address.is_non_zero(), 'invalid token_address');
+        let manager = ConfigManagerTrait::new(world);
+        manager.set(Config{
+            token_address,
+            minter_address: get_contract_address(),
+            is_open: (is_open != 0),
+        });
     }
 
     #[abi(embed_v0)]

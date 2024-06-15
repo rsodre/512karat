@@ -15,9 +15,15 @@ sozo init dojo
 
 # cloned origami erc721_metadata_component
 # so we can make a custom token_uri()
+# https://github.com/rsodre/origami/blob/main/token/src/components/token/erc721/erc721_metadata.cairo
 
-# generated overlay files
+# generated overlay files for dojo_init()
 # $ sozo migrate --generate-overlays
+
+# cloned ConfigManager from Pistols
+# https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/src/models/config.cairo
+
+
 
 
 ```
