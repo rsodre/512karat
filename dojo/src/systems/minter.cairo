@@ -11,11 +11,26 @@ trait IMinter {
 // dojo decorator
 #[dojo::contract]
 mod minter {
+    use debug::PrintTrait;
     use super::{IMinter, next_position};
-    use starknet::{ContractAddress, get_caller_address};
+    use zeroable::Zeroable;
+    use starknet::{ContractAddress, get_contract_address, get_caller_address};
     use karat::models::{
         position::{Position, Vec2}, moves::{Moves, Direction, DirectionsAvailable}
     };
+
+    // params passed from overlays files
+    // https://github.com/dojoengine/dojo/blob/328004d65bbbf7692c26f030b75fa95b7947841d/examples/spawn-and-move/manifests/dev/overlays/contracts/dojo_examples_others_others.toml
+    // https://github.com/dojoengine/dojo/blob/328004d65bbbf7692c26f030b75fa95b7947841d/examples/spawn-and-move/src/others.cairo#L18
+    // overlays generated with: sozo migrate --generate-overlays
+    fn dojo_init(
+        world: @IWorldDispatcher,
+        token_address: ContractAddress,
+        is_open: felt252,
+    ) {
+        'dojo_init()...'.print();
+        assert(token_address.is_non_zero(), 'invalid token_address');
+    }
 
     #[abi(embed_v0)]
     impl MinterImpl of IMinter<ContractState> {

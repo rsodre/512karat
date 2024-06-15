@@ -1,1 +1,9 @@
 name = "karat::systems::minter::minter"
+reads = []
+writes = []
+computed = []
+init_calldata = [
+  "$contract_address:karat::systems::karat_token::karat_token",
+  # "$class_hash:karat::systems::karat_token::karat_token",
+  1,
+]

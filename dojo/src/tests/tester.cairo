@@ -47,11 +47,12 @@ mod tester {
         ];
         let world = spawn_test_world(models);
 
-        let contract_address = world.deploy_contract('karat', karat_token::TEST_CLASS_HASH.try_into().unwrap(), array![].span());
-        let karat = IKaratTokenDispatcher { contract_address };
+        let karat_address = world.deploy_contract('karat', karat_token::TEST_CLASS_HASH.try_into().unwrap(), array![].span());
+        let karat = IKaratTokenDispatcher { contract_address: karat_address };
 
-        let contract_address = world.deploy_contract('salt', minter::TEST_CLASS_HASH.try_into().unwrap(), array![].span());
-        let minter = IMinterDispatcher { contract_address };
+        let init_calldata: Span<felt252> = array![karat_address.into(), 1].span();
+        let minter_address = world.deploy_contract('salt', minter::TEST_CLASS_HASH.try_into().unwrap(), init_calldata);
+        let minter = IMinterDispatcher { contract_address: minter_address };
 
         // let mut state = erc721_enumerable_mock::contract_state_for_testing();
         // state.world_dispatcher.write(world);
