@@ -1,7 +1,7 @@
 [package]
 cairo-version = "2.6.3"
-name = "dojo_starter"
-version = "0.7.0"
+name = "karat"
+version = "0.1.0"
 
 [cairo]
 sierra-replace-ids = true
@@ -28,7 +28,7 @@ build-external-contracts = [
 ]
 
 [tool.dojo]
-initializer_class_hash = "0xbeef"
+initializer_class_hash = "0xdeadcode"
 
 [tool.dojo.env]
 rpc_url = "http://localhost:5050/"

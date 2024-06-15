@@ -1,5 +1,5 @@
-use dojo_starter::models::moves::Direction;
-use dojo_starter::models::position::Position;
+use karat::models::moves::Direction;
+use karat::models::position::Position;
 
 // define the interface
 #[dojo::interface]
@@ -13,7 +13,7 @@ trait IActions {
 mod actions {
     use super::{IActions, next_position};
     use starknet::{ContractAddress, get_caller_address};
-    use dojo_starter::models::{
+    use karat::models::{
         position::{Position, Vec2}, moves::{Moves, Direction, DirectionsAvailable}
     };
 

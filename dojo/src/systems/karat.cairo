@@ -73,7 +73,7 @@ trait IERC721EnumMintBurn {
 }
 
 #[dojo::contract(allow_ref_self)]
-mod ERC721EnumMintBurn {
+mod Karat {
     use starknet::ContractAddress;
     use starknet::{get_contract_address, get_caller_address};
     use token::components::security::initializable::initializable_component;
@@ -222,7 +222,6 @@ mod ERC721EnumMintBurn {
             self.erc721_enumerable.add_token_to_all_tokens_enumeration(token_id);
             self.erc721_enumerable.add_token_to_owner_enumeration(to, token_id);
         }
-
         fn burn(ref world: IWorldDispatcher, token_id: u256) {
             self.erc721_burnable.burn(token_id);
             self.erc721_enumerable.remove_token_from_all_tokens_enumeration(token_id);
