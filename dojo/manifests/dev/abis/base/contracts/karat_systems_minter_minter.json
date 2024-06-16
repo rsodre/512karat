@@ -90,43 +90,6 @@
     "interface_name": "karat::systems::minter::IMinter"
   },
   {
-    "type": "interface",
-    "name": "karat::systems::minter::IMinter",
-    "items": [
-      {
-        "type": "function",
-        "name": "mint",
-        "inputs": [
-          {
-            "name": "contract_address",
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "outputs": [],
-        "state_mutability": "external"
-      }
-    ]
-  },
-  {
-    "type": "impl",
-    "name": "PainterImpl",
-    "interface_name": "karat::systems::minter::IPainter"
-  },
-  {
-    "type": "struct",
-    "name": "core::integer::u256",
-    "members": [
-      {
-        "name": "low",
-        "type": "core::integer::u128"
-      },
-      {
-        "name": "high",
-        "type": "core::integer::u128"
-      }
-    ]
-  },
-  {
     "type": "struct",
     "name": "core::byte_array::ByteArray",
     "members": [
@@ -145,6 +108,81 @@
     ]
   },
   {
+    "type": "struct",
+    "name": "core::array::Span::<core::byte_array::ByteArray>",
+    "members": [
+      {
+        "name": "snapshot",
+        "type": "@core::array::Array::<core::byte_array::ByteArray>"
+      }
+    ]
+  },
+  {
+    "type": "struct",
+    "name": "karat::models::token_data::TokenData",
+    "members": [
+      {
+        "name": "token_id",
+        "type": "core::integer::u128"
+      },
+      {
+        "name": "seed",
+        "type": "core::integer::u128"
+      },
+      {
+        "name": "trait_names",
+        "type": "core::array::Span::<core::byte_array::ByteArray>"
+      },
+      {
+        "name": "trait_values",
+        "type": "core::array::Span::<core::byte_array::ByteArray>"
+      }
+    ]
+  },
+  {
+    "type": "interface",
+    "name": "karat::systems::minter::IMinter",
+    "items": [
+      {
+        "type": "function",
+        "name": "mint",
+        "inputs": [
+          {
+            "name": "contract_address",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u128"
+          }
+        ],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "get_token_data",
+        "inputs": [
+          {
+            "name": "token_id",
+            "type": "core::integer::u128"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "karat::models::token_data::TokenData"
+          }
+        ],
+        "state_mutability": "external"
+      }
+    ]
+  },
+  {
+    "type": "impl",
+    "name": "PainterImpl",
+    "interface_name": "karat::systems::minter::IPainter"
+  },
+  {
     "type": "interface",
     "name": "karat::systems::minter::IPainter",
     "items": [
@@ -154,7 +192,7 @@
         "inputs": [
           {
             "name": "token_id",
-            "type": "core::integer::u256"
+            "type": "core::integer::u128"
           }
         ],
         "outputs": [
