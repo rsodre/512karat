@@ -6,9 +6,11 @@ mod systems {
 
 mod models {
     mod config;
+    mod seed;
 }
 
 mod utils {
+    mod hash;
     mod painter;
 }
 

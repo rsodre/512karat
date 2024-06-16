@@ -2,7 +2,7 @@ use starknet::{ContractAddress};
 
 #[dojo::interface]
 trait IMinter {
-    fn mint(ref world: IWorldDispatcher, contract_address: ContractAddress);
+    fn mint(ref world: IWorldDispatcher, contract_address: ContractAddress) -> u128;
 }
 
 #[dojo::interface]
@@ -20,6 +20,7 @@ mod minter {
     use karat::utils::painter::{painter};
     use karat::models::{
         config::{Config, ConfigManager, ConfigManagerTrait},
+        seed::{Seed, SeedTrait},
     };
 
     mod Errors {
@@ -70,14 +71,20 @@ mod minter {
     //
     #[abi(embed_v0)]
     impl MinterImpl of IMinter<ContractState> {
-        fn mint(ref world: IWorldDispatcher, contract_address: ContractAddress) {
+        fn mint(ref world: IWorldDispatcher, contract_address: ContractAddress) -> u128 {
             let karat = (IKaratTokenDispatcher{contract_address});
             let total_supply: u256 = karat.total_supply();
 
             let config: Config = ConfigManagerTrait::new(world).get(contract_address);
             assert(total_supply.low < config.max_supply, Errors::MINTED_OUT);
             
-            karat.mint(get_caller_address(), total_supply + 1);
+            let token_id: u256 = (total_supply + 1);
+            karat.mint(get_caller_address(), token_id);
+
+            let seed = SeedTrait::new(token_id.low);
+            set!(world, (seed));
+
+            (token_id.low)
         }
     }
 

@@ -11,7 +11,9 @@ mod tests {
     use karat::{
         systems::{minter::{minter, IMinterDispatcher, IMinterDispatcherTrait}},
         systems::{karat_token::{karat_token, IKaratTokenDispatcher, IKaratTokenDispatcherTrait}},
+        models::seed::{Seed, SeedTrait},
     };
+
     use karat::tests::tester::{tester, tester::{ Systems }};
 
     #[test]
@@ -37,15 +39,23 @@ mod tests {
         let sys: Systems = tester::spawn_systems();
         assert(sys.karat.total_supply() == 0, 'supply = 0');
         // #1
-        sys.minter.mint(sys.karat.contract_address);
+        let token_id_1: u128 = sys.minter.mint(sys.karat.contract_address);
         let token_uri_1: ByteArray = sys.karat.token_uri(1);
-        println!("{}", token_uri_1);
+        let seed_1: Seed = get!(sys.world, (token_id_1), Seed);
         assert(sys.karat.total_supply() == 1, 'supply = 1');
+        assert(token_id_1 == 1, 'token_id_1');
+        assert(seed_1.seed > 0, 'seed_1');
         assert(token_uri_1.len() > 3, 'token_uri_1');
+        println!("token_uri_1:{}", token_uri_1);
+        // println!("seed_1:{}", seed_1); // not compatible
         // #2
-        sys.minter.mint(sys.karat.contract_address);
+        let token_id_2: u128 = sys.minter.mint(sys.karat.contract_address);
         let token_uri_2 = sys.karat.token_uri(2);
+        let seed_2: Seed = get!(sys.world, (token_id_2), Seed);
         assert(sys.karat.total_supply() == 2, 'supply = 2');
+        assert(token_id_2 == 2, 'token_id_2');
+        assert(seed_2.seed > 0, 'seed_2');
+        assert(seed_2.seed != seed_1.seed, 'seed_2_1');
         assert(token_uri_2.len() > 3, 'token_uri_2');
         assert(token_uri_2 != token_uri_1, 'token_uri_2_1');
     }
