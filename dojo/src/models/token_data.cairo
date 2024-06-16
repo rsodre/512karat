@@ -23,6 +23,12 @@ impl TokenDataTraitImpl of TokenDataTrait {
             trait_values: array!['Value_1', 'Value_2', 'Value_3'].span(),
         })
     }
+    fn get_name(self: TokenData) -> ByteArray {
+        (format!("512 Karat #{}", self.token_id))
+    }
+    fn get_description(self: TokenData) -> ByteArray {
+        ("Fully on-chain Generative Art made with Dojo")
+    }
 }
 
 
