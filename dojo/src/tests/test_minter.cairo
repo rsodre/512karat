@@ -38,14 +38,15 @@ mod tests {
         assert(sys.karat.total_supply() == 0, 'supply = 0');
         // #1
         sys.minter.mint(sys.karat.contract_address);
-        let token_uri_1 = sys.karat.token_uri(1);
+        let token_uri_1: ByteArray = sys.karat.token_uri(1);
+        println!("{}", token_uri_1);
         assert(sys.karat.total_supply() == 1, 'supply = 1');
-        assert(token_uri_1 != "", 'token_uri_1');
+        assert(token_uri_1.len() > 3, 'token_uri_1');
         // #2
         sys.minter.mint(sys.karat.contract_address);
         let token_uri_2 = sys.karat.token_uri(2);
         assert(sys.karat.total_supply() == 2, 'supply = 2');
-        assert(token_uri_2 != "", 'token_uri_2');
+        assert(token_uri_2.len() > 3, 'token_uri_2');
         assert(token_uri_2 != token_uri_1, 'token_uri_2_1');
     }
 

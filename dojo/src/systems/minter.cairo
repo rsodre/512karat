@@ -1,9 +1,13 @@
 use starknet::{ContractAddress};
 
-// define the interface
 #[dojo::interface]
 trait IMinter {
     fn mint(ref world: IWorldDispatcher, contract_address: ContractAddress);
+}
+
+#[dojo::interface]
+trait IPainter {
+    fn paint(ref world: IWorldDispatcher, token_id: u256) -> ByteArray;
 }
 
 // dojo decorator
@@ -50,6 +54,7 @@ mod minter {
         manager.set(Config{
             token_address,
             minter_address: get_contract_address(),
+            painter_address: get_contract_address(),
             max_supply,
             is_open: (is_open != 0),
         });
@@ -61,7 +66,7 @@ mod minter {
     }
 
     //---------------------------------------
-    // Impl
+    // IMinter
     //
     #[abi(embed_v0)]
     impl MinterImpl of IMinter<ContractState> {
@@ -73,6 +78,17 @@ mod minter {
             assert(total_supply.low < config.max_supply, Errors::MINTED_OUT);
             
             karat.mint(get_caller_address(), total_supply + 1);
+        }
+    }
+
+
+    //---------------------------------------
+    // IPainter
+    //
+    #[abi(embed_v0)]
+    impl PainterImpl of super::IPainter<ContractState> {
+        fn paint(ref world: IWorldDispatcher, token_id: u256) -> ByteArray {
+            return format!("_new_uri_{}", token_id);
         }
     }
 }
