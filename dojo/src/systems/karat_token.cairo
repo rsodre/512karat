@@ -83,6 +83,7 @@ mod karat_token {
     use karat::systems::metadata::erc721_metadata_component;
     use token::components::token::erc721::erc721_mintable::erc721_mintable_component;
     use token::components::token::erc721::erc721_owner::erc721_owner_component;
+    use karat::models::config::{Config, ConfigTrait, ConfigManager, ConfigManagerTrait};
 
     component!(path: initializable_component, storage: initializable, event: InitializableEvent);
     component!(path: erc721_approval_component, storage: erc721_approval, event: ERC721ApprovalEvent);
@@ -130,6 +131,8 @@ mod karat_token {
         const INVALID_RECEIVER: felt252 = 'ERC721: invalid receiver';
         const WRONG_SENDER: felt252 = 'ERC721: wrong sender';
         const SAFE_TRANSFER_FAILED: felt252 = 'ERC721: safe transfer failed';
+        const CALLER_IS_NOT_MINTER: felt252 = 'ERC721: not minter';
+        const MINTING_IS_CLOSED: felt252 = 'ERC721: minting closed';
     }
 
     #[storage]
@@ -221,6 +224,15 @@ mod karat_token {
     impl MintBurnImpl of super::IERC721EnumMintBurn<ContractState> {
         fn mint(ref world: IWorldDispatcher, to: ContractAddress, token_id: u256) {
 'KARAT_MINT'.print();
+            let config: Config = ConfigManagerTrait::new(world).get(get_contract_address());
+            assert(
+                config.is_open,
+                Errors::MINTING_IS_CLOSED,
+            );
+            assert(
+                config.is_minter(get_caller_address()),
+                Errors::CALLER_IS_NOT_MINTER
+            );
             self.erc721_mintable.mint(to, token_id);
             self.erc721_enumerable.add_token_to_all_tokens_enumeration(token_id);
             self.erc721_enumerable.add_token_to_owner_enumeration(to, token_id);

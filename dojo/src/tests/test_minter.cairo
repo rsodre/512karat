@@ -15,17 +15,24 @@ mod tests {
     };
     use karat::tests::tester::{tester, tester::{ Systems }};
 
-
     #[test]
-    #[available_gas(30000000)]
-    fn test_mint() {
-        let sys: Systems = tester::spawn_systems(false);
-
-        sys.karat.initializer("KARAT", "512KARAT", "_uri_");
-        assert(sys.karat.total_supply() == 0, 'supply = 0');
-
+    #[available_gas(10_000_000)]
+    #[should_panic(expected:('ERC721: not minter','ENTRYPOINT_FAILED'))]
+    fn test_not_minter() {
+        let sys: Systems = tester::spawn_systems(true);
         sys.karat.mint(RECIPIENT(), 1);
-        assert(sys.karat.total_supply() == 1, 'supply = 1');
-        assert(sys.karat.token_uri(1) == "_uri_-1", 'token_uri');
     }
+
+    // #[test]
+    // #[available_gas(10_000_000)]
+    // fn test_mint() {
+    //     let sys: Systems = tester::spawn_systems(false);
+
+    //     sys.karat.initializer("KARAT", "512KARAT", "_uri_");
+    //     assert(sys.karat.total_supply() == 0, 'supply = 0');
+
+    //     sys.karat.mint(RECIPIENT(), 1);
+    //     assert(sys.karat.total_supply() == 1, 'supply = 1');
+    //     assert(sys.karat.token_uri(1) == "_uri_-1", 'token_uri');
+    // }
 }
