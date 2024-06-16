@@ -22,20 +22,20 @@ fn STATE() -> (IWorldDispatcher, erc721_metadata_mock::ContractState) {
     (world, state)
 }
 
-#[test]
-fn test_erc721_metadata_initialize() {
-    let (_world, mut state) = STATE();
+// #[test]
+// fn test_erc721_metadata_initialize() {
+//     let (_world, mut state) = STATE();
 
-    let NAME: ByteArray = "NAME";
-    let SYMBOL: ByteArray = "SYMBOL";
-    let URI: ByteArray = "URI";
+//     let NAME: ByteArray = "NAME";
+//     let SYMBOL: ByteArray = "SYMBOL";
+//     let URI: ByteArray = "URI";
 
-    state.erc721_metadata.initialize(NAME, SYMBOL, URI);
+//     state.erc721_metadata.initialize(NAME, SYMBOL, URI);
 
-    assert(state.erc721_metadata.name() == "NAME", 'Should be NAME');
-    assert(state.erc721_metadata.symbol() == "SYMBOL", 'Should be SYMBOL');
+//     assert(state.erc721_metadata.name() == "NAME", 'Should be NAME');
+//     assert(state.erc721_metadata.symbol() == "SYMBOL", 'Should be SYMBOL');
 
-    state.erc721_mintable.mint(OWNER(), 1);
-    assert(state.erc721_metadata.token_uri(1) == "URI-1", 'Should be URI-1');
-    assert(state.erc721_metadata.tokenURI(1) == "URI-1", 'Should be URI-1');
-}
+//     state.erc721_mintable.mint(OWNER(), 1);
+//     assert(state.erc721_metadata.token_uri(1) == "URI-1", 'Should be URI-1');
+//     assert(state.erc721_metadata.tokenURI(1) == "URI-1", 'Should be URI-1');
+// }

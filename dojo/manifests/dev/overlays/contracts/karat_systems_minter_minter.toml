@@ -1,9 +1,9 @@
 name = "karat::systems::minter::minter"
 reads = []
-writes = []
+writes = ["Config"]
 computed = []
 init_calldata = [
   "$contract_address:karat::systems::karat_token::karat_token",
-  # "$class_hash:karat::systems::karat_token::karat_token",
+  512,
   1,
 ]

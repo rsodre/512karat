@@ -8,6 +8,7 @@ struct Config {
     token_address: ContractAddress,
     //------
     minter_address: ContractAddress,
+    max_supply: u128,
     is_open: bool,
 }
 

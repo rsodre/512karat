@@ -18,6 +18,10 @@ mod minter {
         config::{Config, ConfigManager, ConfigManagerTrait},
     };
 
+    mod Errors {
+        const INVALID_TOKEN_ADDRESS: felt252 = 'KARAT: invalid token address';
+        const MINTED_OUT: felt252 = 'KARAT: minted out';
+    }
 
     //---------------------------------------
     // params passed from overlays files
@@ -28,22 +32,32 @@ mod minter {
     fn dojo_init(
         world: @IWorldDispatcher,
         token_address: ContractAddress,
-        is_open: felt252,
+        max_supply: u128,
+        is_open: u8,
     ) {
         'dojo_init()...'.print();
-        assert(token_address.is_non_zero(), 'invalid token_address');
+        
+        //*******************************
+        let TOKEN_NAME = "KARAT";
+        let TOKEN_SYMBOL = "512 KARAT";
+        let BASE_URI = "/";
+        //*******************************
+
         //
-        // Init minter
+        // Config minter
+        assert(token_address.is_non_zero(), Errors::INVALID_TOKEN_ADDRESS);
         let manager = ConfigManagerTrait::new(world);
         manager.set(Config{
             token_address,
             minter_address: get_contract_address(),
+            max_supply,
             is_open: (is_open != 0),
         });
+        
         //
         // initialize token
         let karat = (IKaratTokenDispatcher{ contract_address: token_address });
-        karat.initialize("KARAT", "512KARAT", "/");
+        karat.initialize(TOKEN_NAME, TOKEN_SYMBOL, BASE_URI);
     }
 
     //---------------------------------------
@@ -54,6 +68,10 @@ mod minter {
         fn mint(ref world: IWorldDispatcher, contract_address: ContractAddress) {
             let karat = (IKaratTokenDispatcher{contract_address});
             let total_supply: u256 = karat.total_supply();
+
+            let config: Config = ConfigManagerTrait::new(world).get(contract_address);
+            assert(total_supply.low < config.max_supply, Errors::MINTED_OUT);
+            
             karat.mint(get_caller_address(), total_supply + 1);
         }
     }

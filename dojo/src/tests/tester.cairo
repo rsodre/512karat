@@ -29,6 +29,7 @@ mod tester {
         world: IWorldDispatcher,
         karat: IKaratTokenDispatcher,
         minter: IMinterDispatcher,
+        max_supply: u128,
     }
 
     fn spawn_systems() -> Systems {
@@ -39,9 +40,16 @@ mod tester {
         ];
         let world = spawn_test_world(models);
 
+        let max_supply: u128 = 4;
+        
         let karat_address = world.deploy_contract('karat', karat_token::TEST_CLASS_HASH.try_into().unwrap(), array![].span());
         let karat = IKaratTokenDispatcher { contract_address: karat_address };
-        let init_calldata: Span<felt252> = array![karat_address.into(), 1].span();
+
+        let init_calldata: Span<felt252> = array![
+            karat_address.into(),
+            max_supply.into(),
+            1,
+        ].span();
         let minter_address = world.deploy_contract('salt', minter::TEST_CLASS_HASH.try_into().unwrap(), init_calldata);
         let minter = IMinterDispatcher { contract_address: minter_address };
 
@@ -52,6 +60,7 @@ mod tester {
             world,
             karat,
             minter,
+            max_supply,
         };
 
         (systems)
