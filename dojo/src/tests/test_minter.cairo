@@ -47,7 +47,7 @@ mod tests {
         assert(seed_1.seed > 0, 'seed_1');
         assert(token_uri_1.len() > 3, 'token_uri_1');
         println!("token_uri_1:{}", token_uri_1);
-        // println!("seed_1:{}", seed_1); // not compatible
+        println!("seed_1:{}", seed_1.seed); // not compatible
         // #2
         let token_id_2: u128 = sys.minter.mint(sys.karat.contract_address);
         let token_uri_2 = sys.karat.token_uri(2);

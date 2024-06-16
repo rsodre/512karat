@@ -1,13 +1,17 @@
 use starknet::{ContractAddress};
+use karat::models::{
+    token_data::{TokenData},
+};
 
 #[dojo::interface]
 trait IMinter {
     fn mint(ref world: IWorldDispatcher, contract_address: ContractAddress) -> u128;
+    fn get_token_data(ref world: IWorldDispatcher, token_id: u128) -> TokenData;
 }
 
 #[dojo::interface]
 trait IPainter {
-    fn paint(ref world: IWorldDispatcher, token_id: u256) -> ByteArray;
+    fn paint(ref world: IWorldDispatcher, token_id: u128) -> ByteArray;
 }
 
 #[dojo::contract]
@@ -20,6 +24,7 @@ mod minter {
     use karat::utils::painter::{painter};
     use karat::models::{
         config::{Config, ConfigManager, ConfigManagerTrait},
+        token_data::{TokenData, TokenDataTrait},
         seed::{Seed, SeedTrait},
     };
 
@@ -86,6 +91,9 @@ mod minter {
 
             (token_id.low)
         }
+        fn get_token_data(ref world: IWorldDispatcher, token_id: u128) -> TokenData {
+            (TokenDataTrait::new(world, token_id))
+        }
     }
 
 
@@ -94,8 +102,9 @@ mod minter {
     //
     #[abi(embed_v0)]
     impl PainterImpl of super::IPainter<ContractState> {
-        fn paint(ref world: IWorldDispatcher, token_id: u256) -> ByteArray {
-            return painter::build_uri(token_id);
+        fn paint(ref world: IWorldDispatcher, token_id: u128) -> ByteArray {
+            let token_data = self.get_token_data(token_id);
+            return painter::build_uri(token_data);
         }
     }
 }

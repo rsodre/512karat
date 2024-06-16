@@ -48,8 +48,8 @@ mod erc721_metadata_component {
     use token::components::token::erc721::erc721_owner::erc721_owner_component as erc721_owner_comp;
     use erc721_owner_comp::InternalImpl as ERC721OwnerInternal;
 
-    use karat::models::config::{Config, ConfigTrait, ConfigManager, ConfigManagerTrait};
     use karat::systems::minter::{IPainter, IPainterDispatcher, IPainterDispatcherTrait};
+    use karat::models::config::{Config, ConfigTrait, ConfigManager, ConfigManagerTrait};
 
     #[storage]
     struct Storage {}
@@ -124,7 +124,7 @@ mod erc721_metadata_component {
             // call painter
             let config: Config = ConfigManagerTrait::new(self.get_contract().world()).get(get_contract_address());
             let painter = IPainterDispatcher{ contract_address: config.painter_address };
-            return painter.paint(token_id);
+            return painter.paint(token_id.low);
         }
     }
 }

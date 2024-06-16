@@ -1,4 +1,3 @@
-
 mod painter {
     use debug::PrintTrait;
     use zeroable::Zeroable;
@@ -6,9 +5,10 @@ mod painter {
     use karat::systems::karat_token::{IKaratTokenDispatcher, IKaratTokenDispatcherTrait};
     use karat::models::{
         config::{Config, ConfigManager, ConfigManagerTrait},
+        token_data::{TokenData, TokenDataTrait},
     };
 
-    fn build_uri(token_id: u256) -> ByteArray {
-        return format!("_new_uri_{}", token_id);
+    fn build_uri(token_data: TokenData) -> ByteArray {
+        return format!("/{}/{}", token_data.seed, token_data.token_id);
     }
 }

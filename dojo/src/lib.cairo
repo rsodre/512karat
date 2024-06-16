@@ -7,6 +7,7 @@ mod systems {
 mod models {
     mod config;
     mod seed;
+    mod token_data;
 }
 
 mod utils {
