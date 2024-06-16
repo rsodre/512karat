@@ -18,13 +18,11 @@ trait IKaratToken {
     // IERC721CamelOnly
     fn tokenURI(ref world: IWorldDispatcher, token_id: u256) -> ByteArray;
 
-    fn initializer(
+    fn initialize(
         ref world: IWorldDispatcher,
         name: ByteArray,
         symbol: ByteArray,
         base_uri: ByteArray,
-        // recipient: ContractAddress,
-        // token_ids: Span<u256>,
     );
     fn balance_of(world: @IWorldDispatcher, account: ContractAddress) -> u256;
     fn transfer_from(ref world: IWorldDispatcher, from: ContractAddress, to: ContractAddress, token_id: u256);
@@ -37,18 +35,6 @@ trait IKaratToken {
     );
     fn mint(ref world: IWorldDispatcher, to: ContractAddress, token_id: u256);
     fn burn(ref world: IWorldDispatcher, token_id: u256);
-}
-
-#[dojo::interface]
-trait IERC721EnumInit {
-    fn initializer(
-        ref world: IWorldDispatcher,
-        name: ByteArray,
-        symbol: ByteArray,
-        base_uri: ByteArray,
-        // recipient: ContractAddress,
-        // token_ids: Span<u256>,
-    );
 }
 
 #[dojo::interface]
@@ -68,6 +54,16 @@ trait IERC721EnumTransfer {
 trait IERC721EnumMintBurn {
     fn mint(ref world: IWorldDispatcher, to: ContractAddress, token_id: u256);
     fn burn(ref world: IWorldDispatcher, token_id: u256);
+}
+
+#[dojo::interface]
+trait IERC721EnumInit {
+    fn initialize(
+        ref world: IWorldDispatcher,
+        name: ByteArray,
+        symbol: ByteArray,
+        base_uri: ByteArray,
+    );
 }
 
 #[dojo::contract(allow_ref_self)]
@@ -124,17 +120,6 @@ mod karat_token {
     impl ERC721MintableInternalImpl = erc721_mintable_component::InternalImpl<ContractState>;
     impl ERC721OwnerInternalImpl = erc721_owner_component::InternalImpl<ContractState>;
 
-    mod Errors {
-        const CALLER_IS_NOT_OWNER: felt252 = 'ERC721: caller is not owner';
-        const INVALID_ACCOUNT: felt252 = 'ERC721: invalid account';
-        const UNAUTHORIZED: felt252 = 'ERC721: unauthorized caller';
-        const INVALID_RECEIVER: felt252 = 'ERC721: invalid receiver';
-        const WRONG_SENDER: felt252 = 'ERC721: wrong sender';
-        const SAFE_TRANSFER_FAILED: felt252 = 'ERC721: safe transfer failed';
-        const CALLER_IS_NOT_MINTER: felt252 = 'ERC721: not minter';
-        const MINTING_IS_CLOSED: felt252 = 'ERC721: minting closed';
-    }
-
     #[storage]
     struct Storage {
         #[substorage(v0)]
@@ -168,27 +153,32 @@ mod karat_token {
         ERC721OwnerEvent: erc721_owner_component::Event,
     }
 
+    mod Errors {
+        const CALLER_IS_NOT_OWNER: felt252 = 'ERC721: caller is not owner';
+        const CALLER_IS_NOT_MINTER: felt252 = 'ERC721: caller is not minter';
+        const MINTING_IS_CLOSED: felt252 = 'ERC721: minting closed';
+        const INVALID_ACCOUNT: felt252 = 'ERC721: invalid account';
+        const UNAUTHORIZED: felt252 = 'ERC721: unauthorized caller';
+        const INVALID_RECEIVER: felt252 = 'ERC721: invalid receiver';
+        const WRONG_SENDER: felt252 = 'ERC721: wrong sender';
+        const SAFE_TRANSFER_FAILED: felt252 = 'ERC721: safe transfer failed';
+    }
+
     #[abi(embed_v0)]
-    impl InitializerImpl of super::IERC721EnumInit<ContractState> {
-        fn initializer(
+    impl EnumInitImpl of super::IERC721EnumInit<ContractState> {
+        fn initialize(
             ref world: IWorldDispatcher,
             name: ByteArray,
             symbol: ByteArray,
             base_uri: ByteArray,
-            // recipient: ContractAddress,
-            // token_ids: Span<u256>,
         ) {
-            assert(
-                world.is_owner(get_caller_address(), get_contract_address().into()),
-                Errors::CALLER_IS_NOT_OWNER
-            );
             self.erc721_metadata.initialize(name, symbol, base_uri);
             self.initializable.initialize();
         }
     }
 
     #[abi(embed_v0)]
-    impl TransferImpl of super::IERC721EnumTransfer<ContractState> {
+    impl EnumTransferImpl of super::IERC721EnumTransfer<ContractState> {
         fn balance_of(world: @IWorldDispatcher, account: ContractAddress) -> u256 {
             self.erc721_balance.get_balance(account).amount.into()
         }
@@ -221,9 +211,14 @@ mod karat_token {
     }
 
     #[abi(embed_v0)]
-    impl MintBurnImpl of super::IERC721EnumMintBurn<ContractState> {
-        fn mint(ref world: IWorldDispatcher, to: ContractAddress, token_id: u256) {
-'KARAT_MINT'.print();
+    impl EnumMintBurnImpl of super::IERC721EnumMintBurn<ContractState> {
+        fn mint(
+            ref world: IWorldDispatcher,
+            to: ContractAddress,
+            token_id: u256,
+        ) {
+// 'KARAT_MINT_to...'.print();
+// to.print();
             let config: Config = ConfigManagerTrait::new(world).get(get_contract_address());
             assert(
                 config.is_open,
@@ -237,7 +232,10 @@ mod karat_token {
             self.erc721_enumerable.add_token_to_all_tokens_enumeration(token_id);
             self.erc721_enumerable.add_token_to_owner_enumeration(to, token_id);
         }
-        fn burn(ref world: IWorldDispatcher, token_id: u256) {
+        fn burn(
+            ref world: IWorldDispatcher,
+            token_id: u256,
+        ) {
             self.erc721_burnable.burn(token_id);
             self.erc721_enumerable.remove_token_from_all_tokens_enumeration(token_id);
             let owner = self.erc721_owner.owner_of(token_id);

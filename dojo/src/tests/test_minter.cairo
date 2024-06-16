@@ -11,28 +11,34 @@ mod tests {
     use karat::{
         systems::{minter::{minter, IMinterDispatcher, IMinterDispatcherTrait}},
         systems::{karat_token::{karat_token, IKaratTokenDispatcher, IKaratTokenDispatcherTrait}},
-        models::{position::{Position, Vec2, position}, moves::{Moves, Direction, moves}}
     };
     use karat::tests::tester::{tester, tester::{ Systems }};
 
     #[test]
-    #[available_gas(10_000_000)]
-    #[should_panic(expected:('ERC721: not minter','ENTRYPOINT_FAILED'))]
+    #[available_gas(100_000_000)]
+    #[should_panic(expected:('Initializable: is initialized','ENTRYPOINT_FAILED'))]
+    fn test_is_initialized() {
+        let sys: Systems = tester::spawn_systems();
+        sys.karat.initialize("A", "B", "C");
+    }
+
+    #[test]
+    #[available_gas(100_000_000)]
+    #[should_panic(expected:('ERC721: caller is not minter','ENTRYPOINT_FAILED'))]
     fn test_not_minter() {
-        let sys: Systems = tester::spawn_systems(true);
+        let sys: Systems = tester::spawn_systems();
+        // direct karat minting is not possible
         sys.karat.mint(RECIPIENT(), 1);
     }
 
-    // #[test]
-    // #[available_gas(10_000_000)]
-    // fn test_mint() {
-    //     let sys: Systems = tester::spawn_systems(false);
-
-    //     sys.karat.initializer("KARAT", "512KARAT", "_uri_");
-    //     assert(sys.karat.total_supply() == 0, 'supply = 0');
-
-    //     sys.karat.mint(RECIPIENT(), 1);
-    //     assert(sys.karat.total_supply() == 1, 'supply = 1');
-    //     assert(sys.karat.token_uri(1) == "_uri_-1", 'token_uri');
-    // }
+    #[test]
+    #[available_gas(100_000_000)]
+    fn test_mint_ok() {
+        let sys: Systems = tester::spawn_systems();
+        assert(sys.karat.total_supply() == 0, 'supply = 0');
+        sys.minter.mint(sys.karat.contract_address);
+        assert(sys.karat.total_supply() == 1, 'supply = 1');
+// sys.karat.token_uri(1).print();
+        assert(sys.karat.token_uri(1) == "/1", 'token_uri');
+    }
 }

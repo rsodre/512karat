@@ -1,30 +1,30 @@
-use karat::models::moves::Direction;
-use karat::models::position::Position;
+use starknet::{ContractAddress};
 
 // define the interface
 #[dojo::interface]
 trait IMinter {
-    fn spawn(ref world: IWorldDispatcher);
-    fn move(ref world: IWorldDispatcher, direction: Direction);
+    fn mint(ref world: IWorldDispatcher, contract_address: ContractAddress);
 }
 
 // dojo decorator
 #[dojo::contract]
 mod minter {
     use debug::PrintTrait;
-    use super::{IMinter, next_position};
+    use super::{IMinter};
     use zeroable::Zeroable;
     use starknet::{ContractAddress, get_contract_address, get_caller_address};
+    use karat::systems::karat_token::{IKaratTokenDispatcher, IKaratTokenDispatcherTrait};
     use karat::models::{
         config::{Config, ConfigManager, ConfigManagerTrait},
-        position::{Position, Vec2},
-        moves::{Moves, Direction, DirectionsAvailable},
     };
 
+
+    //---------------------------------------
     // params passed from overlays files
     // https://github.com/dojoengine/dojo/blob/328004d65bbbf7692c26f030b75fa95b7947841d/examples/spawn-and-move/manifests/dev/overlays/contracts/dojo_examples_others_others.toml
     // https://github.com/dojoengine/dojo/blob/328004d65bbbf7692c26f030b75fa95b7947841d/examples/spawn-and-move/src/others.cairo#L18
     // overlays generated with: sozo migrate --generate-overlays
+    //
     fn dojo_init(
         world: @IWorldDispatcher,
         token_address: ContractAddress,
@@ -32,82 +32,29 @@ mod minter {
     ) {
         'dojo_init()...'.print();
         assert(token_address.is_non_zero(), 'invalid token_address');
+        //
+        // Init minter
         let manager = ConfigManagerTrait::new(world);
         manager.set(Config{
             token_address,
             minter_address: get_contract_address(),
             is_open: (is_open != 0),
         });
+        //
+        // initialize token
+        let karat = (IKaratTokenDispatcher{ contract_address: token_address });
+        karat.initialize("KARAT", "512KARAT", "/");
     }
 
+    //---------------------------------------
+    // Impl
+    //
     #[abi(embed_v0)]
     impl MinterImpl of IMinter<ContractState> {
-        fn spawn(ref world: IWorldDispatcher) {
-            // Get the address of the current caller, possibly the player's address.
-            let player = get_caller_address();
-            // Retrieve the player's current position from the world.
-            let position = get!(world, player, (Position));
-
-            // Update the world state with the new data.
-            // 1. Set the player's remaining moves to 100.
-            // 2. Move the player's position 10 units in both the x and y direction.
-            // 3. Set available directions to all four directions. (This is an example of how you can use an array in Dojo).
-
-            let directions_available = DirectionsAvailable {
-                player,
-                directions: array![
-                    Direction::Up,
-                    Direction::Right,
-                    Direction::Down,
-                    Direction::Left
-                ],
-            };
-
-            set!(
-                world,
-                (
-                    Moves { player, remaining: 100, last_direction: Direction::None(()) },
-                    Position {
-                        player, vec: Vec2 { x: position.vec.x + 10, y: position.vec.y + 10 }
-                    },
-                    directions_available
-                )
-            );
-        }
-
-        // Implementation of the move function for the ContractState struct.
-        fn move(ref world: IWorldDispatcher, direction: Direction) {
-            // Get the address of the current caller, possibly the player's address.
-            let player = get_caller_address();
-
-            // Retrieve the player's current position and moves data from the world.
-            let (mut position, mut moves) = get!(world, player, (Position, Moves));
-
-            // Deduct one from the player's remaining moves.
-            moves.remaining -= 1;
-
-            // Update the last direction the player moved in.
-            moves.last_direction = direction;
-
-            // Calculate the player's next position based on the provided direction.
-            let next = next_position(position, direction);
-
-            // Update the world state with the new moves data and position.
-            set!(world, (moves, next));
-        // Emit an event to the world to notify about the player's move.
-        // emit!(world, (moves));
+        fn mint(ref world: IWorldDispatcher, contract_address: ContractAddress) {
+            let karat = (IKaratTokenDispatcher{contract_address});
+            let total_supply: u256 = karat.total_supply();
+            karat.mint(get_caller_address(), total_supply + 1);
         }
     }
-}
-
-// Define function like this:
-fn next_position(mut position: Position, direction: Direction) -> Position {
-    match direction {
-        Direction::None => { return position; },
-        Direction::Left => { position.vec.x -= 1; },
-        Direction::Right => { position.vec.x += 1; },
-        Direction::Up => { position.vec.y -= 1; },
-        Direction::Down => { position.vec.y += 1; },
-    };
-    position
 }

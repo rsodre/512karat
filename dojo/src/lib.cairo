@@ -6,14 +6,11 @@ mod systems {
 
 mod models {
     mod config;
-    mod moves;
-    mod position;
 }
 
 mod tests {
     mod tester;
     mod test_minter;
-    mod test_world;
 
     mod token {
         #[cfg(test)]

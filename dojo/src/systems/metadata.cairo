@@ -39,6 +39,7 @@ mod erc721_metadata_component {
     use super::IERC721Metadata;
     use super::IERC721MetadataCamel;
 
+    use debug::PrintTrait;
     use starknet::get_contract_address;
     use dojo::world::{
         IWorldProvider, IWorldProviderDispatcher, IWorldDispatcher, IWorldDispatcherTrait
@@ -106,7 +107,7 @@ mod erc721_metadata_component {
             if base_uri.len() == 0 {
                 return "";
             } else {
-                return format!("{}-{}", base_uri, token_id);
+                return format!("{}{}", base_uri, token_id);
             }
         }
 
