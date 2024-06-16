@@ -1,11 +1,15 @@
 mod systems {
-    mod minter;
     mod karat_token;
     mod metadata;
+    mod minter;
 }
 
 mod models {
     mod config;
+}
+
+mod utils {
+    mod painter;
 }
 
 mod tests {
