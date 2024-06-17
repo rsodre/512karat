@@ -55,7 +55,7 @@
   },
   {
     "type": "impl",
-    "name": "InitializerImpl",
+    "name": "EnumInitImpl",
     "interface_name": "karat::systems::karat_token::IERC721EnumInit"
   },
   {
@@ -82,7 +82,7 @@
     "items": [
       {
         "type": "function",
-        "name": "initializer",
+        "name": "initialize",
         "inputs": [
           {
             "name": "name",
@@ -104,7 +104,7 @@
   },
   {
     "type": "impl",
-    "name": "TransferImpl",
+    "name": "EnumTransferImpl",
     "interface_name": "karat::systems::karat_token::IERC721EnumTransfer"
   },
   {
@@ -199,7 +199,7 @@
   },
   {
     "type": "impl",
-    "name": "MintBurnImpl",
+    "name": "EnumMintBurnImpl",
     "interface_name": "karat::systems::karat_token::IERC721EnumMintBurn"
   },
   {

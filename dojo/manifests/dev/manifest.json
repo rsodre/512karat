@@ -1019,10 +1019,10 @@
   "contracts": [
     {
       "kind": "DojoContract",
-      "address": null,
-      "class_hash": "0x144a22c5f65c3397bc1de69269c7313ed38bf0676908cee4920d530b80e0376",
-      "original_class_hash": "0x144a22c5f65c3397bc1de69269c7313ed38bf0676908cee4920d530b80e0376",
-      "base_class_hash": "0x0",
+      "address": "0x2ec22a653460527eacb3b74c07eeb0606a9c47db5f450d140a14f0a0a117e76",
+      "class_hash": "0x32fdecd54a4426060bfdda844976c34d7d7b14e06379fbd0cce2b0af12dec60",
+      "original_class_hash": "0x32fdecd54a4426060bfdda844976c34d7d7b14e06379fbd0cce2b0af12dec60",
+      "base_class_hash": "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46",
       "abi": [
         {
           "type": "impl",
@@ -1080,7 +1080,7 @@
         },
         {
           "type": "impl",
-          "name": "InitializerImpl",
+          "name": "EnumInitImpl",
           "interface_name": "karat::systems::karat_token::IERC721EnumInit"
         },
         {
@@ -1107,7 +1107,7 @@
           "items": [
             {
               "type": "function",
-              "name": "initializer",
+              "name": "initialize",
               "inputs": [
                 {
                   "name": "name",
@@ -1129,7 +1129,7 @@
         },
         {
           "type": "impl",
-          "name": "TransferImpl",
+          "name": "EnumTransferImpl",
           "interface_name": "karat::systems::karat_token::IERC721EnumTransfer"
         },
         {
@@ -1224,7 +1224,7 @@
         },
         {
           "type": "impl",
-          "name": "MintBurnImpl",
+          "name": "EnumMintBurnImpl",
           "interface_name": "karat::systems::karat_token::IERC721EnumMintBurn"
         },
         {
@@ -1893,10 +1893,10 @@
     },
     {
       "kind": "DojoContract",
-      "address": null,
-      "class_hash": "0x3b1a61844154d0d85a8cdd2574a47ecab46956a207dd4e68ddb9ff6fa48fc88",
-      "original_class_hash": "0x3b1a61844154d0d85a8cdd2574a47ecab46956a207dd4e68ddb9ff6fa48fc88",
-      "base_class_hash": "0x0",
+      "address": "0x3bac2791460aec9d2ce62787c07c4d8c728fbc01ccd48f120f47380bd4ea65a",
+      "class_hash": "0x837646492e53d1691bb796e1f90a13262c2f60c843fbfb02cc6773a96823ef",
+      "original_class_hash": "0x837646492e53d1691bb796e1f90a13262c2f60c843fbfb02cc6773a96823ef",
+      "base_class_hash": "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46",
       "abi": [
         {
           "type": "impl",
@@ -1966,12 +1966,16 @@
               "name": "dojo_init",
               "inputs": [
                 {
-                  "name": "minter_address",
+                  "name": "token_address",
                   "type": "core::starknet::contract_address::ContractAddress"
                 },
                 {
-                  "name": "token_address",
-                  "type": "core::starknet::contract_address::ContractAddress"
+                  "name": "max_supply",
+                  "type": "core::integer::u128"
+                },
+                {
+                  "name": "is_open",
+                  "type": "core::integer::u8"
                 }
               ],
               "outputs": [],
@@ -1985,28 +1989,52 @@
           "interface_name": "karat::systems::minter::IMinter"
         },
         {
-          "type": "enum",
-          "name": "karat::models::moves::Direction",
-          "variants": [
+          "type": "struct",
+          "name": "core::byte_array::ByteArray",
+          "members": [
             {
-              "name": "None",
-              "type": "()"
+              "name": "data",
+              "type": "core::array::Array::<core::bytes_31::bytes31>"
             },
             {
-              "name": "Left",
-              "type": "()"
+              "name": "pending_word",
+              "type": "core::felt252"
             },
             {
-              "name": "Right",
-              "type": "()"
+              "name": "pending_word_len",
+              "type": "core::integer::u32"
+            }
+          ]
+        },
+        {
+          "type": "struct",
+          "name": "core::array::Span::<core::byte_array::ByteArray>",
+          "members": [
+            {
+              "name": "snapshot",
+              "type": "@core::array::Array::<core::byte_array::ByteArray>"
+            }
+          ]
+        },
+        {
+          "type": "struct",
+          "name": "karat::models::token_data::TokenData",
+          "members": [
+            {
+              "name": "token_id",
+              "type": "core::integer::u128"
             },
             {
-              "name": "Up",
-              "type": "()"
+              "name": "seed",
+              "type": "core::integer::u128"
             },
             {
-              "name": "Down",
-              "type": "()"
+              "name": "trait_names",
+              "type": "core::array::Span::<core::byte_array::ByteArray>"
+            },
+            {
+              "name": "trait_values",
+              "type": "core::array::Span::<core::byte_array::ByteArray>"
             }
           ]
         },
@@ -2016,21 +2044,61 @@
           "items": [
             {
               "type": "function",
-              "name": "spawn",
-              "inputs": [],
-              "outputs": [],
+              "name": "mint",
+              "inputs": [
+                {
+                  "name": "contract_address",
+                  "type": "core::starknet::contract_address::ContractAddress"
+                }
+              ],
+              "outputs": [
+                {
+                  "type": "core::integer::u128"
+                }
+              ],
               "state_mutability": "external"
             },
             {
               "type": "function",
-              "name": "move",
+              "name": "get_token_data",
               "inputs": [
                 {
-                  "name": "direction",
-                  "type": "karat::models::moves::Direction"
+                  "name": "token_id",
+                  "type": "core::integer::u128"
                 }
               ],
-              "outputs": [],
+              "outputs": [
+                {
+                  "type": "karat::models::token_data::TokenData"
+                }
+              ],
+              "state_mutability": "external"
+            }
+          ]
+        },
+        {
+          "type": "impl",
+          "name": "PainterImpl",
+          "interface_name": "karat::systems::minter::IPainter"
+        },
+        {
+          "type": "interface",
+          "name": "karat::systems::minter::IPainter",
+          "items": [
+            {
+              "type": "function",
+              "name": "paint",
+              "inputs": [
+                {
+                  "name": "token_id",
+                  "type": "core::integer::u128"
+                }
+              ],
+              "outputs": [
+                {
+                  "type": "core::byte_array::ByteArray"
+                }
+              ],
               "state_mutability": "external"
             }
           ]
@@ -2096,19 +2164,24 @@
         }
       ],
       "reads": [],
-      "writes": [],
+      "writes": [
+        "Config",
+        "Seed"
+      ],
       "computed": [],
       "init_calldata": [
-        "$contract_address:karat::systems::karat_token::karat_token"
+        "$contract_address:karat::systems::karat_token::karat_token",
+        "512",
+        "1"
       ],
       "name": "karat::systems::minter::minter"
     },
     {
       "kind": "DojoContract",
-      "address": null,
-      "class_hash": "0x1fe5bbc5343bc12d843ab5e9878b00b925c7cebbd16bb5a728518469f4b0993",
-      "original_class_hash": "0x1fe5bbc5343bc12d843ab5e9878b00b925c7cebbd16bb5a728518469f4b0993",
-      "base_class_hash": "0x0",
+      "address": "0x7c31001d8600ff3fcffc1330021dd2f8a37a06e5016310c96e22c36da4a1df4",
+      "class_hash": "0x66fbf868d37a59740f16f54f7d51d2f8801af20f512dd17e3d6024e45ee455",
+      "original_class_hash": "0x66fbf868d37a59740f16f54f7d51d2f8801af20f512dd17e3d6024e45ee455",
+      "base_class_hash": "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46",
       "abi": [
         {
           "type": "impl",
@@ -2487,18 +2560,33 @@
       "kind": "DojoModel",
       "members": [
         {
-          "name": "player",
+          "name": "token_address",
           "type": "ContractAddress",
           "key": true
         },
         {
-          "name": "directions",
-          "type": "Array<Direction>",
+          "name": "minter_address",
+          "type": "ContractAddress",
+          "key": false
+        },
+        {
+          "name": "painter_address",
+          "type": "ContractAddress",
+          "key": false
+        },
+        {
+          "name": "max_supply",
+          "type": "u128",
+          "key": false
+        },
+        {
+          "name": "is_open",
+          "type": "bool",
           "key": false
         }
       ],
-      "class_hash": "0x302ba8cd62bbc7ffdda7c0c48f3bfa8c09fe18dc766347f3503c457dbebb24a",
-      "original_class_hash": "0x302ba8cd62bbc7ffdda7c0c48f3bfa8c09fe18dc766347f3503c457dbebb24a",
+      "class_hash": "0x22c65e8e896257819191be93cbe76be316102b9314811b88aa8395646958073",
+      "original_class_hash": "0x22c65e8e896257819191be93cbe76be316102b9314811b88aa8395646958073",
       "abi": [
         {
           "type": "impl",
@@ -2820,52 +2908,52 @@
         },
         {
           "type": "impl",
-          "name": "directions_availableImpl",
-          "interface_name": "karat::models::moves::Idirections_available"
+          "name": "configImpl",
+          "interface_name": "karat::models::config::Iconfig"
         },
         {
           "type": "enum",
-          "name": "karat::models::moves::Direction",
+          "name": "core::bool",
           "variants": [
             {
-              "name": "None",
+              "name": "False",
               "type": "()"
             },
             {
-              "name": "Left",
-              "type": "()"
-            },
-            {
-              "name": "Right",
-              "type": "()"
-            },
-            {
-              "name": "Up",
-              "type": "()"
-            },
-            {
-              "name": "Down",
+              "name": "True",
               "type": "()"
             }
           ]
         },
         {
           "type": "struct",
-          "name": "karat::models::moves::DirectionsAvailable",
+          "name": "karat::models::config::Config",
           "members": [
             {
-              "name": "player",
+              "name": "token_address",
               "type": "core::starknet::contract_address::ContractAddress"
             },
             {
-              "name": "directions",
-              "type": "core::array::Array::<karat::models::moves::Direction>"
+              "name": "minter_address",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "painter_address",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "max_supply",
+              "type": "core::integer::u128"
+            },
+            {
+              "name": "is_open",
+              "type": "core::bool"
             }
           ]
         },
         {
           "type": "interface",
-          "name": "karat::models::moves::Idirections_available",
+          "name": "karat::models::config::Iconfig",
           "items": [
             {
               "type": "function",
@@ -2873,7 +2961,7 @@
               "inputs": [
                 {
                   "name": "model",
-                  "type": "karat::models::moves::DirectionsAvailable"
+                  "type": "karat::models::config::Config"
                 }
               ],
               "outputs": [],
@@ -2883,34 +2971,29 @@
         },
         {
           "type": "event",
-          "name": "karat::models::moves::directions_available::Event",
+          "name": "karat::models::config::config::Event",
           "kind": "enum",
           "variants": []
         }
       ],
-      "name": "karat::models::moves::directions_available"
+      "name": "karat::models::config::config"
     },
     {
       "kind": "DojoModel",
       "members": [
         {
-          "name": "player",
-          "type": "ContractAddress",
+          "name": "token_id",
+          "type": "u128",
           "key": true
         },
         {
-          "name": "remaining",
-          "type": "u8",
-          "key": false
-        },
-        {
-          "name": "last_direction",
-          "type": "Direction",
+          "name": "seed",
+          "type": "u128",
           "key": false
         }
       ],
-      "class_hash": "0x5f6fb131126f3aef7ecfc43a34c5ee412990658b540e5194e25c731f813bbe7",
-      "original_class_hash": "0x5f6fb131126f3aef7ecfc43a34c5ee412990658b540e5194e25c731f813bbe7",
+      "class_hash": "0x604ffab2db12a3094c2ffb5e8791bb89d38621303a0a1220603274ab4336f4c",
+      "original_class_hash": "0x604ffab2db12a3094c2ffb5e8791bb89d38621303a0a1220603274ab4336f4c",
       "abi": [
         {
           "type": "impl",
@@ -3232,56 +3315,26 @@
         },
         {
           "type": "impl",
-          "name": "movesImpl",
-          "interface_name": "karat::models::moves::Imoves"
-        },
-        {
-          "type": "enum",
-          "name": "karat::models::moves::Direction",
-          "variants": [
-            {
-              "name": "None",
-              "type": "()"
-            },
-            {
-              "name": "Left",
-              "type": "()"
-            },
-            {
-              "name": "Right",
-              "type": "()"
-            },
-            {
-              "name": "Up",
-              "type": "()"
-            },
-            {
-              "name": "Down",
-              "type": "()"
-            }
-          ]
+          "name": "seedImpl",
+          "interface_name": "karat::models::seed::Iseed"
         },
         {
           "type": "struct",
-          "name": "karat::models::moves::Moves",
+          "name": "karat::models::seed::Seed",
           "members": [
             {
-              "name": "player",
-              "type": "core::starknet::contract_address::ContractAddress"
+              "name": "token_id",
+              "type": "core::integer::u128"
             },
             {
-              "name": "remaining",
-              "type": "core::integer::u8"
-            },
-            {
-              "name": "last_direction",
-              "type": "karat::models::moves::Direction"
+              "name": "seed",
+              "type": "core::integer::u128"
             }
           ]
         },
         {
           "type": "interface",
-          "name": "karat::models::moves::Imoves",
+          "name": "karat::models::seed::Iseed",
           "items": [
             {
               "type": "function",
@@ -3289,7 +3342,7 @@
               "inputs": [
                 {
                   "name": "model",
-                  "type": "karat::models::moves::Moves"
+                  "type": "karat::models::seed::Seed"
                 }
               ],
               "outputs": [],
@@ -3299,407 +3352,12 @@
         },
         {
           "type": "event",
-          "name": "karat::models::moves::moves::Event",
+          "name": "karat::models::seed::seed::Event",
           "kind": "enum",
           "variants": []
         }
       ],
-      "name": "karat::models::moves::moves"
-    },
-    {
-      "kind": "DojoModel",
-      "members": [
-        {
-          "name": "player",
-          "type": "ContractAddress",
-          "key": true
-        },
-        {
-          "name": "vec",
-          "type": "Vec2",
-          "key": false
-        }
-      ],
-      "class_hash": "0x4703251cf99a9b2d1a8e79b6d6560b432479e41a3308c992ad9dcbdef1a0b9",
-      "original_class_hash": "0x4703251cf99a9b2d1a8e79b6d6560b432479e41a3308c992ad9dcbdef1a0b9",
-      "abi": [
-        {
-          "type": "impl",
-          "name": "DojoModelImpl",
-          "interface_name": "dojo::model::IModel"
-        },
-        {
-          "type": "struct",
-          "name": "core::byte_array::ByteArray",
-          "members": [
-            {
-              "name": "data",
-              "type": "core::array::Array::<core::bytes_31::bytes31>"
-            },
-            {
-              "name": "pending_word",
-              "type": "core::felt252"
-            },
-            {
-              "name": "pending_word_len",
-              "type": "core::integer::u32"
-            }
-          ]
-        },
-        {
-          "type": "enum",
-          "name": "core::option::Option::<core::integer::u32>",
-          "variants": [
-            {
-              "name": "Some",
-              "type": "core::integer::u32"
-            },
-            {
-              "name": "None",
-              "type": "()"
-            }
-          ]
-        },
-        {
-          "type": "struct",
-          "name": "core::array::Span::<core::integer::u8>",
-          "members": [
-            {
-              "name": "snapshot",
-              "type": "@core::array::Array::<core::integer::u8>"
-            }
-          ]
-        },
-        {
-          "type": "struct",
-          "name": "dojo::database::introspect::FieldLayout",
-          "members": [
-            {
-              "name": "selector",
-              "type": "core::felt252"
-            },
-            {
-              "name": "layout",
-              "type": "dojo::database::introspect::Layout"
-            }
-          ]
-        },
-        {
-          "type": "struct",
-          "name": "core::array::Span::<dojo::database::introspect::FieldLayout>",
-          "members": [
-            {
-              "name": "snapshot",
-              "type": "@core::array::Array::<dojo::database::introspect::FieldLayout>"
-            }
-          ]
-        },
-        {
-          "type": "struct",
-          "name": "core::array::Span::<dojo::database::introspect::Layout>",
-          "members": [
-            {
-              "name": "snapshot",
-              "type": "@core::array::Array::<dojo::database::introspect::Layout>"
-            }
-          ]
-        },
-        {
-          "type": "enum",
-          "name": "dojo::database::introspect::Layout",
-          "variants": [
-            {
-              "name": "Fixed",
-              "type": "core::array::Span::<core::integer::u8>"
-            },
-            {
-              "name": "Struct",
-              "type": "core::array::Span::<dojo::database::introspect::FieldLayout>"
-            },
-            {
-              "name": "Tuple",
-              "type": "core::array::Span::<dojo::database::introspect::Layout>"
-            },
-            {
-              "name": "Array",
-              "type": "core::array::Span::<dojo::database::introspect::Layout>"
-            },
-            {
-              "name": "ByteArray",
-              "type": "()"
-            },
-            {
-              "name": "Enum",
-              "type": "core::array::Span::<dojo::database::introspect::FieldLayout>"
-            }
-          ]
-        },
-        {
-          "type": "struct",
-          "name": "core::array::Span::<core::felt252>",
-          "members": [
-            {
-              "name": "snapshot",
-              "type": "@core::array::Array::<core::felt252>"
-            }
-          ]
-        },
-        {
-          "type": "struct",
-          "name": "dojo::database::introspect::Member",
-          "members": [
-            {
-              "name": "name",
-              "type": "core::felt252"
-            },
-            {
-              "name": "attrs",
-              "type": "core::array::Span::<core::felt252>"
-            },
-            {
-              "name": "ty",
-              "type": "dojo::database::introspect::Ty"
-            }
-          ]
-        },
-        {
-          "type": "struct",
-          "name": "core::array::Span::<dojo::database::introspect::Member>",
-          "members": [
-            {
-              "name": "snapshot",
-              "type": "@core::array::Array::<dojo::database::introspect::Member>"
-            }
-          ]
-        },
-        {
-          "type": "struct",
-          "name": "dojo::database::introspect::Struct",
-          "members": [
-            {
-              "name": "name",
-              "type": "core::felt252"
-            },
-            {
-              "name": "attrs",
-              "type": "core::array::Span::<core::felt252>"
-            },
-            {
-              "name": "children",
-              "type": "core::array::Span::<dojo::database::introspect::Member>"
-            }
-          ]
-        },
-        {
-          "type": "struct",
-          "name": "core::array::Span::<(core::felt252, dojo::database::introspect::Ty)>",
-          "members": [
-            {
-              "name": "snapshot",
-              "type": "@core::array::Array::<(core::felt252, dojo::database::introspect::Ty)>"
-            }
-          ]
-        },
-        {
-          "type": "struct",
-          "name": "dojo::database::introspect::Enum",
-          "members": [
-            {
-              "name": "name",
-              "type": "core::felt252"
-            },
-            {
-              "name": "attrs",
-              "type": "core::array::Span::<core::felt252>"
-            },
-            {
-              "name": "children",
-              "type": "core::array::Span::<(core::felt252, dojo::database::introspect::Ty)>"
-            }
-          ]
-        },
-        {
-          "type": "struct",
-          "name": "core::array::Span::<dojo::database::introspect::Ty>",
-          "members": [
-            {
-              "name": "snapshot",
-              "type": "@core::array::Array::<dojo::database::introspect::Ty>"
-            }
-          ]
-        },
-        {
-          "type": "enum",
-          "name": "dojo::database::introspect::Ty",
-          "variants": [
-            {
-              "name": "Primitive",
-              "type": "core::felt252"
-            },
-            {
-              "name": "Struct",
-              "type": "dojo::database::introspect::Struct"
-            },
-            {
-              "name": "Enum",
-              "type": "dojo::database::introspect::Enum"
-            },
-            {
-              "name": "Tuple",
-              "type": "core::array::Span::<dojo::database::introspect::Ty>"
-            },
-            {
-              "name": "Array",
-              "type": "core::array::Span::<dojo::database::introspect::Ty>"
-            },
-            {
-              "name": "ByteArray",
-              "type": "()"
-            }
-          ]
-        },
-        {
-          "type": "interface",
-          "name": "dojo::model::IModel",
-          "items": [
-            {
-              "type": "function",
-              "name": "selector",
-              "inputs": [],
-              "outputs": [
-                {
-                  "type": "core::felt252"
-                }
-              ],
-              "state_mutability": "view"
-            },
-            {
-              "type": "function",
-              "name": "name",
-              "inputs": [],
-              "outputs": [
-                {
-                  "type": "core::byte_array::ByteArray"
-                }
-              ],
-              "state_mutability": "view"
-            },
-            {
-              "type": "function",
-              "name": "version",
-              "inputs": [],
-              "outputs": [
-                {
-                  "type": "core::integer::u8"
-                }
-              ],
-              "state_mutability": "view"
-            },
-            {
-              "type": "function",
-              "name": "unpacked_size",
-              "inputs": [],
-              "outputs": [
-                {
-                  "type": "core::option::Option::<core::integer::u32>"
-                }
-              ],
-              "state_mutability": "view"
-            },
-            {
-              "type": "function",
-              "name": "packed_size",
-              "inputs": [],
-              "outputs": [
-                {
-                  "type": "core::option::Option::<core::integer::u32>"
-                }
-              ],
-              "state_mutability": "view"
-            },
-            {
-              "type": "function",
-              "name": "layout",
-              "inputs": [],
-              "outputs": [
-                {
-                  "type": "dojo::database::introspect::Layout"
-                }
-              ],
-              "state_mutability": "view"
-            },
-            {
-              "type": "function",
-              "name": "schema",
-              "inputs": [],
-              "outputs": [
-                {
-                  "type": "dojo::database::introspect::Ty"
-                }
-              ],
-              "state_mutability": "view"
-            }
-          ]
-        },
-        {
-          "type": "impl",
-          "name": "positionImpl",
-          "interface_name": "karat::models::position::Iposition"
-        },
-        {
-          "type": "struct",
-          "name": "karat::models::position::Vec2",
-          "members": [
-            {
-              "name": "x",
-              "type": "core::integer::u32"
-            },
-            {
-              "name": "y",
-              "type": "core::integer::u32"
-            }
-          ]
-        },
-        {
-          "type": "struct",
-          "name": "karat::models::position::Position",
-          "members": [
-            {
-              "name": "player",
-              "type": "core::starknet::contract_address::ContractAddress"
-            },
-            {
-              "name": "vec",
-              "type": "karat::models::position::Vec2"
-            }
-          ]
-        },
-        {
-          "type": "interface",
-          "name": "karat::models::position::Iposition",
-          "items": [
-            {
-              "type": "function",
-              "name": "ensure_abi",
-              "inputs": [
-                {
-                  "name": "model",
-                  "type": "karat::models::position::Position"
-                }
-              ],
-              "outputs": [],
-              "state_mutability": "view"
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "name": "karat::models::position::position::Event",
-          "kind": "enum",
-          "variants": []
-        }
-      ],
-      "name": "karat::models::position::position"
+      "name": "karat::models::seed::seed"
     },
     {
       "kind": "DojoModel",

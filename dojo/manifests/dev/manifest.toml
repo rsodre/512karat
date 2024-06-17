@@ -21,9 +21,10 @@ name = "dojo::base::base"
 
 [[contracts]]
 kind = "DojoContract"
-class_hash = "0x144a22c5f65c3397bc1de69269c7313ed38bf0676908cee4920d530b80e0376"
-original_class_hash = "0x144a22c5f65c3397bc1de69269c7313ed38bf0676908cee4920d530b80e0376"
-base_class_hash = "0x0"
+address = "0x2ec22a653460527eacb3b74c07eeb0606a9c47db5f450d140a14f0a0a117e76"
+class_hash = "0x32fdecd54a4426060bfdda844976c34d7d7b14e06379fbd0cce2b0af12dec60"
+original_class_hash = "0x32fdecd54a4426060bfdda844976c34d7d7b14e06379fbd0cce2b0af12dec60"
+base_class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
 abi = "manifests/dev/abis/deployments/contracts/karat_systems_karat_token_karat_token.json"
 reads = []
 writes = []
@@ -33,21 +34,30 @@ name = "karat::systems::karat_token::karat_token"
 
 [[contracts]]
 kind = "DojoContract"
-class_hash = "0x3b1a61844154d0d85a8cdd2574a47ecab46956a207dd4e68ddb9ff6fa48fc88"
-original_class_hash = "0x3b1a61844154d0d85a8cdd2574a47ecab46956a207dd4e68ddb9ff6fa48fc88"
-base_class_hash = "0x0"
+address = "0x3bac2791460aec9d2ce62787c07c4d8c728fbc01ccd48f120f47380bd4ea65a"
+class_hash = "0x837646492e53d1691bb796e1f90a13262c2f60c843fbfb02cc6773a96823ef"
+original_class_hash = "0x837646492e53d1691bb796e1f90a13262c2f60c843fbfb02cc6773a96823ef"
+base_class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
 abi = "manifests/dev/abis/deployments/contracts/karat_systems_minter_minter.json"
 reads = []
-writes = []
+writes = [
+    "Config",
+    "Seed",
+]
 computed = []
-init_calldata = ["$contract_address:karat::systems::karat_token::karat_token"]
+init_calldata = [
+    "$contract_address:karat::systems::karat_token::karat_token",
+    "512",
+    "1",
+]
 name = "karat::systems::minter::minter"
 
 [[contracts]]
 kind = "DojoContract"
-class_hash = "0x1fe5bbc5343bc12d843ab5e9878b00b925c7cebbd16bb5a728518469f4b0993"
-original_class_hash = "0x1fe5bbc5343bc12d843ab5e9878b00b925c7cebbd16bb5a728518469f4b0993"
-base_class_hash = "0x0"
+address = "0x7c31001d8600ff3fcffc1330021dd2f8a37a06e5016310c96e22c36da4a1df4"
+class_hash = "0x66fbf868d37a59740f16f54f7d51d2f8801af20f512dd17e3d6024e45ee455"
+original_class_hash = "0x66fbf868d37a59740f16f54f7d51d2f8801af20f512dd17e3d6024e45ee455"
+base_class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
 abi = "manifests/dev/abis/deployments/contracts/karat_tests_token_erc721_metadata_mock_erc721_metadata_mock.json"
 reads = []
 writes = []
@@ -57,58 +67,51 @@ name = "karat::tests::token::erc721_metadata_mock::erc721_metadata_mock"
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x302ba8cd62bbc7ffdda7c0c48f3bfa8c09fe18dc766347f3503c457dbebb24a"
-original_class_hash = "0x302ba8cd62bbc7ffdda7c0c48f3bfa8c09fe18dc766347f3503c457dbebb24a"
-abi = "manifests/dev/abis/deployments/models/karat_models_moves_directions_available.json"
-name = "karat::models::moves::directions_available"
+class_hash = "0x22c65e8e896257819191be93cbe76be316102b9314811b88aa8395646958073"
+original_class_hash = "0x22c65e8e896257819191be93cbe76be316102b9314811b88aa8395646958073"
+abi = "manifests/dev/abis/deployments/models/karat_models_config_config.json"
+name = "karat::models::config::config"
 
 [[models.members]]
-name = "player"
+name = "token_address"
 type = "ContractAddress"
 key = true
 
 [[models.members]]
-name = "directions"
-type = "Array<Direction>"
+name = "minter_address"
+type = "ContractAddress"
+key = false
+
+[[models.members]]
+name = "painter_address"
+type = "ContractAddress"
+key = false
+
+[[models.members]]
+name = "max_supply"
+type = "u128"
+key = false
+
+[[models.members]]
+name = "is_open"
+type = "bool"
 key = false
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x5f6fb131126f3aef7ecfc43a34c5ee412990658b540e5194e25c731f813bbe7"
-original_class_hash = "0x5f6fb131126f3aef7ecfc43a34c5ee412990658b540e5194e25c731f813bbe7"
-abi = "manifests/dev/abis/deployments/models/karat_models_moves_moves.json"
-name = "karat::models::moves::moves"
+class_hash = "0x604ffab2db12a3094c2ffb5e8791bb89d38621303a0a1220603274ab4336f4c"
+original_class_hash = "0x604ffab2db12a3094c2ffb5e8791bb89d38621303a0a1220603274ab4336f4c"
+abi = "manifests/dev/abis/deployments/models/karat_models_seed_seed.json"
+name = "karat::models::seed::seed"
 
 [[models.members]]
-name = "player"
-type = "ContractAddress"
+name = "token_id"
+type = "u128"
 key = true
 
 [[models.members]]
-name = "remaining"
-type = "u8"
-key = false
-
-[[models.members]]
-name = "last_direction"
-type = "Direction"
-key = false
-
-[[models]]
-kind = "DojoModel"
-class_hash = "0x4703251cf99a9b2d1a8e79b6d6560b432479e41a3308c992ad9dcbdef1a0b9"
-original_class_hash = "0x4703251cf99a9b2d1a8e79b6d6560b432479e41a3308c992ad9dcbdef1a0b9"
-abi = "manifests/dev/abis/deployments/models/karat_models_position_position.json"
-name = "karat::models::position::position"
-
-[[models.members]]
-name = "player"
-type = "ContractAddress"
-key = true
-
-[[models.members]]
-name = "vec"
-type = "Vec2"
+name = "seed"
+type = "u128"
 key = false
 
 [[models]]
