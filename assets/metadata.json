@@ -1,0 +1,19 @@
+{
+  "name": "512 Karat #1",
+  "description": "Fully on-chain Generative Art made with Dojo",
+  "type": "1",
+  "attributes": [
+    {
+      "trait": "Trait_1",
+      "value": "Value_1"
+    },
+    {
+      "trait": "Trait_2",
+      "value": "Value_2"
+    },
+    {
+      "trait": "Trait_3",
+      "value": "Value_3"
+    }
+  ]
+}
