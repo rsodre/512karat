@@ -3,17 +3,20 @@ mod painter {
     use core::byte_array::ByteArrayTrait;
     use core::array::{Array, ArrayTrait};
     use karat::models::token_data::{TokenData, TokenDataTrait};
+    use karat::utils::encoding::bytes_base64_encode;
 
     fn build_uri(token_data: TokenData) -> ByteArray {
         let name_tag = _value_tag("name", token_data.get_name());
         let desc_tag = _value_tag("description", token_data.get_description());
         let type_tag = _value_tag("type", token_data.get_type());
         let attributes_tag = _array_tag("attributes", _attributes_array(token_data));
-        (format!("{{{},{},{},{}}}",
+        let image_tag = _value_tag("image", _encode_svg(_svg(token_data)));
+        (format!("{{{},{},{},{},{}}}",
             name_tag,
             desc_tag,
             type_tag,
             attributes_tag,
+            image_tag,
         ))
     }
 
@@ -51,4 +54,19 @@ mod painter {
         (format!("{{\"trait\":\"{}\",\"value\":\"{}\"}}", name, value))
     }
 
+    #[inline(always)]
+    fn _svg(token_data: TokenData) -> ByteArray {
+        (format!(
+            "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" width=\"600\" height=\"600\" viewBox=\"-1 -1 6 6\"><style>text{{fill:#fff;font-size:1px;font-family:'Courier New',monospace;}}.BG{{fill:#000;}}</style><g><rect class=\"BG\" x=\"-1\" y=\"-1\" width=\"6\" height=\"6\" /><text x=\"0\" y=\"1\">Karat</text><text x=\"0\" y=\"2\">#{}</text></g></svg>",
+             token_data.token_id,
+        ))
+    }
+
+    #[inline(always)]
+    fn _encode_svg(svg: ByteArray) -> ByteArray {
+        (format!("data:image/svg+xml;base64,{}", bytes_base64_encode(svg)))
+    }
+
 }
+
+

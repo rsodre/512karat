@@ -11,6 +11,7 @@ mod models {
 }
 
 mod utils {
+    mod encoding;
     mod hash;
     mod painter;
 }

@@ -15,5 +15,6 @@
       "trait": "Trait_3",
       "value": "Value_3"
     }
-  ]
+  ],
+  "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSItMSAtMSA2IDYiPjxzdHlsZT50ZXh0e2ZpbGw6I2ZmZjtmb250LXNpemU6MXB4O2ZvbnQtZmFtaWx5OidDb3VyaWVyIE5ldycsbW9ub3NwYWNlO30uQkd7ZmlsbDojMDAwO308L3N0eWxlPjxnPjxyZWN0IGNsYXNzPSJCRyIgeD0iLTEiIHk9Ii0xIiB3aWR0aD0iNiIgaGVpZ2h0PSI2IiAvPjx0ZXh0IHg9IjAiIHk9IjEiPkthcmF0PC90ZXh0Pjx0ZXh0IHg9IjAiIHk9IjIiPiMxPC90ZXh0PjwvZz48L3N2Zz4="
 }

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="600" height="600" viewBox="-1 -1 6 6">
+  <style>
+    text{fill:#fff;font-size:1px;font-family:'Courier New',monospace;}
+    .BG{fill:#000;}
+  </style>
+  <g>
+    <rect class="BG" x="-1" y="-1" width="6" height="6" />
+    <text x="0" y="1">Karat</text>
+    <text x="0" y="2">#1</text>
+  </g>
+</svg>
