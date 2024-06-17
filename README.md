@@ -30,6 +30,9 @@ sozo init dojo
 # cloned base64 encoder from Blobert
 # https://github.com/BibliothecaDAO/codename-bobby-realms/blob/main/contracts/src/utils/encoding.cairo
 
+# cloned starknet-react-app example from dojo.js
+# https://github.com/dojoengine/dojo.js/tree/main/examples/react/starknet-react-app
+
 
 ```
 
