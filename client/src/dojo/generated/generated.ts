@@ -12,35 +12,22 @@ export interface MoveProps {
 }
 
 export async function setupWorld(provider: DojoProvider) {
-  function actions() {
-    const spawn = async ({ account }: { account: AccountInterface }) => {
+  function minter() {
+    const mint = async ({ account }: { account: AccountInterface }) => {
       try {
         return await provider.execute(account, {
-          contractName: "actions",
-          entrypoint: "spawn",
+          contractName: "minter",
+          entrypoint: "mint",
           calldata: [],
         });
       } catch (error) {
-        console.error("Error executing spawn:", error);
+        console.error("Error executing mint:", error);
         throw error;
       }
     };
-
-    const move = async ({ account, direction }: MoveProps) => {
-      try {
-        return await provider.execute(account, {
-          contractName: "actions",
-          entrypoint: "move",
-          calldata: [direction],
-        });
-      } catch (error) {
-        console.error("Error executing move:", error);
-        throw error;
-      }
-    };
-    return { spawn, move };
+    return { mint };
   }
   return {
-    actions: actions(),
+    minter: minter(),
   };
 }

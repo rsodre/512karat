@@ -66,7 +66,6 @@ export async function setup({ ...config }: DojoConfig) {
     systemCalls: createSystemCalls(
       { client },
       contractComponents,
-      clientComponents
     ),
     publish: (typedData: string, signature: WeierstrassSignatureType) => {
       toriiClient.publishMessage(typedData, {
