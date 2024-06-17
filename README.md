@@ -33,6 +33,9 @@ sozo init dojo
 # cloned starknet-react-app example from dojo.js
 # https://github.com/dojoengine/dojo.js/tree/main/examples/react/starknet-react-app
 
+# cloned migrate script from Pistols
+# https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/migrate
+
 
 ```
 

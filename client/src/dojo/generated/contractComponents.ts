@@ -2,41 +2,45 @@
 
 import { defineComponent, Type as RecsType, World } from "@dojoengine/recs";
 
-export type ContractComponents = Awaited<
-  ReturnType<typeof defineContractComponents>
->;
+export type ContractComponents = Awaited<ReturnType<typeof defineContractComponents>>;
 
 export function defineContractComponents(world: World) {
   return {
-    Moves: (() => {
+    Config: (() => {
       return defineComponent(
         world,
-        {
-          player: RecsType.BigInt,
-          remaining: RecsType.Number,
-          last_direction: RecsType.Number,
-        },
+        { token_address: RecsType.BigInt, minter_address: RecsType.BigInt, painter_address: RecsType.BigInt, max_supply: RecsType.BigInt, is_open: RecsType.Boolean },
         {
           metadata: {
-            name: "Moves",
-            types: ["contractaddress", "u8", "enum"],
-            customTypes: ["Direction"],
+            name: "Config",
+            types: ["contractaddress","contractaddress","contractaddress","u128","bool"],
+            customTypes: [],
           },
         }
       );
     })(),
-    Position: (() => {
+    Seed: (() => {
       return defineComponent(
         world,
-        {
-          player: RecsType.BigInt,
-          vec: { x: RecsType.Number, y: RecsType.Number },
-        },
+        { token_id: RecsType.BigInt, seed: RecsType.BigInt },
         {
           metadata: {
-            name: "Position",
-            types: ["contractaddress", "u32", "u32"],
-            customTypes: ["Vec2"],
+            name: "Seed",
+            types: ["u128","u128"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC721MetaModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, name: undefined, symbol: undefined, base_uri: undefined },
+        {
+          metadata: {
+            name: "ERC721MetaModel",
+            types: ["contractaddress"],
+            customTypes: [],
           },
         }
       );

@@ -1,14 +1,14 @@
 {
-  "name": "starknet-react-example",
+  "name": "512karat",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "create-components": "npx @dojoengine/core ../../dojo-starter/target/dev/manifest.json src/dojo/generated/contractComponents.ts http://localhost:5050 0x28f5999ae62fec17c09c52a800e244961dba05251f5aaf923afabd9c9804d1a"
+    "create-components": "npx @dojoengine/core ../dojo/manifests/dev/manifest.json src/dojo/generated/contractComponents.ts"
   },
   "dependencies": {
     "@dojoengine/core": "^0.7.2",
