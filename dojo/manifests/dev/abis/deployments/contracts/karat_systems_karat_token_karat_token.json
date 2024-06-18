@@ -551,55 +551,6 @@
   },
   {
     "type": "impl",
-    "name": "ERC721MetadataImpl",
-    "interface_name": "karat::systems::metadata::IERC721Metadata"
-  },
-  {
-    "type": "interface",
-    "name": "karat::systems::metadata::IERC721Metadata",
-    "items": [
-      {
-        "type": "function",
-        "name": "name",
-        "inputs": [],
-        "outputs": [
-          {
-            "type": "core::byte_array::ByteArray"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "type": "function",
-        "name": "symbol",
-        "inputs": [],
-        "outputs": [
-          {
-            "type": "core::byte_array::ByteArray"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "type": "function",
-        "name": "token_uri",
-        "inputs": [
-          {
-            "name": "token_id",
-            "type": "core::integer::u256"
-          }
-        ],
-        "outputs": [
-          {
-            "type": "core::byte_array::ByteArray"
-          }
-        ],
-        "state_mutability": "external"
-      }
-    ]
-  },
-  {
-    "type": "impl",
     "name": "ERC721MetadataCamelImpl",
     "interface_name": "karat::systems::metadata::IERC721MetadataCamel"
   },
@@ -649,6 +600,55 @@
           }
         ],
         "state_mutability": "view"
+      }
+    ]
+  },
+  {
+    "type": "impl",
+    "name": "ERC721MetadataImpl",
+    "interface_name": "karat::systems::metadata::IERC721Metadata"
+  },
+  {
+    "type": "interface",
+    "name": "karat::systems::metadata::IERC721Metadata",
+    "items": [
+      {
+        "type": "function",
+        "name": "name",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::byte_array::ByteArray"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "symbol",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::byte_array::ByteArray"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "token_uri",
+        "inputs": [
+          {
+            "name": "token_id",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::byte_array::ByteArray"
+          }
+        ],
+        "state_mutability": "external"
       }
     ]
   },
@@ -791,12 +791,6 @@
   },
   {
     "type": "event",
-    "name": "karat::systems::metadata::erc721_metadata_component::Event",
-    "kind": "enum",
-    "variants": []
-  },
-  {
-    "type": "event",
     "name": "token::components::token::erc721::erc721_mintable::erc721_mintable_component::Event",
     "kind": "enum",
     "variants": []
@@ -804,6 +798,12 @@
   {
     "type": "event",
     "name": "token::components::token::erc721::erc721_owner::erc721_owner_component::Event",
+    "kind": "enum",
+    "variants": []
+  },
+  {
+    "type": "event",
+    "name": "karat::systems::metadata::erc721_metadata_component::Event",
     "kind": "enum",
     "variants": []
   },
@@ -843,11 +843,6 @@
         "kind": "nested"
       },
       {
-        "name": "ERC721MetadataEvent",
-        "type": "karat::systems::metadata::erc721_metadata_component::Event",
-        "kind": "nested"
-      },
-      {
         "name": "ERC721MintableEvent",
         "type": "token::components::token::erc721::erc721_mintable::erc721_mintable_component::Event",
         "kind": "nested"
@@ -855,6 +850,11 @@
       {
         "name": "ERC721OwnerEvent",
         "type": "token::components::token::erc721::erc721_owner::erc721_owner_component::Event",
+        "kind": "nested"
+      },
+      {
+        "name": "ERC721MetadataEvent",
+        "type": "karat::systems::metadata::erc721_metadata_component::Event",
         "kind": "nested"
       }
     ]
