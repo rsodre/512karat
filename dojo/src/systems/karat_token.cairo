@@ -71,54 +71,26 @@ mod karat_token {
     use debug::PrintTrait;
     use starknet::ContractAddress;
     use starknet::{get_contract_address, get_caller_address};
+
+    use karat::models::config::{Config, ConfigTrait, ConfigManager, ConfigManagerTrait};
+
     use token::components::security::initializable::initializable_component;
     use token::components::token::erc721::erc721_approval::erc721_approval_component;
     use token::components::token::erc721::erc721_balance::erc721_balance_component;
     use token::components::token::erc721::erc721_burnable::erc721_burnable_component;
     use token::components::token::erc721::erc721_enumerable::erc721_enumerable_component;
-    use karat::systems::metadata::erc721_metadata_component;
     use token::components::token::erc721::erc721_mintable::erc721_mintable_component;
     use token::components::token::erc721::erc721_owner::erc721_owner_component;
-    use karat::models::config::{Config, ConfigTrait, ConfigManager, ConfigManagerTrait};
+    use karat::systems::metadata::erc721_metadata_component;
 
     component!(path: initializable_component, storage: initializable, event: InitializableEvent);
     component!(path: erc721_approval_component, storage: erc721_approval, event: ERC721ApprovalEvent);
     component!(path: erc721_balance_component, storage: erc721_balance, event: ERC721BalanceEvent);
     component!(path: erc721_burnable_component, storage: erc721_burnable, event: ERC721BurnableEvent);
     component!(path: erc721_enumerable_component, storage: erc721_enumerable, event: ERC721EnumerableEvent);
-    component!(path: erc721_metadata_component, storage: erc721_metadata, event: ERC721MetadataEvent);
     component!(path: erc721_mintable_component, storage: erc721_mintable, event: ERC721MintableEvent);
     component!(path: erc721_owner_component, storage: erc721_owner, event: ERC721OwnerEvent);
-
-    impl InitializableImpl = initializable_component::InitializableImpl<ContractState>;
-
-    #[abi(embed_v0)]
-    impl ERC721ApprovalImpl =erc721_approval_component::ERC721ApprovalImpl<ContractState>;
-    #[abi(embed_v0)]
-    impl ERC721ApprovalCamelImpl = erc721_approval_component::ERC721ApprovalCamelImpl<ContractState>;
-    #[abi(embed_v0)]
-    impl ERC721EnumerableImpl = erc721_enumerable_component::ERC721EnumerableImpl<ContractState>;
-    #[abi(embed_v0)]
-    impl ERC721EnumerableCamelImpl = erc721_enumerable_component::ERC721EnumerableCamelImpl<ContractState>;
-    #[abi(embed_v0)]
-    impl ERC721MetadataImpl = erc721_metadata_component::ERC721MetadataImpl<ContractState>;
-    #[abi(embed_v0)]
-    impl ERC721MetadataCamelImpl = erc721_metadata_component::ERC721MetadataCamelImpl<ContractState>;
-    #[abi(embed_v0)]
-    impl ERC721OwnerImpl = erc721_owner_component::ERC721OwnerImpl<ContractState>;
-
-    //
-    // Internal Impls
-    //
-    
-    impl InitializableInternalImpl = initializable_component::InternalImpl<ContractState>;
-    impl ERC721ApprovalInternalImpl = erc721_approval_component::InternalImpl<ContractState>;
-    impl ERC721BalanceInternalImpl = erc721_balance_component::InternalImpl<ContractState>;
-    impl ERC721BurnableInternalImpl = erc721_burnable_component::InternalImpl<ContractState>;
-    impl ERC721EnumerableInternalImpl = erc721_enumerable_component::InternalImpl<ContractState>;
-    impl ERC721MetadataInternalImpl = erc721_metadata_component::InternalImpl<ContractState>;
-    impl ERC721MintableInternalImpl = erc721_mintable_component::InternalImpl<ContractState>;
-    impl ERC721OwnerInternalImpl = erc721_owner_component::InternalImpl<ContractState>;
+    component!(path: erc721_metadata_component, storage: erc721_metadata, event: ERC721MetadataEvent);
 
     #[storage]
     struct Storage {
@@ -133,11 +105,11 @@ mod karat_token {
         #[substorage(v0)]
         erc721_enumerable: erc721_enumerable_component::Storage,
         #[substorage(v0)]
-        erc721_metadata: erc721_metadata_component::Storage,
-        #[substorage(v0)]
         erc721_mintable: erc721_mintable_component::Storage,
         #[substorage(v0)]
         erc721_owner: erc721_owner_component::Storage,
+        #[substorage(v0)]
+        erc721_metadata: erc721_metadata_component::Storage,
     }
 
     #[event]
@@ -148,9 +120,9 @@ mod karat_token {
         ERC721BalanceEvent: erc721_balance_component::Event,
         ERC721BurnableEvent: erc721_burnable_component::Event,
         ERC721EnumerableEvent: erc721_enumerable_component::Event,
-        ERC721MetadataEvent: erc721_metadata_component::Event,
         ERC721MintableEvent: erc721_mintable_component::Event,
         ERC721OwnerEvent: erc721_owner_component::Event,
+        ERC721MetadataEvent: erc721_metadata_component::Event,
     }
 
     mod Errors {
@@ -163,6 +135,35 @@ mod karat_token {
         const WRONG_SENDER: felt252 = 'ERC721: wrong sender';
         const SAFE_TRANSFER_FAILED: felt252 = 'ERC721: safe transfer failed';
     }
+
+    impl InitializableImpl = initializable_component::InitializableImpl<ContractState>;
+    #[abi(embed_v0)]
+    impl ERC721ApprovalImpl = erc721_approval_component::ERC721ApprovalImpl<ContractState>;
+    #[abi(embed_v0)]
+    impl ERC721ApprovalCamelImpl = erc721_approval_component::ERC721ApprovalCamelImpl<ContractState>;
+    #[abi(embed_v0)]
+    impl ERC721EnumerableImpl = erc721_enumerable_component::ERC721EnumerableImpl<ContractState>;
+    #[abi(embed_v0)]
+    impl ERC721EnumerableCamelImpl = erc721_enumerable_component::ERC721EnumerableCamelImpl<ContractState>;
+    #[abi(embed_v0)]
+    impl ERC721MetadataCamelImpl = erc721_metadata_component::ERC721MetadataCamelImpl<ContractState>;
+    #[abi(embed_v0)]
+    impl ERC721OwnerImpl = erc721_owner_component::ERC721OwnerImpl<ContractState>;
+    #[abi(embed_v0)]
+    impl ERC721MetadataImpl = erc721_metadata_component::ERC721MetadataImpl<ContractState>;
+
+    //
+    // Internal Impls
+    //
+    
+    impl InitializableInternalImpl = initializable_component::InternalImpl<ContractState>;
+    impl ERC721ApprovalInternalImpl = erc721_approval_component::InternalImpl<ContractState>;
+    impl ERC721BalanceInternalImpl = erc721_balance_component::InternalImpl<ContractState>;
+    impl ERC721BurnableInternalImpl = erc721_burnable_component::InternalImpl<ContractState>;
+    impl ERC721EnumerableInternalImpl = erc721_enumerable_component::InternalImpl<ContractState>;
+    impl ERC721MintableInternalImpl = erc721_mintable_component::InternalImpl<ContractState>;
+    impl ERC721OwnerInternalImpl = erc721_owner_component::InternalImpl<ContractState>;
+    impl ERC721MetadataInternalImpl = erc721_metadata_component::InternalImpl<ContractState>;
 
     #[abi(embed_v0)]
     impl EnumInitImpl of super::IERC721EnumInit<ContractState> {

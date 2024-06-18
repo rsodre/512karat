@@ -45,5 +45,44 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    InitializableModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, initialized: RecsType.Boolean },
+        {
+          metadata: {
+            name: "InitializableModel",
+            types: ["contractaddress","bool"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC721BalanceModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, account: RecsType.BigInt, amount: RecsType.BigInt },
+        {
+          metadata: {
+            name: "ERC721BalanceModel",
+            types: ["contractaddress","contractaddress","u128"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC721OwnerModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, token_id: RecsType.BigInt, address: RecsType.BigInt },
+        {
+          metadata: {
+            name: "ERC721OwnerModel",
+            types: ["contractaddress","u128","contractaddress"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
   };
 }

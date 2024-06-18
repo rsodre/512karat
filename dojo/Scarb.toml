@@ -30,14 +30,14 @@ alexandria_math = { git = "https://github.com/keep-starknet-strange/alexandria.g
 
 [[target.dojo]]
 build-external-contracts = [
-  "token::components::security::initializable::initializable_component",
-  "token::components::token::erc721::erc721_approval::erc721_approval_component",
-  "token::components::token::erc721::erc721_balance::erc721_balance_component",
-  "token::components::token::erc721::erc721_burnable::erc721_burnable_component",
-  "token::components::token::erc721::erc721_enumerable::erc721_enumerable_component",
-  # "token::components::token::erc721::erc721_metadata::erc721_metadata_component",
-  "token::components::token::erc721::erc721_mintable::erc721_mintable_component",
-  "token::components::token::erc721::erc721_owner::erc721_owner_component",
+  "token::components::security::initializable::initializable_model",
+  "token::components::token::erc721::erc721_approval::erc_721_approval_model",
+  "token::components::token::erc721::erc721_balance::erc_721_balance_model",
+  "token::components::token::erc721::erc721_burnable::erc_721_burnable_model",
+  "token::components::token::erc721::erc721_enumerable::erc_721_enumerable_model",
+  "token::components::token::erc721::erc721_mintable::erc_721_mintable_model",
+  "token::components::token::erc721::erc721_owner::erc_721_owner_model",
+  # "token::components::token::erc721::erc721_metadata::erc_721_metadata_model",
 ]
 
 [tool.dojo]
