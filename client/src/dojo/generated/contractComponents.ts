@@ -58,6 +58,32 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    ERC721OperatorApprovalModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, owner: RecsType.BigInt, operator: RecsType.BigInt, approved: RecsType.Boolean },
+        {
+          metadata: {
+            name: "ERC721OperatorApprovalModel",
+            types: ["contractaddress","contractaddress","contractaddress","bool"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC721TokenApprovalModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, token_id: RecsType.BigInt, address: RecsType.BigInt },
+        {
+          metadata: {
+            name: "ERC721TokenApprovalModel",
+            types: ["contractaddress","u128","contractaddress"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
     ERC721BalanceModel: (() => {
       return defineComponent(
         world,
@@ -66,6 +92,71 @@ export function defineContractComponents(world: World) {
           metadata: {
             name: "ERC721BalanceModel",
             types: ["contractaddress","contractaddress","u128"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC721EnumerableIndexModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, index: RecsType.BigInt, token_id: RecsType.BigInt },
+        {
+          metadata: {
+            name: "ERC721EnumerableIndexModel",
+            types: ["contractaddress","u128","u128"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC721EnumerableOwnerIndexModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, owner: RecsType.BigInt, index: RecsType.BigInt, token_id: RecsType.BigInt },
+        {
+          metadata: {
+            name: "ERC721EnumerableOwnerIndexModel",
+            types: ["contractaddress","contractaddress","u128","u128"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC721EnumerableOwnerTokenModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, owner: RecsType.BigInt, token_id: RecsType.BigInt, index: RecsType.BigInt },
+        {
+          metadata: {
+            name: "ERC721EnumerableOwnerTokenModel",
+            types: ["contractaddress","contractaddress","u128","u128"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC721EnumerableTokenModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, token_id: RecsType.BigInt, index: RecsType.BigInt },
+        {
+          metadata: {
+            name: "ERC721EnumerableTokenModel",
+            types: ["contractaddress","u128","u128"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC721EnumerableTotalModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, total_supply: RecsType.BigInt },
+        {
+          metadata: {
+            name: "ERC721EnumerableTotalModel",
+            types: ["contractaddress","u128"],
             customTypes: [],
           },
         }
