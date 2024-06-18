@@ -1,26 +1,26 @@
-use integer::BoundedInt;
-use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
-use dojo::test_utils::spawn_test_world;
-use token::tests::constants::{OWNER};
+// use integer::BoundedInt;
+// use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
+// use dojo::test_utils::spawn_test_world;
+// use token::tests::constants::{OWNER};
 
-use karat::systems::metadata::{erc_721_meta_model, ERC721MetaModel,};
-use karat::systems::metadata::erc721_metadata_component::{
-    ERC721MetadataImpl, ERC721MetadataCamelImpl, InternalImpl
-};
-use token::components::token::erc721::erc721_mintable::erc721_mintable_component::InternalImpl as ERC721MintableInternalImpl;
+// use karat::systems::metadata::{erc_721_meta_model, ERC721MetaModel,};
+// use karat::systems::metadata::erc721_metadata_component::{
+//     ERC721MetadataImpl, ERC721MetadataCamelImpl, InternalImpl
+// };
+// use token::components::token::erc721::erc721_mintable::erc721_mintable_component::InternalImpl as ERC721MintableInternalImpl;
 
-use karat::tests::token::erc721_metadata_mock::erc721_metadata_mock;
-use starknet::storage::{StorageMemberAccessTrait};
+// use karat::tests::token::erc721_metadata_mock::erc721_metadata_mock;
+// use starknet::storage::{StorageMemberAccessTrait};
 
 
-fn STATE() -> (IWorldDispatcher, erc721_metadata_mock::ContractState) {
-    let world = spawn_test_world(array![erc_721_meta_model::TEST_CLASS_HASH,]);
+// fn STATE() -> (IWorldDispatcher, erc721_metadata_mock::ContractState) {
+//     let world = spawn_test_world(array![erc_721_meta_model::TEST_CLASS_HASH,]);
 
-    let mut state = erc721_metadata_mock::contract_state_for_testing();
-    state.world_dispatcher.write(world);
+//     let mut state = erc721_metadata_mock::contract_state_for_testing();
+//     state.world_dispatcher.write(world);
 
-    (world, state)
-}
+//     (world, state)
+// }
 
 // #[test]
 // fn test_erc721_metadata_initialize() {
