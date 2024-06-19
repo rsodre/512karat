@@ -13,12 +13,12 @@ export interface MoveProps {
 
 export async function setupWorld(provider: DojoProvider) {
   function minter() {
-    const mint = async ({ account }: { account: AccountInterface }) => {
+    const mint = async ({ account, contract_address }: { account: AccountInterface, contract_address:string }) => {
       try {
         return await provider.execute(account, {
           contractName: "minter",
           entrypoint: "mint",
-          calldata: [],
+          calldata: [contract_address],
         });
       } catch (error) {
         console.error("Error executing mint:", error);

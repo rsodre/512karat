@@ -13,10 +13,10 @@ export function createSystemCalls(
   contractComponents: ContractComponents,
   // { Config, Seed }: ClientComponents
 ) {
-  const mint = async (account: AccountInterface) => {
+  const mint = async (account: AccountInterface, contractAddress: string) => {
 
     try {
-      const { transaction_hash } = await client.minter.mint({ account });
+      const { transaction_hash } = await client.minter.mint({ account, contractAddress });
 
       setComponentsFromEvents(
         contractComponents,

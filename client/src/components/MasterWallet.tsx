@@ -1,18 +1,24 @@
-import { useConnect, useAccount } from "@starknet-react/core";
+import { useConnect, useAccount, useDisconnect } from "@starknet-react/core";
 
 export default function MasterAccountConnect() {
   const { connect, connectors } = useConnect();
-  const { address, status } = useAccount();
+  const { disconnect } = useDisconnect();
+  const { address, isConnected } = useAccount();
 
-  if (status === "connected") {
-    return <p>Connected with address {address}</p>;
+  if (isConnected) {
+    return (
+      <div>
+        <p>Connected with address {address}</p>
+        <button onClick={() => disconnect()}>disconnect</button>
+      </div>
+    )
   }
 
   return (
     <ul>
       {connectors.map((connector) => (
         <li key={connector.id}>
-          <button onClick={() => connect({ connector })}>
+          <button disabled={!connector.available} onClick={() => connect({ connector })}>
             {connector.name}
           </button>
         </li>

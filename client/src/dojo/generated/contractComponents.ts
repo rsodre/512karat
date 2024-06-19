@@ -35,7 +35,7 @@ export function defineContractComponents(world: World) {
     ERC721MetaModel: (() => {
       return defineComponent(
         world,
-        { token: RecsType.BigInt, name: undefined, symbol: undefined, base_uri: undefined },
+        { token: RecsType.BigInt, name: RecsType.String, symbol: RecsType.String, base_uri: RecsType.String },
         {
           metadata: {
             name: "ERC721MetaModel",

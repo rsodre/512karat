@@ -26,7 +26,7 @@ async function init() {
         chains={chains}
         provider={() => provider(katana)}
         connectors={connectors}
-        autoConnect
+        autoConnect={false}
       >
         <DojoProvider value={setupResult}>
           <App />
