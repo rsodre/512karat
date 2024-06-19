@@ -7,7 +7,7 @@ import { ReactNode, createContext, useContext } from "react";
 import { Account, AccountInterface } from "starknet";
 import { SetupResult } from "./generated/setup";
 import { useAccount } from "@starknet-react/core";
-import { dojoConfig } from "../../dojoConfig";
+import { dojoConfig } from "./dojoConfig";
 
 interface DojoContextType extends SetupResult {
   masterAccount: AccountInterface | undefined;

@@ -1,14 +1,13 @@
 import { jsonRpcProvider } from "@starknet-react/core";
 import { Chain } from "@starknet-react/chains";
-import { dojoConfig } from "../dojoConfig";
+import { dojoConfig } from "./dojo/dojoConfig";
 
 export const katana: Chain = {
   id: BigInt(420),
   network: "katana",
   name: "Katana Devnet",
   nativeCurrency: {
-    address:
-      "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
+    address: "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
     name: "Ether",
     symbol: "ETH",
     decimals: 18,
