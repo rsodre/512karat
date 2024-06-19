@@ -1,25 +1,10 @@
-import { useDojo } from "../dojo/useDojo";
-import { useTokenContract } from "../hooks/useToken";
+import { useMint } from "../hooks/useMint";
 
 export default function Mint() {
-  const {
-    setup: {
-      systemCalls: { mint },
-    },
-    account,
-  } = useDojo();
-
-  const { contractAddress } = useTokenContract();
-
-  const _mint = () => {
-    if (account && contractAddress) {
-      mint(account, contractAddress);
-    }
-  }
-
+  const { mint } = useMint()
   return (
     <>
-      <button disabled={!account} onClick={() => _mint()}>Mint</button>
+      <button disabled={!mint} onClick={() => mint?.()}>Mint</button>
     </>
   );
 }
