@@ -8,6 +8,7 @@ import { useDojo } from "./dojo/useDojo";
 import MasterAccountConnect from "./components/MasterWallet";
 import { Deploy } from "./components/Deploy";
 import Mint from "./components/Mint";
+import { useTotalSupply } from "./hooks/useToken";
 
 export default function App() {
   const { account } = useDojo();
@@ -17,9 +18,11 @@ export default function App() {
     BigInt(account?.address ?? 0),
   ]) as Entity;
 
+  const { total_supply } = useTotalSupply()
+
   return (
     <>
-      {/* <Deploy /> */}
+      <Deploy />
       <MasterAccountConnect />
 
       <div className="card">
@@ -29,7 +32,7 @@ export default function App() {
       <div className="card">
         <Mint />
         <div>
-          Total Supply: ?
+          Total Supply: {total_supply}
         </div>
       </div>
 

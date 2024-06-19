@@ -12,7 +12,7 @@ export default function Mint() {
   const { contractAddress } = useTokenContract();
 
   const _mint = () => {
-    if (account) {
+    if (account && contractAddress) {
       mint(account, contractAddress);
     }
   }
