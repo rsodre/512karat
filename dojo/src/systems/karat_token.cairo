@@ -7,7 +7,7 @@ trait IKaratToken {
     // IERC721
     fn name(world: @IWorldDispatcher) -> ByteArray;
     fn symbol(world: @IWorldDispatcher) -> ByteArray;
-    fn token_uri(ref world: IWorldDispatcher, token_id: u256) -> ByteArray;
+    fn token_uri(world: @IWorldDispatcher, token_id: u256) -> ByteArray;
     fn owner_of(world: @IWorldDispatcher, account: ContractAddress) -> bool;
     fn get_approved(world: @IWorldDispatcher, token_id: u256) -> ContractAddress;
     fn approve(ref world: IWorldDispatcher, to: ContractAddress, token_id: u256);
@@ -16,7 +16,7 @@ trait IKaratToken {
     fn token_of_owner_by_index(world: @IWorldDispatcher, owner: ContractAddress, index: u256) -> u256;
 
     // IERC721CamelOnly
-    fn tokenURI(ref world: IWorldDispatcher, token_id: u256) -> ByteArray;
+    fn tokenURI(world: @IWorldDispatcher, token_id: u256) -> ByteArray;
 
     fn initialize(
         ref world: IWorldDispatcher,

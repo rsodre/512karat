@@ -9,6 +9,7 @@ import MasterAccountConnect from "./components/MasterWallet";
 import { Deploy } from "./components/Deploy";
 import Mint from "./components/Mint";
 import { useTotalSupply } from "./hooks/useToken";
+import Token from "./components/Token";
 
 export default function App() {
   const { account } = useDojo();
@@ -34,6 +35,7 @@ export default function App() {
         <div>
           Total Supply: {total_supply}
         </div>
+        <Token token_id={total_supply} />
       </div>
 
     </>
