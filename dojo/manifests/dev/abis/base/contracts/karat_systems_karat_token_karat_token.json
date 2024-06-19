@@ -572,7 +572,7 @@
             "type": "core::byte_array::ByteArray"
           }
         ],
-        "state_mutability": "external"
+        "state_mutability": "view"
       }
     ]
   },
@@ -648,7 +648,7 @@
             "type": "core::byte_array::ByteArray"
           }
         ],
-        "state_mutability": "external"
+        "state_mutability": "view"
       }
     ]
   },

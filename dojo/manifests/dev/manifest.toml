@@ -22,8 +22,8 @@ name = "dojo::base::base"
 [[contracts]]
 kind = "DojoContract"
 address = "0x2ec22a653460527eacb3b74c07eeb0606a9c47db5f450d140a14f0a0a117e76"
-class_hash = "0x6141e72771227c75ec6f6f6f45305c24c0f45792a2100ff59cb7b22edd62894"
-original_class_hash = "0x6141e72771227c75ec6f6f6f45305c24c0f45792a2100ff59cb7b22edd62894"
+class_hash = "0x7fc5730fa6ae6281da230acee7af1921057cab8cabc4af28d8183b9c0630df"
+original_class_hash = "0x7fc5730fa6ae6281da230acee7af1921057cab8cabc4af28d8183b9c0630df"
 base_class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
 abi = "manifests/dev/abis/deployments/contracts/karat_systems_karat_token_karat_token.json"
 reads = []
