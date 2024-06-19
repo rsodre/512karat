@@ -1,29 +1,9 @@
-export enum Direction {
-  Left = 1,
-  Right = 2,
-  Up = 3,
-  Down = 4,
+import { Buffer } from 'buffer';
+
+export function decodeBase64(data: string) {
+  return Buffer.from(data ?? '', 'base64').toString('utf8');
 }
 
-export function updatePositionWithDirection(
-  direction: Direction,
-  value: { vec: { x: number; y: number } }
-) {
-  switch (direction) {
-    case Direction.Left:
-      value.vec.x--;
-      break;
-    case Direction.Right:
-      value.vec.x++;
-      break;
-    case Direction.Up:
-      value.vec.y--;
-      break;
-    case Direction.Down:
-      value.vec.y++;
-      break;
-    default:
-      throw new Error("Invalid direction provided");
-  }
-  return value;
+export function decodeBase64Buffer(data: string) {
+  return Buffer.from(data ?? '', 'base64');
 }

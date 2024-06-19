@@ -1,7 +1,15 @@
 import { BigNumberish } from "starknet";
 import { useDojo } from "../dojo/useDojo"
 import { useTokenContract } from "./useToken";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { decodeBase64 } from "../utils";
+
+type MetadataType = {
+  name: string
+  description: string
+  attributes: any
+  image: string
+}
 
 export const useTokenUri = (token_id: BigNumberish) => {
   const {
@@ -11,7 +19,6 @@ export const useTokenUri = (token_id: BigNumberish) => {
   } = useDojo();
 
   const { contractAddress } = useTokenContract();
-  // const canFetch = useMemo(() => (Boolean(token_id) && Boolean(contractAddress)), [token_id, contractAddress])
 
   const [uri, setUri] = useState('')
   const _fetch = () => {
@@ -30,9 +37,32 @@ export const useTokenUri = (token_id: BigNumberish) => {
     _fetch();
   }, [contractAddress, token_id])
 
+
+  const metadata = useMemo<MetadataType>(() => {
+    if (uri) {
+      try {
+        return JSON.parse(uri)
+      } catch (e) {
+        console.error(`METADATA ERROR:`, e, uri)
+      }
+    }
+    return {}
+  }, [uri])
+  // console.log(`META:::`,metadata)
+
+  const { name, description, attributes, image } = metadata
+
+  // const svg = useMemo(() => decodeBase64(image), [image])
+  // console.log(image, svg)
+
   return {
     // token_uri: _fetch
+    token_id,
     uri,
+    name,
+    description,
+    attributes,
+    image,
   }
 }
 

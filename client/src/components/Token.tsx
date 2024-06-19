@@ -6,10 +6,12 @@ export default function Token({
 }: {
   token_id: BigNumberish
 }) {
-  const { uri } = useTokenUri(token_id);
+  const { name, description, image } = useTokenUri(token_id);
   return (
     <>
-    [{uri}]
+      <h5>{name}</h5>
+      <h5>{description}</h5>
+      <img src={image} />
       {/* <button disabled={!mint} onClick={() => mint?.()}>Mint</button> */}
     </>
   );
