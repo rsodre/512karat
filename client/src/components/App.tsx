@@ -5,6 +5,7 @@ import { Deploy } from "./Deploy";
 import MasterAccountConnect from "./MasterWallet";
 import Mint from "./Mint";
 import Token from "./Token";
+import { shortAddress } from "../utils/types";
 
 export default function App() {
   const { account } = useDojo();
@@ -17,7 +18,7 @@ export default function App() {
       <MasterAccountConnect />
 
       <div className="card">
-        account:{account?.address.toString() ?? '?'}
+        account: {shortAddress(account?.address ?? null)}
       </div>
 
       <div className="card">

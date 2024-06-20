@@ -1,10 +1,10 @@
-import { getContractByName } from "@dojoengine/core"
 import { useEffect, useMemo, useState } from "react"
-import manifest from '../dojo/generated/manifest.json'
-import { useDojo } from "../dojo/useDojo"
+import { getContractByName } from "@dojoengine/core"
 import { useComponentValue } from "@dojoengine/react"
-import { getEntityIdFromKeys } from "@dojoengine/utils"
-import { Entity } from "@dojoengine/recs"
+import { useDojo } from "../dojo/useDojo"
+import { bigintToEntity, keysToEntity } from "../utils/types"
+import { BigNumberish } from "starknet"
+import manifest from '../dojo/generated/manifest.json'
 
 export const useTokenContract = () => {
   const [contractAddress, setContractAddress] = useState<string>('')
@@ -14,19 +14,29 @@ export const useTokenContract = () => {
     setContractAddress(contract?.address ?? '')
   },[])
 
-  const entityId = useMemo(() => (getEntityIdFromKeys([BigInt(contractAddress || 0)]) as Entity), [contractAddress])
+  const contractEntityId = useMemo(() => bigintToEntity(contractAddress), [contractAddress])
 
   return {
     contractAddress,
-    entityId,
+    contractEntityId,
   }
 }
 
 export const useTotalSupply = () => {
   const { setup: { clientComponents: { ERC721EnumerableTotalModel } } } = useDojo();
-  const { entityId } = useTokenContract()
-  const data = useComponentValue(ERC721EnumerableTotalModel, entityId);
+  const { contractEntityId } = useTokenContract()
+  const data = useComponentValue(ERC721EnumerableTotalModel, contractEntityId);
   return {
     total_supply: Number(data?.total_supply ?? 0)
+  }
+}
+
+export const useTokenOwner = (token_id: BigNumberish) => {
+  const { setup: { clientComponents: { ERC721OwnerModel } } } = useDojo();
+  const { contractAddress } = useTokenContract()
+  const entityId = useMemo(() => keysToEntity([contractAddress, BigInt(token_id ?? 0) > 0 ? token_id : 0]), [contractAddress, token_id])
+  const data = useComponentValue(ERC721OwnerModel, entityId);
+  return {
+    ownerAddress: data?.address ? BigInt(data?.address) : null
   }
 }
