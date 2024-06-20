@@ -24,9 +24,9 @@ migrate = "sozo build && sozo migrate apply"
 mint = "./scripts/mint.sh"
 
 [dependencies]
-dojo = { git = "https://github.com/dojoengine/dojo", tag = "v0.7.1" }
+dojo = { git = "https://github.com/dojoengine/dojo", tag = "v0.7.2" }
 # token = { git = "https://github.com/rsodre/origami", branch = "karat" }
-token = { git = "https://github.com/dojoengine/origami", tag = "v0.7.1" }
+token = { git = "https://github.com/dojoengine/origami", tag = "v0.7.2" }
 alexandria_math = { git = "https://github.com/keep-starknet-strange/alexandria.git", rev = "417c5a80ed2fef05ce159d643f3e34a5386ee06c" }
 
 
