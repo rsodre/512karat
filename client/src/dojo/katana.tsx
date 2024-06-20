@@ -1,6 +1,6 @@
 import { jsonRpcProvider } from "@starknet-react/core";
 import { Chain } from "@starknet-react/chains";
-import { dojoConfig } from "./dojo/dojoConfig";
+import { dojoConfig } from "./dojoConfig";
 
 export const katana: Chain = {
   id: BigInt(420),

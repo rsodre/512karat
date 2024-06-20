@@ -1,13 +1,13 @@
+import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
 import { setup } from "./dojo/generated/setup.ts";
 import { DojoProvider } from "./dojo/DojoContext.tsx";
 import { dojoConfig } from "./dojo/dojoConfig.ts";
 import { sepolia } from "@starknet-react/chains";
 import { StarknetConfig, argent, braavos } from "@starknet-react/core";
-import { provider, katana } from "./katana.tsx";
+import { provider, katana } from "./dojo/katana.tsx";
+import App from "./components/App.tsx";
 
 async function init() {
   const rootElement = document.getElementById("root");

@@ -1,12 +1,12 @@
 import "./App.css";
 import { Entity } from "@dojoengine/recs";
 import { getEntityIdFromKeys } from "@dojoengine/utils";
-import { useDojo } from "./dojo/useDojo";
-import { useTotalSupply } from "./hooks/useToken";
-import { Deploy } from "./components/Deploy";
-import MasterAccountConnect from "./components/MasterWallet";
-import Mint from "./components/Mint";
-import Token from "./components/Token";
+import { useDojo } from "../dojo/useDojo";
+import { useTotalSupply } from "../hooks/useToken";
+import { Deploy } from "./Deploy";
+import MasterAccountConnect from "./MasterWallet";
+import Mint from "./Mint";
+import Token from "./Token";
 
 export default function App() {
   const { account } = useDojo();
