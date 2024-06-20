@@ -40,8 +40,8 @@ sozo init dojo
 # cloned styles from Pistols
 # https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/styles/styles.scss
 
-# added Courier Prime from Google fonts
-# https://fonts.google.com/specimen/Courier+Prime
+# added Saira font from Google fonts
+# https://fonts.google.com/specimen/Saira
 
 # cloned misc utils and cosmetic components from Pistols
 # https://github.com/underware-gg/pistols/tree/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/src/lib/utils
