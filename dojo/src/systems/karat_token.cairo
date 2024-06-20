@@ -230,8 +230,6 @@ mod karat_token {
             to: ContractAddress,
             token_id: u256,
         ) {
-// 'KARAT_MINT_to...'.print();
-// to.print();
             let config: Config = ConfigManagerTrait::new(world).get(get_contract_address());
             assert(
                 config.is_open,

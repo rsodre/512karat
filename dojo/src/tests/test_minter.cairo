@@ -49,6 +49,7 @@ mod tests {
         println!("seed_1:{}", seed_1.seed);
         println!("{}", token_uri_1);
         // #2
+        testing::set_contract_address(RECIPIENT());
         let token_id_2: u128 = sys.minter.mint(sys.karat.contract_address);
         let token_uri_2 = sys.karat.token_uri(2);
         let seed_2: Seed = get!(sys.world, (token_id_2), Seed);
@@ -62,6 +63,38 @@ mod tests {
 
     #[test]
     #[available_gas(100_000_000)]
+    #[should_panic(expected:('KARAT: dont be greedy!','ENTRYPOINT_FAILED'))]
+    fn test_greedy1() {
+        let sys: Systems = tester::spawn_systems();
+        sys.minter.mint(sys.karat.contract_address);
+        sys.minter.mint(sys.karat.contract_address);
+    }
+
+    #[test]
+    #[available_gas(100_000_000)]
+    #[should_panic(expected:('KARAT: dont be greedy!','ENTRYPOINT_FAILED'))]
+    fn test_greedy2() {
+        let sys: Systems = tester::spawn_systems();
+        sys.minter.mint(sys.karat.contract_address);
+        testing::set_contract_address(RECIPIENT());
+        sys.minter.mint(sys.karat.contract_address);
+        sys.minter.mint(sys.karat.contract_address);
+    }
+    #[test]
+    #[available_gas(100_000_000)]
+    #[should_panic(expected:('KARAT: dont be greedy!','ENTRYPOINT_FAILED'))]
+    fn test_greedy3() {
+        let sys: Systems = tester::spawn_systems();
+        sys.minter.mint(sys.karat.contract_address);
+        testing::set_contract_address(RECIPIENT());
+        sys.minter.mint(sys.karat.contract_address);
+        testing::set_contract_address(OWNER());
+        sys.minter.mint(sys.karat.contract_address);
+        sys.minter.mint(sys.karat.contract_address);
+    }
+
+    #[test]
+    #[available_gas(100_000_000)]
     fn test_max_supply() {
         let sys: Systems = tester::spawn_systems();
         let mut supply: u128 = 0;
@@ -69,6 +102,7 @@ mod tests {
             if (supply == sys.max_supply) {
                 break;
             }
+            testing::set_contract_address(if (supply % 2 == 0) {OWNER()} else {RECIPIENT()});
             sys.minter.mint(sys.karat.contract_address);
             supply += 1;
         };
@@ -84,6 +118,7 @@ mod tests {
             if (supply > sys.max_supply) {
                 break;
             }
+            testing::set_contract_address(if (supply % 2 == 0) {OWNER()} else {RECIPIENT()});
             sys.minter.mint(sys.karat.contract_address);
             supply += 1;
         };

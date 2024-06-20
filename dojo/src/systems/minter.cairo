@@ -31,6 +31,7 @@ mod minter {
     mod Errors {
         const INVALID_TOKEN_ADDRESS: felt252 = 'KARAT: invalid token address';
         const MINTED_OUT: felt252 = 'KARAT: minted out';
+        const NOT_AGAIN: felt252 = 'KARAT: dont be greedy!';
     }
 
     //---------------------------------------
@@ -45,7 +46,7 @@ mod minter {
         max_supply: u128,
         is_open: u8,
     ) {
-        'dojo_init()...'.print();
+        // 'dojo_init()...'.print();
         
         //*******************************
         let TOKEN_NAME = "KARAT";
@@ -80,15 +81,31 @@ mod minter {
             let karat = (IKaratTokenDispatcher{contract_address});
             let total_supply: u256 = karat.total_supply();
 
+            // check availability
             let config: Config = ConfigManagerTrait::new(world).get(contract_address);
             assert(total_supply.low < config.max_supply, Errors::MINTED_OUT);
             
+            // get next token_id
             let token_id: u256 = (total_supply + 1);
+
+            // very simple cool down rule
+            // avoid wallets to make consecutive mints
+            if (token_id > 1) {
+                let owner: ContractAddress = karat.owner_of(token_id - 1);
+                assert(
+                    owner != get_caller_address(),
+                    Errors::NOT_AGAIN,
+                )
+            }
+
+            // mint!
             karat.mint(get_caller_address(), token_id);
 
+            // generate seed
             let seed = SeedTrait::new(token_id.low);
             set!(world, (seed));
 
+            // return minted token id
             (token_id.low)
         }
         fn get_token_data(ref world: IWorldDispatcher, token_id: u128) -> TokenData {
