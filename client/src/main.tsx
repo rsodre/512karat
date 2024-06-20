@@ -3,11 +3,13 @@ import './styles/fonts.scss'
 import './styles/styles.scss'
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { StarknetConfig, argent, braavos } from "@starknet-react/core";
+import { mainnet, sepolia } from "@starknet-react/chains";
+import { ArgentMobileConnector } from "starknetkit/argentMobile";
+import { WebWalletConnector } from "starknetkit/webwallet";
 import { setup } from "./dojo/generated/setup.ts";
 import { DojoProvider } from "./dojo/DojoContext.tsx";
 import { dojoConfig } from "./dojo/dojoConfig.ts";
-import { sepolia } from "@starknet-react/chains";
-import { StarknetConfig, argent, braavos } from "@starknet-react/core";
 import { provider, katana } from "./dojo/katana.tsx";
 import App from "./components/App.tsx";
 
@@ -18,9 +20,20 @@ async function init() {
 
   const setupResult = await setup(dojoConfig);
 
-  const chains = [katana];
+  const chains = [
+    katana,
+    // sepolia,
+    // mainnet,
+  ];
 
-  const connectors = [braavos(), argent()];
+  const connectors = [
+    braavos(),
+    argent(),
+    // new InjectedConnector({ options: { id: "braavos", name: "Braavos" } }),
+    // new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
+    new WebWalletConnector({ url: "https://web.argent.xyz" }),
+    new ArgentMobileConnector(),
+  ];
 
   root.render(
     <React.StrictMode>
