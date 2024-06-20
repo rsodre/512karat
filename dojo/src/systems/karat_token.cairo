@@ -4,26 +4,14 @@ use dojo::world::IWorldDispatcher;
 #[dojo::interface]
 // trait IERC721EnumMintBurnPreset {
 trait IKaratToken {
-    // IERC721
-    fn name(world: @IWorldDispatcher) -> ByteArray;
-    fn symbol(world: @IWorldDispatcher) -> ByteArray;
-    fn token_uri(world: @IWorldDispatcher, token_id: u256) -> ByteArray;
-    fn owner_of(world: @IWorldDispatcher, account: ContractAddress) -> bool;
+
+    // IERC721Approval
     fn get_approved(world: @IWorldDispatcher, token_id: u256) -> ContractAddress;
+    fn is_approved_for_all(world: @IWorldDispatcher, owner: ContractAddress, operator: ContractAddress) -> bool;
     fn approve(ref world: IWorldDispatcher, to: ContractAddress, token_id: u256);
-    fn total_supply(world: @IWorldDispatcher) -> u256;
-    fn token_by_index(world: @IWorldDispatcher, index: u256) -> u256;
-    fn token_of_owner_by_index(world: @IWorldDispatcher, owner: ContractAddress, index: u256) -> u256;
+    fn set_approval_for_all(ref world: IWorldDispatcher, operator: ContractAddress, approved: bool);
 
-    // IERC721CamelOnly
-    fn tokenURI(world: @IWorldDispatcher, token_id: u256) -> ByteArray;
-
-    fn initialize(
-        ref world: IWorldDispatcher,
-        name: ByteArray,
-        symbol: ByteArray,
-        base_uri: ByteArray,
-    );
+    // IERC721Balance
     fn balance_of(world: @IWorldDispatcher, account: ContractAddress) -> u256;
     fn transfer_from(ref world: IWorldDispatcher, from: ContractAddress, to: ContractAddress, token_id: u256);
     fn safe_transfer_from(
@@ -33,10 +21,34 @@ trait IKaratToken {
         token_id: u256,
         data: Span<felt252>
     );
+
+    // IERC721Owner
+    fn owner_of(world: @IWorldDispatcher, token_id: u256) -> ContractAddress;
+
+    // IERC721Enumerable
+    fn total_supply(world: @IWorldDispatcher) -> u256;
+    fn token_by_index(world: @IWorldDispatcher, index: u256) -> u256;
+    fn token_of_owner_by_index(world: @IWorldDispatcher, owner: ContractAddress, index: u256) -> u256;
+
+    // IERC721Metadata
+    fn name(world: @IWorldDispatcher) -> ByteArray;
+    fn symbol(world: @IWorldDispatcher) -> ByteArray;
+    fn token_uri(world: @IWorldDispatcher, token_id: u256) -> ByteArray;
+    // IERC721MetadataCamel
+    fn tokenURI(world: @IWorldDispatcher, token_id: u256) -> ByteArray;
+
+    // karat_token
+    fn initialize(
+        ref world: IWorldDispatcher,
+        name: ByteArray,
+        symbol: ByteArray,
+        base_uri: ByteArray,
+    );
     fn mint(ref world: IWorldDispatcher, to: ContractAddress, token_id: u256);
     fn burn(ref world: IWorldDispatcher, token_id: u256);
 }
 
+// extends IERC721Balance
 #[dojo::interface]
 trait IERC721EnumTransfer {
     fn balance_of(world: @IWorldDispatcher, account: ContractAddress) -> u256;
