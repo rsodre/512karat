@@ -12,7 +12,6 @@ export default function Token({
       <h5>{name}</h5>
       <h5>{description}</h5>
       <img src={image} />
-      {/* <button disabled={!mint} onClick={() => mint?.()}>Mint</button> */}
     </>
   );
 }

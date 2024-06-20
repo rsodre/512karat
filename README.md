@@ -36,6 +36,10 @@ sozo init dojo
 # cloned migrate script from Pistols
 # https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/migrate
 
+# added semantic-ui, scss
+# cloned styles from Pistols
+# https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/styles/styles.scss
+
 
 ```
 

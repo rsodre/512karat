@@ -1,3 +1,4 @@
+import { Button } from "semantic-ui-react";
 import { useConnect, useAccount, useDisconnect } from "@starknet-react/core";
 
 export default function MasterAccountConnect() {
@@ -9,7 +10,7 @@ export default function MasterAccountConnect() {
     return (
       <div>
         <p>Connected with address {address}</p>
-        <button onClick={() => disconnect()}>disconnect</button>
+        <Button onClick={() => disconnect()}>disconnect</Button>
       </div>
     )
   }
@@ -18,9 +19,9 @@ export default function MasterAccountConnect() {
     <ul>
       {connectors.map((connector) => (
         <li key={connector.id}>
-          <button disabled={!connector.available} onClick={() => connect({ connector })}>
+          <Button disabled={!connector.available} onClick={() => connect({ connector })}>
             {connector.name}
-          </button>
+          </Button>
         </li>
       ))}
     </ul>

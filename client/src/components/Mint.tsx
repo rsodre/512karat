@@ -1,10 +1,11 @@
+import { Button } from "semantic-ui-react";
 import { useMint } from "../hooks/useMint";
 
 export default function Mint() {
   const { mint } = useMint()
   return (
     <>
-      <button disabled={!mint} onClick={() => mint?.()}>Mint</button>
+      <Button disabled={!canMint} onClick={() => mint?.()}>{isCoolingDown ? 'Cooling down' : 'Mint'}</Button>
     </>
   );
 }

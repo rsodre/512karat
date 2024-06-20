@@ -1,6 +1,4 @@
-import "./App.css";
-import { Entity } from "@dojoengine/recs";
-import { getEntityIdFromKeys } from "@dojoengine/utils";
+import { Container } from "semantic-ui-react";
 import { useDojo } from "../dojo/useDojo";
 import { useTotalSupply } from "../hooks/useToken";
 import { Deploy } from "./Deploy";
@@ -11,15 +9,10 @@ import Token from "./Token";
 export default function App() {
   const { account } = useDojo();
 
-  // entity id we are syncing
-  const entityId = getEntityIdFromKeys([
-    BigInt(account?.address ?? 0),
-  ]) as Entity;
-
   const { total_supply } = useTotalSupply()
 
   return (
-    <>
+    <Container text>
       <Deploy />
       <MasterAccountConnect />
 
@@ -35,6 +28,6 @@ export default function App() {
         <Token token_id={total_supply} />
       </div>
 
-    </>
+    </Container>
   );
 }

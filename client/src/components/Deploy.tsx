@@ -1,3 +1,4 @@
+import { Button } from "semantic-ui-react";
 import {
   useContractWrite,
   useAccount,
@@ -42,7 +43,7 @@ export function Deploy() {
 
   return (
     <>
-      <button onClick={() => writeAsync()}>Transfer</button>
+      <Button onClick={() => writeAsync()}>Transfer</Button>
       <p>status: {isPending && <div>Submitting...</div>}</p>
       <p>hash: {data?.transaction_hash}</p>
     </>
