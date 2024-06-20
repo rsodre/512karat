@@ -4,10 +4,10 @@ $font-family-mono: 'Courier Prime', monospace;
 
 // Figma colors
 // https://www.figma.com/file/eseZA1jRIoX6IYNtoHgz30/Pistols-at-Ten-Blocks
-$color-bg: #000; //#1e1e1e;
+$color-bg: #111; //#1e1e1e;
 $color-darkest: #181820;
 $color-dark: #494958;
-$color-medium: #c7fcff;
+$color-medium: #c7ffff;
 $color-bright: #dddddd;
 $color-brightest: #ffffff;
 
@@ -73,6 +73,7 @@ body {
 
 #root {
   max-width: 1280px;
+  height: 100vh;
   margin: 0 auto;
   text-align: center;
 }
@@ -232,12 +233,14 @@ canvas {
 
 .Number {
   // @extend .TitleCase;
-  font-family: $font-family-mono;
+  // font-family: $font-family-mono;
+  font-family: $font-family;
   line-height: 1.0rem!important;
 }
 .Code {
   @extend .Number;
   font-size: 1.2rem;
+  color: $color-medium;
 }
 
 .Quote {

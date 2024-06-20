@@ -1,34 +1,44 @@
-import { Container } from "semantic-ui-react";
-import { useDojo } from "../dojo/useDojo";
+import { Container, Grid } from "semantic-ui-react";
+import { useAccount } from "@starknet-react/core";
 import { useTotalSupply } from "../hooks/useToken";
-import { Deploy } from "./Deploy";
-import MasterAccountConnect from "./MasterWallet";
+import Connect from "./Connect";
 import Mint from "./Mint";
 import Token from "./Token";
-import { shortAddress } from "../utils/types";
-import { AddressShort } from "./AddressShort";
+
+const Row = Grid.Row
+const Col = Grid.Column
 
 export default function App() {
-  const { account } = useDojo();
+  const { address, isConnected } = useAccount();
 
   const { total_supply } = useTotalSupply()
 
   return (
-    <Container text>
-      <Deploy />
-      <MasterAccountConnect />
+    <Container text fluid className="FillParent Relative CenteredContainer">
+      <Grid>
+        <Row columns={'equal'}>
+          <Col>
+            <Connect />
+          </Col>
+        </Row>
 
-      <div className="card">
-        account: <AddressShort address={account?.address ?? 0} />
-      </div>
+        {isConnected && <>
+          <Row columns={'equal'}>
+            <Col>
+              <Mint />
+            </Col>
+          </Row>
+          <Row columns={'equal'}>
+            <Col>
+              <div>
+                Total Supply: {total_supply}
+              </div>
+              <Token token_id={total_supply} />
+            </Col>
+          </Row>
+        </>}
 
-      <div className="card">
-        <Mint />
-        <div>
-          Total Supply: {total_supply}
-        </div>
-        <Token token_id={total_supply} />
-      </div>
+      </Grid>
 
     </Container>
   );

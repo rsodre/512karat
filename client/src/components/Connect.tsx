@@ -1,7 +1,8 @@
 import { Button } from "semantic-ui-react";
 import { useConnect, useAccount, useDisconnect } from "@starknet-react/core";
+import { AddressShort } from "./AddressShort";
 
-export default function MasterAccountConnect() {
+export default function Connect() {
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   const { address, isConnected } = useAccount();
@@ -9,7 +10,7 @@ export default function MasterAccountConnect() {
   if (isConnected) {
     return (
       <div>
-        <p>Connected with address {address}</p>
+        Connected as: <AddressShort address={address ?? 0} />
         <Button onClick={() => disconnect()}>disconnect</Button>
       </div>
     )
