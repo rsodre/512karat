@@ -2,7 +2,6 @@ import { BigNumberish } from "starknet";
 import { useDojo } from "../dojo/useDojo"
 import { useTokenContract } from "./useToken";
 import { useEffect, useMemo, useState } from "react";
-import { decodeBase64 } from "../utils";
 
 type MetadataType = {
   name: string

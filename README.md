@@ -43,6 +43,8 @@ sozo init dojo
 # added Courier Prime from Google fonts
 # https://fonts.google.com/specimen/Courier+Prime
 
+# cloned misc utils from Pistols
+# https://github.com/underware-gg/pistols/tree/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/src/lib/utils
 
 
 ```
