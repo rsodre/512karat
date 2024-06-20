@@ -1,6 +1,5 @@
-
-$font-family: serif;
-$font-family-mono: monospace;
+$font-family: 'Courier Prime', serif;
+$font-family-mono: 'Courier Prime', monospace;
 // $font-family-mono: 'Xanh Mono', monospace;
 
 // Figma colors
@@ -523,6 +522,11 @@ $box-h: calc((100vh - $aspect-h) / 2);
 ._round_border_inactive {
   border: $border-button-inactive!important;
   border-radius: 0.5em!important;
+}
+//
+// <Container>
+.ui.text.container {
+  font-family: $font-family;
 }
 // 
 // <Input>
