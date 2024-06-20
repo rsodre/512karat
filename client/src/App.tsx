@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
-import { useComponentValue } from "@dojoengine/react";
-import { Entity } from "@dojoengine/recs";
 import "./App.css";
-import { Direction } from "./utils";
+import { Entity } from "@dojoengine/recs";
 import { getEntityIdFromKeys } from "@dojoengine/utils";
 import { useDojo } from "./dojo/useDojo";
-import MasterAccountConnect from "./components/MasterWallet";
-import { Deploy } from "./components/Deploy";
-import Mint from "./components/Mint";
 import { useTotalSupply } from "./hooks/useToken";
+import { Deploy } from "./components/Deploy";
+import MasterAccountConnect from "./components/MasterWallet";
+import Mint from "./components/Mint";
 import Token from "./components/Token";
 
 export default function App() {

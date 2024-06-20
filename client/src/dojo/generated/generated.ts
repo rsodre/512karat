@@ -2,14 +2,8 @@
 
 import { Account, AccountInterface, BigNumberish } from "starknet";
 import { DojoProvider } from "@dojoengine/core";
-import { Direction } from "../../utils";
 
 export type IWorld = Awaited<ReturnType<typeof setupWorld>>;
-
-export interface MoveProps {
-  account: Account | AccountInterface;
-  direction: Direction;
-}
 
 export async function setupWorld(provider: DojoProvider) {
   
