@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="600" height="600" viewBox="-2 -2 36 36">
+  <style>
+    .BG{fill:#00000b;}
+    .NORMAL{letter-spacing:0.41px;}
+    .SCALED{transform:scaleX(1.667);}
+    text{
+      fill:#c2e0fd;font-size:1px;font-family:'Courier New',monospace;
+      dominant-baseline:hanging;shape-rendering:crispEdges;white-space:pre;cursor:default;
+      -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+    }
+  </style>
+  <g>
+    <rect class="BG" x="-2" y="-2" width="36" height="36" />
+    <text class="NORMAL" x="0" y="1">12345678901234567890123456789012</text>
+  </g>
+</svg>
