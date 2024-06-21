@@ -1,51 +1,37 @@
 # 512karat
-512Katat
+
+## Generative Art made with Dojo
+
+For the [ETHGlobal StarkHack](https://ethglobal.com/events/starkhack) hackaton between June 13th and June 23rd 2024.
+
+code + art: **Roger Mataleone** ([@matalecode](https://x.com/matalecode))
 
 
-## History
+## Project structure
 
+* `/dojo`: Dojo contracts
+* `/client`: Typescript Vite client
+* `/draft`: Token experiments (metadata, svg)
+* Token art developed at [p5js.org](https://editor.p5js.org/rsodre/sketches/Im7yQgmf5) then ported to Cairo.
+
+## Resources and History
+
+This project sarted from scratch, using a few open source boilerplates, mainly from [Dojo](https://www.dojoengine.org/), [Origami](https://book.dojoengine.org/toolchain/origami) and [Pistols at 10 Blocks](https://pistols.underware.gg/).
+
+* Dojo [starter](https://book.dojoengine.org/tutorial/dojo-starter) template
 ```sh
-# dojo starter template
-# https://book.dojoengine.org/tutorial/dojo-starter
 sozo init dojo
-
-# imported origami preset: enumerable_mintable_burnable.cairo
-# forked nd updated to...
-# https://github.com/rsodre/origami/tree/karat
-
-# cloned origami erc721_metadata_component
-# so we can make a custom token_uri()
-# https://github.com/rsodre/origami/blob/main/token/src/components/token/erc721/erc721_metadata.cairo
-
-# generated overlay files for dojo_init()
-# $ sozo migrate --generate-overlays
-
-# cloned ConfigManager from Pistols (originally from RYO)
-# https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/src/models/config.cairo
-
-# cloned hash and seed utils from Pistols
-# https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/src/utils/hash.cairo
-# https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/src/systems/seeder.cairo
-
-# cloned base64 encoder from Blobert
-# https://github.com/BibliothecaDAO/codename-bobby-realms/blob/main/contracts/src/utils/encoding.cairo
-
-# cloned starknet-react-app example from dojo.js
-# https://github.com/dojoengine/dojo.js/tree/main/examples/react/starknet-react-app
-
-# cloned migrate script from Pistols
-# https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/migrate
-
-# added semantic-ui, scss
-# cloned styles from Pistols
-# https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/styles/styles.scss
-
-# added Saira font from Google fonts
-# https://fonts.google.com/specimen/Saira
-
-# cloned misc utils and cosmetic components from Pistols
-# https://github.com/underware-gg/pistols/tree/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/src/lib/utils
-
-
 ```
+* Cloned [origami](https://github.com/dojoengine/origami/tree/v0.7.2) [preset](https://github.com/dojoengine/origami/blob/v0.7.2/token/src/presets/erc721/enumerable_mintable_burnable.cairo): `enumerable_mintable_burnable.cairo` as the erc-721 token contract starting point
+* Cloned origami [component](https://github.com/dojoengine/origami/blob/v0.7.2/token/src/components/token/erc721/erc721_metadata.cairo): `erc721_metadata.cairo` so we can customize `token_uri()`
+* Generated overlay files for `dojo_init()`
+```sh
+sozo migrate --generate-overlays
+```
+* Cloned [ConfigManager](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/src/models/config.cairo) from Pistols (originally from [Dope Wars](https://github.com/cartridge-gg/dopewars))
+* Cloned [migrate script](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/migrate), [cairo hasher](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/src/utils/hash.cairo), [cairo seeder](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/src/systems/seeder.cairo), [styles](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/styles/styles.scss), [misc utils](https://github.com/underware-gg/pistols/tree/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/src/lib/utils) and [cosmetic components](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/src/lib/ui) from [Pistols](https://github.com/underware-gg/pistols).
+* Cloned base64 [encoder](https://github.com/BibliothecaDAO/codename-bobby-realms/blob/main/contracts/src/utils/encoding.cairo) from [Blobert](https://blobert.realms.world/)
+* Cloned [starknet-react-app](https://github.com/dojoengine/dojo.js/tree/main/examples/react/starknet-react-app) example from [dojo.js](https://github.com/dojoengine/dojo.js)
+* Added [semantic-ui](https://react.semantic-ui.com) + [scss](https://sass-lang.com/)
+* Added [Saira](https://fonts.google.com/specimen/Saira) font from Google fonts
 
