@@ -11,6 +11,7 @@ import { setup } from "./dojo/generated/setup.ts";
 import { DojoProvider } from "./dojo/DojoContext.tsx";
 import { dojoConfig } from "./dojo/dojoConfig.ts";
 import { provider, katana } from "./dojo/katana.tsx";
+import { makeController } from './components/useController.tsx';
 import App from "./components/App.tsx";
 
 async function init() {
@@ -20,6 +21,8 @@ async function init() {
 
   const setupResult = await setup(dojoConfig);
 
+  const controller = makeController(setupResult.manifest)
+
   const chains = [
     katana,
     // sepolia,
@@ -27,6 +30,7 @@ async function init() {
   ];
 
   const connectors = [
+    controller,
     braavos(),
     argent(),
     // new InjectedConnector({ options: { id: "braavos", name: "Braavos" } }),

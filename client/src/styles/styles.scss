@@ -228,7 +228,7 @@ canvas {
 
 
 .TitleCase {
-  font-variant-caps: small-caps;
+  // font-variant-caps: small-caps;
   text-transform: uppercase;
 }
 
@@ -511,6 +511,9 @@ $box-h: calc((100vh - $aspect-h) / 2);
 	margin: 0 !important;
 	text-shadow: 0.1em 0 $color-shadow;
 	color: $color-text;
+}
+.IconInactive {
+  filter: brightness(60%) saturate(0%);
 }
 .EtherIcon {
   position:relative;

@@ -4,11 +4,11 @@ import { useComponentValue } from "@dojoengine/react"
 import { useDojo } from "../dojo/useDojo"
 import { bigintToEntity, keysToEntity } from "../utils/types"
 import { BigNumberish } from "starknet"
-import manifest from '../dojo/generated/manifest.json'
 
 export const useTokenContract = () => {
   const [contractAddress, setContractAddress] = useState<string>('')
-
+  
+  const { setup: { manifest } } = useDojo()
   useEffect(() => {
     const contract = getContractByName(manifest, 'karat_token');
     setContractAddress(contract?.address ?? '')

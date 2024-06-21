@@ -75,6 +75,7 @@ export async function setup({ ...config }: DojoConfig) {
     },
     config,
     dojoProvider,
+    manifest: config.manifest,
     // burnerManager,
   };
 }

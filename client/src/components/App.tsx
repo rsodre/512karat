@@ -16,13 +16,26 @@ export default function App() {
   return (
     <Container text fluid className="FillParent Relative CenteredContainer">
       <Grid>
-        <Row columns={'equal'}>
-          <Col>
-            <Connect />
-          </Col>
-        </Row>
+
+        {!isConnected && <>
+          <Row columns={'equal'}>
+            <Col>
+              <h1>512 KARAT</h1>
+            </Col>
+          </Row>
+          <Row columns={'equal'}>
+            <Col>
+              <Connect />
+            </Col>
+          </Row>
+        </>}
 
         {isConnected && <>
+          <Row columns={'equal'}>
+            <Col>
+              <Connect />
+            </Col>
+          </Row>
           <Row columns={'equal'}>
             <Col>
               <Mint />
