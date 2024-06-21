@@ -18,12 +18,18 @@ struct TokenData {
 impl TokenDataTraitImpl of TokenDataTrait {
     fn new(world: IWorldDispatcher, token_id: u128) -> TokenData {
         let seed: Seed = get!(world, (token_id), Seed);
-        let class: Class = Class::A; //Class::from_seed(seed.seed);
+        let class: Class = seed.to_class();
         (TokenData{
             token_id,
             seed: seed.seed,
-            trait_names: array!["Trait_1", "Trait_2", "Trait_3"].span(),
-            trait_values: array!["Value_1", "Value_2", "Value_3"].span(),
+            trait_names: array![
+                "Class",
+                "Realm",
+            ].span(),
+            trait_values: array![
+                class.name(),
+                format!("{}", seed.realm_id()),
+            ].span(),
             class,
         })
     }

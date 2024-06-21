@@ -1,4 +1,7 @@
 use karat::utils::hash::{make_seed};
+use karat::{
+    models::class::{Class, ClassTrait, CLASS_COUNT},
+};
 
 #[derive(Copy, Drop, Serde)]
 #[dojo::model]
@@ -8,19 +11,41 @@ struct Seed {
     seed: u128,
 }
 
-#[generate_trait]
+trait SeedTrait {
+    fn new(token_id: u128) -> Seed;
+    fn to_class(self: Seed) -> Class;
+    fn realm_id(self: Seed) -> felt252;
+}
+
 impl SeedTraitImpl of SeedTrait {
     fn new(token_id: u128) -> Seed {
         let seed = make_seed(token_id);
-        (Seed{
-            token_id,
-            seed,
-        })
+        (Seed { token_id, seed })
+    }
+    fn to_class(self: Seed) -> Class {
+        let s: u128 = (self.seed % CLASS_COUNT);
+        if (s == 0) { Class::A }
+        else if (s == 1) { Class::B }
+        else if (s == 2) { Class::C }
+        else if (s == 3) { Class::D }
+        else if (s == 4) { Class::E }
+        else if (s == 5) { Class::F }
+        else if (s == 6) { Class::G }
+        else if (s == 7) { Class::H }
+        else  { Class::A }
+    }
+    fn realm_id(self: Seed) -> felt252 {
+        ((self.seed % 10_000).into())
     }
 }
 
 
- 
+
+
+
+//----------------------------
+// tests
+//
 #[cfg(test)]
 mod tests {
     use super::{Seed, SeedTrait};
