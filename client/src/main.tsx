@@ -31,8 +31,8 @@ async function init() {
 
   const connectors = [
     controller,
-    braavos(),
     argent(),
+    braavos(),
     // new InjectedConnector({ options: { id: "braavos", name: "Braavos" } }),
     // new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
     new WebWalletConnector({ url: "https://web.argent.xyz" }),
