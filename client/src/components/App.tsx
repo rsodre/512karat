@@ -9,6 +9,7 @@ const Row = Grid.Row
 const Col = Grid.Column
 
 export default function App() {
+  const { isDebug } = useDebug();
   const { address, isConnected } = useAccount();
 
   const { total_supply } = useTotalSupply()
@@ -26,8 +27,10 @@ export default function App() {
           <Row columns={'equal'}>
             <Col>
               <Connect />
+              {isDebug && <Mint />}
             </Col>
           </Row>
+          {isDebug && <TokenRows token_id={total_supply} />}
         </>}
 
         {isConnected && <>
