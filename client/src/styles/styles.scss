@@ -500,6 +500,11 @@ $box-h: calc((100vh - $aspect-h) / 2);
 // Karat
 //
 
+.AttributeRow {
+  border-top: 1px solid rgba($color-medium, 0.1);
+}
+
+
 //
 // <IconXXX>
 //
@@ -657,6 +662,7 @@ $logo-url: '/logos/logo_avante.svg';
 // <Container>
 .ui.text.container {
   font-family: $font-family;
+  max-width: 450px!important;
 }
 // 
 // <Input>

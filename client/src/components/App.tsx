@@ -1,9 +1,10 @@
 import { Container, Grid } from "semantic-ui-react";
 import { useAccount } from "@starknet-react/core";
 import { useTotalSupply } from "../hooks/useToken";
+import { useDebug } from "../hooks/useDebug";
 import Connect from "./Connect";
 import Mint from "./Mint";
-import Token from "./Token";
+import TokenRows from "./Token";
 
 const Row = Grid.Row
 const Col = Grid.Column
@@ -15,7 +16,7 @@ export default function App() {
   const { total_supply } = useTotalSupply()
 
   return (
-    <Container text fluid className="FillParent Relative CenteredContainer">
+    <Container text>
       <Grid>
 
         {!isConnected && <>
@@ -39,19 +40,16 @@ export default function App() {
               <Connect />
             </Col>
           </Row>
-          <Row columns={'equal'}>
-            <Col>
+          <Row>
+            <Col textAlign="left" width={10}>
+              <h1>512 KARAT</h1>
+            </Col>
+            <Col textAlign="right" width={6}>
               <Mint />
             </Col>
           </Row>
-          <Row columns={'equal'}>
-            <Col>
-              <div>
-                Total Supply: {total_supply}
-              </div>
-              <Token token_id={total_supply} />
-            </Col>
-          </Row>
+          
+          <TokenRows token_id={total_supply} />
         </>}
 
       </Grid>

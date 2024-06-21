@@ -10,6 +10,10 @@ type MetadataType = {
   image: string
 }
 
+type Attributes = {
+  [key: string]: string,
+}
+
 export const useTokenUri = (token_id: BigNumberish) => {
   const {
     setup: {
@@ -49,13 +53,19 @@ export const useTokenUri = (token_id: BigNumberish) => {
   }, [uri])
   // console.log(`META:::`,metadata)
 
-  const { name, description, attributes, image } = metadata
+  const { name, description, image, attributes: rawAttributes } = metadata
+
+  const attributes = useMemo(() => (rawAttributes ?? []).reduce((acc: Attributes, attr: any) => {
+    acc[attr.trait] = attr.value
+    return acc
+  }, {} as Attributes), [rawAttributes])
 
   // const svg = useMemo(() => decodeBase64(image), [image])
   // console.log(image, svg)
 
   return {
     // token_uri: _fetch
+    tokenExists: Boolean(name),
     token_id,
     uri,
     name,

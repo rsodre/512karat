@@ -1,8 +1,8 @@
+import { useMemo } from "react";
 import { useAccount } from "@starknet-react/core";
 import { useDojo } from "../dojo/useDojo"
 import { useTokenContract, useTokenOwner, useTotalSupply } from "./useToken";
-import { useMemo } from "react";
-import { bigintEquals, bigintToHex } from "../utils/types";
+import { bigintEquals } from "../utils/types";
 
 export const useMint = () => {
   const {
@@ -20,10 +20,9 @@ export const useMint = () => {
 
   const canMint = useMemo(() => (account && isConnected && contractAddress), [isConnected, account, contractAddress]);
   const isCoolingDown = useMemo(() => (account && canMint && bigintEquals(lastOwnerAddress, account.address)), [account, canMint, lastOwnerAddress])
-  console.log(isCoolingDown, bigintToHex(lastOwnerAddress), account?.address)
 
   const _mint = () => {
-    if (account && canMint) {
+    if (account) {
       mint(account, contractAddress);
     }
   }

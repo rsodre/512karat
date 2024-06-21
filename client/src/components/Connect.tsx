@@ -1,8 +1,11 @@
-import { Button } from "semantic-ui-react";
+import { Button, Grid } from "semantic-ui-react";
 import { useConnect, useAccount, useDisconnect } from "@starknet-react/core";
 import { AddressShort } from "./AddressShort";
 import { useOpener } from "../hooks/useOpener";
 import ConnectModal from "./ConnectModal";
+
+const Row = Grid.Row
+const Col = Grid.Column
 
 export default function Connect() {
   const { connect, connectors } = useConnect();
@@ -12,10 +15,16 @@ export default function Connect() {
 
   if (isConnected) {
     return (
-      <div>
-        Connected as: <AddressShort address={address ?? 0} />
-        <Button onClick={() => disconnect()}>Disconnect</Button>
-      </div>
+      <Grid>
+        <Row columns={'equal'}>
+          <Col textAlign="left">
+            <Button onClick={() => disconnect()}>Disconnect</Button>
+          </Col>
+          <Col textAlign="right" verticalAlign="middle">
+            <AddressShort address={address ?? 0} />
+          </Col>
+        </Row>
+      </Grid>
     )
   }
 

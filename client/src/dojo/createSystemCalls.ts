@@ -16,6 +16,7 @@ export function createSystemCalls(
   const mint = async (account: AccountInterface, contract_address: BigNumberish) => {
     try {
       const { transaction_hash } = await client.minter.mint({ account, contract_address });
+      console.log(`minted tx:`, transaction_hash)
       // setComponentsFromEvents(
       //   contractComponents,
       //   getEvents(
