@@ -118,6 +118,44 @@
     ]
   },
   {
+    "type": "enum",
+    "name": "karat::models::class::Class",
+    "variants": [
+      {
+        "name": "A",
+        "type": "()"
+      },
+      {
+        "name": "B",
+        "type": "()"
+      },
+      {
+        "name": "C",
+        "type": "()"
+      },
+      {
+        "name": "D",
+        "type": "()"
+      },
+      {
+        "name": "E",
+        "type": "()"
+      },
+      {
+        "name": "F",
+        "type": "()"
+      },
+      {
+        "name": "G",
+        "type": "()"
+      },
+      {
+        "name": "H",
+        "type": "()"
+      }
+    ]
+  },
+  {
     "type": "struct",
     "name": "karat::models::token_data::TokenData",
     "members": [
@@ -136,6 +174,10 @@
       {
         "name": "trait_values",
         "type": "core::array::Span::<core::byte_array::ByteArray>"
+      },
+      {
+        "name": "class",
+        "type": "karat::models::class::Class"
       }
     ]
   },
