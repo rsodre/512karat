@@ -1,8 +1,9 @@
-import { Grid, Image } from "semantic-ui-react";
+import { Divider, Grid, Image } from "semantic-ui-react";
 import { BigNumberish } from "starknet";
 import { useTokenUri } from "../hooks/useTokenUri";
 import { useTokenOwner, useTotalSupply } from "../hooks/useToken";
 import { AddressShort } from "./AddressShort";
+import Navigation from "./Navigation";
 
 const Row = Grid.Row
 const Col = Grid.Column
@@ -31,7 +32,13 @@ export default function TokenRows({
     <>
       <Row columns={'equal'}>
         <Col>
-          <Image src={image ?? '/images/placeholder.svg'} size='large' centered spaced/>
+          <Image src={image ?? '/images/placeholder.svg'} size='large' centered spaced />
+        </Col>
+      </Row>
+      <Row columns={'equal'}>
+        <Col textAlign="center">
+          <Navigation />
+          <Divider hidden />
         </Col>
       </Row>
       {tokenExists && <>
@@ -53,6 +60,13 @@ export default function TokenRows({
           </Col>
         </Row>
       </>}
+
+      <Row columns={'equal'}>
+        <Col textAlign="center">
+          <Divider hidden />
+        </Col>
+      </Row>
+
     </>
   );
 }

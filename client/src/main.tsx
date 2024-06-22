@@ -3,6 +3,7 @@ import './styles/fonts.scss'
 import './styles/styles.scss'
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { StarknetConfig, argent, braavos } from "@starknet-react/core";
 import { mainnet, sepolia } from "@starknet-react/chains";
 import { ArgentMobileConnector } from "starknetkit/argentMobile";
@@ -13,6 +14,13 @@ import { dojoConfig } from "./dojo/dojoConfig.ts";
 import { provider, katana } from "./dojo/katana.tsx";
 import { makeController } from './components/useController.tsx';
 import App from "./components/App.tsx";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+]);
 
 async function init() {
   const rootElement = document.getElementById("root");
@@ -48,7 +56,7 @@ async function init() {
         autoConnect={false}
       >
         <DojoProvider value={setupResult}>
-          <App />
+          <RouterProvider router={router} />
         </DojoProvider>
       </StarknetConfig>
     </React.StrictMode>

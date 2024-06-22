@@ -4,9 +4,9 @@ $font-family-mono: 'Courier Prime', monospace;
 
 // Figma colors
 // https://www.figma.com/file/eseZA1jRIoX6IYNtoHgz30/Pistols-at-Ten-Blocks
-$color-bg: #111; //#1e1e1e;
+$color-bg: #222; //#1e1e1e;
 $color-darkest: #181820;
-$color-dark: #494958;
+$color-dark: #52606d;
 $color-medium: #c2e0fd;
 $color-bright: #dddddd;
 $color-brightest: #ffffff;
@@ -399,101 +399,6 @@ TextArea::selection {
 }
 
 
-//------------------------
-// ASPECT RATIO
-//
-// $reference-w: 1200;
-// $reference-h: 675;
-$aspect: 1.7777;
-$aspect-w: min(100vw,100vh*$aspect);
-$aspect-h: min(100vw/$aspect,100vh);
-$box-w: calc((100vw - $aspect-w) / 2);
-$box-h: calc((100vh - $aspect-h) / 2);
-.AspectContent {
-	// background-color: #f004;
-	position: absolute;
-	top: $box-h !important;		// center frame to offset box
-	left: $box-w !important;	// center frame to offset box
-	width: $aspect-w;
-	height: $aspect-h;
-  background-size: cover;
-}
-.AspectLeft, .AspectRight, .AspectTop, .AspectBottom {
-	// background-color: #f0f8;
-	position: absolute;
-	z-index: 100;
-}
-.AspectLeft, .AspectRight {
-	width: $box-w;
-	min-width: 0px;
-	min-height: 100vh;
-	top: 0;
-}
-.AspectLeft {
-	left: 0;
-}
-.AspectRight {
-	right: 0;
-}
-.AspectTop, .AspectBottom {
-	height: $box-h;
-	min-height: 0px;
-	min-width: 100vw;
-	left: 0;
-}
-.AspectTop {
-	top: 0;
-}
-.AspectBottom {
-	bottom: 0;
-}
-
-.DebuggerButton {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-}
-
-//
-// Backgrounds
-//
-.LightenBackground {
-  background-color: #fffb;
-  background-blend-mode:lighten;
-}
-.Background {
-    background-color: #1c130c;
-}
-.BackgroundSplash {
-  @extend .Background;
-  background-image: url('/images/bg_duel.jpg');
-}
-.BackgroundGate {
-  @extend .Background;
-  background-image: url('/images/bg_gate.jpg');
-}
-.BackgroundDuelists {
-  @extend .Background;
-  background-image: url('/images/bg_duelists.jpg');
-}
-.BackgroundDuelsYour {
-  @extend .Background;
-  background-image: url('/images/bg_duels_yours.jpg');
-}
-.BackgroundDuelsLive {
-  @extend .Background;
-  background-image: url('/images/bg_duels_live.jpg');
-}
-.BackgroundDuelsPast {
-  @extend .Background;
-  background-image: url('/images/bg_duels_past.jpg');
-}
-.BackgroundDuel {
-  @extend .Background;
-  background-image: url('/images/bg_duel.jpg');
-}
-
 
 
 //-----------------------------
@@ -502,6 +407,13 @@ $box-h: calc((100vh - $aspect-h) / 2);
 
 .AttributeRow {
   border-top: 1px solid rgba($color-medium, 0.1);
+}
+
+.Navigation {
+  margin: auto!important;
+  display: flex!important;
+  justify-content:center!important;
+  height: 52px;
 }
 
 
@@ -858,10 +770,8 @@ input::placeholder {
   padding-left: 5px;
 }
 .ui.secondary.pointing.menu .item {
-  padding: 0.5em 3em 0.5em 1em; // semantic: 0.85714286em 1.14285714em;
+  padding: 0.5em 0.5em; // semantic: 0.85714286em 1.14285714em;
   background-color: transparent;
-  color: $color-bright;
-  text-shadow: $title-shadow;
   border: 0!important;
   border-radius: 0!important;
 }

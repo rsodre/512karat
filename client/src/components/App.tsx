@@ -1,7 +1,7 @@
 import { Container, Grid } from "semantic-ui-react";
 import { useAccount } from "@starknet-react/core";
-import { useTotalSupply } from "../hooks/useToken";
 import { useDebug } from "../hooks/useDebug";
+import { useTokenId } from "../hooks/useTokenId";
 import Connect from "./Connect";
 import Mint from "./Mint";
 import TokenRows from "./Token";
@@ -13,11 +13,12 @@ export default function App() {
   const { isDebug } = useDebug();
   const { address, isConnected } = useAccount();
 
-  const { total_supply } = useTotalSupply()
+  const { token_id } = useTokenId()
 
   return (
-    <Container text>
+    <Container text className="CenteredContainer">
       <Grid>
+        {/* _.⚡★tooL◆ */}
 
         {!isConnected && <>
           <Row columns={'equal'}>
@@ -31,7 +32,6 @@ export default function App() {
               {isDebug && <Mint />}
             </Col>
           </Row>
-          {isDebug && <TokenRows token_id={total_supply} />}
         </>}
 
         {isConnected && <>
@@ -48,9 +48,9 @@ export default function App() {
               <Mint />
             </Col>
           </Row>
-          
-          <TokenRows token_id={total_supply} />
         </>}
+
+        {(isDebug || isConnected) && <TokenRows token_id={token_id} />}
 
       </Grid>
 

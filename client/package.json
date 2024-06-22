@@ -31,6 +31,7 @@
     "proxy-deep": "^3.1.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-router-dom": "^6.23.1",
     "rxjs": "^7.8.1",
     "sass": "^1.77.6",
     "semantic-ui-css": "^2.5.0",
