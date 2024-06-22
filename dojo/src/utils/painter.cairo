@@ -62,30 +62,41 @@ mod painter {
         (format!("{{\"trait\":\"{}\",\"value\":\"{}\"}}", name, value))
     }
 
+    #[inline(always)]
+    fn _encode_svg(svg: ByteArray) -> ByteArray {
+        (format!("data:image/svg+xml;base64,{}", bytes_base64_encode(svg)))
+    }
+
+
+    //------------------------
+    // SVG builder
+    //
     fn _svg(token_data: TokenData) -> ByteArray {
         //---------------------------
-        // Build lines
+        // Build text tags
         let class_name: ByteArray = if (token_data.class.is_scaled()) {"SCALED"} else {"NORMAL"};
         let text_length: usize = if (token_data.class.is_scaled()) {SCALED_WIDTH} else {WIDTH};
         let char_set: Span<ByteArray> = token_data.class.get_char_set();
         let char_count: usize = char_set.len();
-        let mut lines: ByteArray = "";
+        let cells: Span<usize> = _make_cells(token_data, char_count);
+        let mut text_tags: ByteArray = "";
         let mut y: usize = 0;
         loop {
             if (y == HEIGHT) { break; }
-            let mut line: ByteArray = "";
+            let mut row: ByteArray = "";
             let mut x: usize = 0;
             loop {
                 if (x == WIDTH) { break; }
-                line.append(char_set.at((x+y) % char_count));
+                let value: @usize = cells.at(y * WIDTH + x);
+                row.append(char_set.at(*value));
                 x += 1;
             };
-            lines.append(@format!(
+            text_tags.append(@format!(
                 "<text class=\"{}\" x=\"0\" y=\"{}\" textLength=\"{}\">{}</text>",
                     class_name,
                     y,
                     text_length,
-                    line,
+                    row,
             ));
             y += 1;
         };
@@ -119,13 +130,29 @@ mod painter {
                 svg_tag,
                 style_tag,
                 bg_tag,
-                lines,
+                text_tags,
         ))
     }
 
-    #[inline(always)]
-    fn _encode_svg(svg: ByteArray) -> ByteArray {
-        (format!("data:image/svg+xml;base64,{}", bytes_base64_encode(svg)))
+
+    //------------------------
+    // token cell builder
+    //
+    fn _make_cells(token_data: TokenData, char_count: usize) -> Span<usize> {
+        let mut cells:Array<usize> = array![];
+        let mut y: usize = 0;
+        loop {
+            if (y == HEIGHT) { break; }
+            let mut x: usize = 0;
+            loop {
+                if (x == WIDTH) { break; }
+                let value: usize = ((x+y) % char_count);
+                cells.append(value);
+                x += 1;
+            };
+            y += 1;
+        };
+        (cells.span())
     }
 
 }
