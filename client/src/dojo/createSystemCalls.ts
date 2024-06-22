@@ -1,9 +1,6 @@
 import { AccountInterface, BigNumberish } from "starknet";
-import {
-  getEvents,
-  setComponentsFromEvents,
-} from "@dojoengine/utils";
 import { ContractComponents } from "./generated/contractComponents";
+import { ClientComponents } from "./createClientComponents";
 import type { IWorld } from "./generated/generated";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
@@ -11,20 +8,17 @@ export type SystemCalls = ReturnType<typeof createSystemCalls>;
 export function createSystemCalls(
   { client }: { client: IWorld },
   contractComponents: ContractComponents,
-  // { Config, Seed }: ClientComponents
+  { Config, Seed }: ClientComponents
 ) {
   const mint = async (account: AccountInterface, contract_address: BigNumberish) => {
     try {
       const { transaction_hash } = await client.minter.mint({ account, contract_address });
       console.log(`minted tx:`, transaction_hash)
-      // setComponentsFromEvents(
-      //   contractComponents,
-      //   getEvents(
-      //     await account.waitForTransaction(transaction_hash, {
-      //       retryInterval: 100,
-      //     })
-      //   )
-      // );
+      console.log(
+        await account.waitForTransaction(transaction_hash, {
+          retryInterval: 100,
+        })
+      );
     } catch (e) {
       console.error(`MINT ERROR:`, e);
     }

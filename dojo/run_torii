@@ -16,6 +16,7 @@ fi
 
 torii \
   --world $WORLD_ADDRESS $* \
-  --allowed-origins "*" --index-pending \
+  --allowed-origins "*" \
   --start-block 1 \
+  --index-pending \
 
