@@ -10,6 +10,7 @@ mod painter {
     const RES_HEIGHT: usize = 1000;
     const WIDTH: usize = 48;
     const HEIGHT: usize = 48;
+    const SCALED_WIDTH: usize = 29;
     const GAP: usize = 4;
 
     fn build_uri(token_data: TokenData) -> ByteArray {
@@ -65,6 +66,7 @@ mod painter {
         //---------------------------
         // Build lines
         let class_name: ByteArray = if (token_data.class.is_scaled()) {"SCALED"} else {"NORMAL"};
+        let text_length: usize = if (token_data.class.is_scaled()) {SCALED_WIDTH} else {WIDTH};
         let char_set: Span<ByteArray> = token_data.class.get_char_set();
         let char_count: usize = char_set.len();
         let mut lines: ByteArray = "";
@@ -79,9 +81,10 @@ mod painter {
                 x += 1;
             };
             lines.append(@format!(
-                "<text class=\"{}\" x=\"0\" y=\"{}\">{}</text>",
+                "<text class=\"{}\" x=\"0\" y=\"{}\" textLength=\"{}\">{}</text>",
                     class_name,
                     y,
+                    text_length,
                     line,
             ));
             y += 1;
