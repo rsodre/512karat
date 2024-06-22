@@ -29,9 +29,7 @@ impl SeedTraitImpl of SeedTrait {
         else if (s == 2) { Class::C }
         else if (s == 3) { Class::D }
         else if (s == 4) { Class::E }
-        else if (s == 5) { Class::F }
-        else if (s == 6) { Class::G }
-        else if (s == 7) { Class::H }
+        else if (s == 5) { Class::L }
         else  { Class::A }
     }
     fn realm_id(self: Seed) -> felt252 {

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="600" height="600" viewBox="-2 -2 36 36">
+  <style>
+    .BG{fill:#00000b;}
+    .NORMAL{letter-spacing:0px;}
+    .SCALED{transform:scaleX(1.667);}
+    text{
+      fill:#c2e0fd;font-size:1px;font-family:'Courier New',monospace;
+      dominant-baseline:hanging;shape-rendering:crispEdges;white-space:pre;cursor:default;
+      -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+    }
+  </style>
+  <g>
+    <rect class="BG" x="-2" y="-2" width="36" height="36" />
+    <text class="NORMAL" x="0" y="1">A: &#x26AB;&#x26BD;&#x26D4;&#x26BE;&#x26AA; </text>
+    <text class="NORMAL" x="0" y="2">B: &#x25AB;&#x25A2;&#x25A4;&#x25A5;&#x25A9;&#x2CBC;</text> 
+    <text class="NORMAL" x="0" y="3">C: &#x0020;&#x002E;&#x007C;&#x002F;&#x005C;&#x2666; </text>
+    <text class="NORMAL" x="0" y="4">D: &#x2595;&#x2595;&#x2594;&#x2594;&#x2597;&#x259D;&#x2596;&#x2598;&#x002F;&#x259A;&#x259E; </text>
+    <text class="NORMAL" x="0" y="5">E: &#x2B55;&#x0020;&#x0020;&#x002E;&#x25C7;&#x25C6;&#x25E2;&#x25E4;&#x25E5;&#x25E3;&#x2D54; </text>
+    <text class="NORMAL" x="0" y="6">L: &#x0020;&#x005F;&#x002E;&#x26A1;&#x2605;&#x0074;&#x006F;&#x006F;&#x004C;&#x25C6; </text>
+    <text class="NORMAL" x="0" y="7">N: &#x002E;&#x0030;&#x0031;&#x0032;&#x0033;&#x0034;&#x0035;&#x0036; </text>
+    <text class="NORMAL" x="0" y="8">&#x26AB;&#x26BD;&#x26D4;&#x26BE;&#x26AA;&#x26AB;&#x26BD;&#x26D4;&#x26BE;&#x26AA;&#x26AB;&#x26BD;&#x26D4;&#x26BE;&#x26AA;&#x26AB;&#x26BD;&#x26D4;&#x26BE;&#x26AA;&#x26AB;&#x26BD;&#x26D4;&#x26BE;&#x26AA;&#x26AB;&#x26BD;&#x26D4;&#x26BE;&#x26AA;&#x26AB;&#x26BD;</text>
+  </g>
+</svg>
+
+

@@ -8,41 +8,45 @@ enum Class {
     C,
     D,
     E,
-    F,
-    G,
-    H,
+    L,
 }
-const CLASS_COUNT: u128 = 8;
-const CHAR_COUNT: usize = 5;
+const CLASS_COUNT: u128 = 6;
 
 trait ClassTrait {
     fn name(self: Class) -> ByteArray;
-    fn to_char_array(self: Class) -> Span<ByteArray>;
+    fn get_char_set(self: Class) -> Span<ByteArray>;
+    fn is_scaled(self: Class) -> bool;
 }
 
 impl ClassTraitImpl of ClassTrait {
     fn name(self: Class) -> ByteArray {
         match self {
-            Class::A => "A", // "╰╯╭╮",
-            Class::B => "B", // "╰╯╭╮^._",
+            Class::A => "A",
+            Class::B => "B",
             Class::C => "C",
             Class::D => "D",
             Class::E => "E",
-            Class::F => "F",
-            Class::G => "G",
-            Class::H => "H",
+            Class::L => "L",
         }
     }
-    fn to_char_array(self: Class) -> Span<ByteArray> {
+    fn get_char_set(self: Class) -> Span<ByteArray> {
         match self {
-            Class::A => array!["&#E297A3;", "A", ".", "_", "_"].span(),
-            Class::B => array!["&#E297A3;", "B", ".", "_", "_"].span(),
-            Class::C => array!["&#E297A3;", "C", ".", "_", "_"].span(),
-            Class::D => array!["&#E297A3;", "D", ".", "_", "_"].span(),
-            Class::E => array!["&#E297A3;", "E", ".", "_", "_"].span(),
-            Class::F => array!["&#E297A3;", "F", ".", "_", "_"].span(),
-            Class::G => array!["&#E297A3;", "H", ".", "_", "_"].span(),
-            Class::H => array!["&#E297A3;", "I", ".", "_", "_"].span(),
+            Class::A => array!["&#x0020;", "&#x002E;", "&#x007C;", "&#x002F;", "&#x005C;", "&#x2666;", "&#x2728;"].span(), 
+            Class::B => array!["&#x26AB;", "&#x26BD;", "&#x26BE;", "&#x270A;", "&#x26D4;"].span(), 
+            Class::C => array!["&#x25AB;", "&#x25A2;", "&#x25A4;", "&#x25A5;", "&#x25A9;", "&#x2CBC;", "&#x2705;"].span(), 
+            Class::D => array!["&#x2B55;", "&#x0020;", "&#x0020;", "&#x002E;", "&#x25C7;", "&#x25C6;", "&#x25E2;", "&#x25E4;", "&#x25E5;", "&#x25E3;", "&#x2D54;"].span(), 
+            Class::E => array!["&#x2595;", "&#x2595;", "&#x2594;", "&#x2594;", "&#x2597;", "&#x259D;", "&#x2596;", "&#x2598;", "&#x002F;", "&#x005C;", "&#x259A;", "&#x259E;"].span(), 
+            Class::L => array!["&#x0020;", "&#x005F;", "&#x002E;", "&#x26A1;", "&#x2605;", "&#x0074;", "&#x006F;", "&#x006F;", "&#x004C;", "&#x25C6;"].span(),
+        }
+    }
+    fn is_scaled(self: Class) -> bool {
+        match self {
+            Class::A => true,
+            Class::B => false,
+            Class::C => false,
+            Class::D => false,
+            Class::E => true,
+            Class::L => false,
         }
     }
 }
@@ -56,9 +60,7 @@ impl ClassTraitImpl of ClassTrait {
 //             Class::C => 2,
 //             Class::D => 3,
 //             Class::E => 4,
-//             Class::F => 5,
-//             Class::G => 6,
-//             Class::H => 7,
+//             Class::L => 5,
 //         }
 //     }
 // }
@@ -70,9 +72,7 @@ impl ClassTraitImpl of ClassTrait {
 //         else if s == 2 { Class::C }
 //         else if s == 3 { Class::D }
 //         else if s == 4 { Class::E }
-//         else if s == 5 { Class::F }
-//         else if s == 6 { Class::G }
-//         else if s == 7 { Class::H }
+//         else if s == 5 { Class::L }
 //         else  { Class::A }
 //     }
 // }
@@ -88,21 +88,21 @@ impl ClassTraitImpl of ClassTrait {
 //
 #[cfg(test)]
 mod tests {
-    use super::{Class, ClassTrait, CLASS_COUNT, CHAR_COUNT};
+    use super::{Class, ClassTrait, CLASS_COUNT};
     use karat::models::seed::{Seed, SeedTrait};
 
-    #[test]
-    #[available_gas(100_000_000)]
-    fn test_class_arrya_sizes() {
-        let mut c: u128 = 0;
-        loop {
-            if (c == CLASS_COUNT) {
-                break;
-            }
-            let seed: Seed = Seed{ token_id:1, seed:(0x57237+c) };
-            let class: Class = seed.to_class();
-            assert(class.to_char_array().len() == CHAR_COUNT, 'not char len');
-            c += 1;
-        };
-    }
+    // #[test]
+    // #[available_gas(100_000_000)]
+    // fn test_class_array_sizes() {
+    //     let mut c: u128 = 0;
+    //     loop {
+    //         if (c == CLASS_COUNT) {
+    //             break;
+    //         }
+    //         let seed: Seed = Seed{ token_id:1, seed:(0x57237+c) };
+    //         let class: Class = seed.to_class();
+    //         assert(class.get_char_set().len() == CHAR_COUNT, 'not char len');
+    //         c += 1;
+    //     };
+    // }
 }

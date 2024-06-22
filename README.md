@@ -12,11 +12,15 @@ code + art: **Roger Mataleone** ([@matalecode](https://x.com/matalecode))
 * `/dojo`: Dojo contracts
 * `/client`: Typescript Vite client
 * `/draft`: Token experiments (metadata, svg)
-* Token art developed at [p5js.org](https://editor.p5js.org/rsodre/sketches/Im7yQgmf5) then ported to Cairo.
+* [p5js](https://editor.p5js.org/rsodre/sketches/Im7yQgmf5): Art playground
 
-## Resources and History
+
+## Resources and Process
 
 This project sarted from scratch, using a few open source boilerplates, mainly from [Dojo](https://www.dojoengine.org/), [Origami](https://book.dojoengine.org/toolchain/origami) and [Pistols at 10 Blocks](https://pistols.underware.gg/).
+
+
+#### Smart Contracts
 
 * Dojo [starter](https://book.dojoengine.org/tutorial/dojo-starter) template
 ```sh
@@ -32,6 +36,26 @@ sozo migrate --generate-overlays
 * Cloned [migrate script](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/migrate), [cairo hasher](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/src/utils/hash.cairo), [cairo seeder](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/src/systems/seeder.cairo), [styles](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/styles/styles.scss), [misc utils](https://github.com/underware-gg/pistols/tree/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/src/lib/utils) and [cosmetic components](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/src/lib/ui) from [Pistols](https://github.com/underware-gg/pistols).
 * Cloned base64 [encoder](https://github.com/BibliothecaDAO/codename-bobby-realms/blob/main/contracts/src/utils/encoding.cairo) from [Blobert](https://blobert.realms.world/)
 * Cloned [starknet-react-app](https://github.com/dojoengine/dojo.js/tree/main/examples/react/starknet-react-app) example from [dojo.js](https://github.com/dojoengine/dojo.js)
+
+
+#### Client
+
+* Added [StarknetKit](https://www.starknetkit.com/) connectors with [starknet-react](https://starknet-react.com/)
 * Added [semantic-ui](https://react.semantic-ui.com) + [scss](https://sass-lang.com/)
 * Added [Saira](https://fonts.google.com/specimen/Saira) font from Google fonts
 
+
+#### Art
+
+* Token art drafted with [p5js](https://editor.p5js.org/rsodre/sketches/Im7yQgmf5) then ported to Cairo.
+* Final image is an SVG fully generated on-chain containing only unicode text.
+* When the p5js script runs, it prints character set for [Cairo](https://github.com/rsodre/512karat/blob/main/dojo/src/models/class.cairo).
+
+```rust
+Class::A => array!["&#x26AB;", "&#x26BD;", "&#x26D4;", "&#x26BE;", "&#x26AA;"].span(), 
+Class::B => array!["&#x25AB;", "&#x25A2;", "&#x25A4;", "&#x25A5;", "&#x25A9;", "&#x2CBC;"].span(), 
+Class::C => array!["&#x0020;", "&#x002E;", "&#x007C;", "&#x002F;", "&#x005C;", "&#x2666;"].span(), 
+Class::D => array!["&#x2595;", "&#x2595;", "&#x2594;", "&#x2594;", "&#x2597;", "&#x259D;", "&#x2596;", "&#x2598;", "&#x002F;", "&#x259A;", "&#x259E;"].span(), 
+Class::E => array!["&#x2B55;", "&#x0020;", "&#x0020;", "&#x002E;", "&#x25C7;", "&#x25C6;", "&#x25E2;", "&#x25E4;", "&#x25E5;", "&#x25E3;", "&#x2D54;"].span(), 
+Class::L => array!["&#x0020;", "&#x005F;", "&#x002E;", "&#x26A1;", "&#x2605;", "&#x0074;", "&#x006F;", "&#x006F;", "&#x004C;", "&#x25C6;"].span(), 
+```

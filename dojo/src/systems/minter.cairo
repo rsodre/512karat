@@ -90,13 +90,13 @@ mod minter {
 
             // very simple cool down rule
             // avoid wallets to make consecutive mints
-            if (token_id > 1) {
-                let owner: ContractAddress = karat.owner_of(token_id - 1);
-                assert(
-                    owner != get_caller_address(),
-                    Errors::NOT_AGAIN,
-                )
-            }
+            // if (token_id > 1) {
+            //     let owner: ContractAddress = karat.owner_of(token_id - 1);
+            //     assert(
+            //         owner != get_caller_address(),
+            //         Errors::NOT_AGAIN,
+            //     )
+            // }
 
             // mint!
             karat.mint(get_caller_address(), token_id);

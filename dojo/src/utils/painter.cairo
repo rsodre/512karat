@@ -3,13 +3,14 @@ mod painter {
     use core::byte_array::ByteArrayTrait;
     use core::array::{Array, ArrayTrait};
     use karat::models::token_data::{TokenData, TokenDataTrait};
+    use karat::models::class::{Class, ClassTrait};
     use karat::utils::encoding::bytes_base64_encode;
 
-    const RES_WIDTH: usize = 600;
-    const RES_HEIGHT: usize = 600;
-    const WIDTH: usize = 32;
-    const HEIGHT: usize = 32;
-    const GAP: usize = 2;
+    const RES_WIDTH: usize = 1000;
+    const RES_HEIGHT: usize = 1000;
+    const WIDTH: usize = 48;
+    const HEIGHT: usize = 48;
+    const GAP: usize = 4;
 
     fn build_uri(token_data: TokenData) -> ByteArray {
         let name_tag = _value_tag("name", token_data.get_name());
@@ -63,21 +64,27 @@ mod painter {
     fn _svg(token_data: TokenData) -> ByteArray {
         //---------------------------
         // Build lines
+        let class_name: ByteArray = if (token_data.class.is_scaled()) {"SCALED"} else {"NORMAL"};
+        let char_set: Span<ByteArray> = token_data.class.get_char_set();
+        let char_count: usize = char_set.len();
         let mut lines: ByteArray = "";
-        let mut l: usize = 0;
+        let mut y: usize = 0;
         loop {
-            if (l == HEIGHT) {
-                break;
-            }
-            let line: ByteArray = "12345678901234567890123456789012";
-            lines.append(
-                @format!(
-                    "<text class=\"NORMAL\" x=\"0\" y=\"{}\">{}</text>",
-                    l,
+            if (y == HEIGHT) { break; }
+            let mut line: ByteArray = "";
+            let mut x: usize = 0;
+            loop {
+                if (x == WIDTH) { break; }
+                line.append(char_set.at((x+y) % char_count));
+                x += 1;
+            };
+            lines.append(@format!(
+                "<text class=\"{}\" x=\"0\" y=\"{}\">{}</text>",
+                    class_name,
+                    y,
                     line,
-                )
-            );
-            l += 1;
+            ));
+            y += 1;
         };
         //----------------
         // Build tags
@@ -92,7 +99,7 @@ mod painter {
                 GAP + HEIGHT + GAP,
         );
         let style_tag = format!(
-            "<style>.BG{{fill:#00000b;}}.NORMAL{{letter-spacing:0.41px;}}.SCALED{{transform:scaleX(1.667);}}text{{fill:#c2e0fd;font-size:1px;font-family:'Courier New',monospace;dominant-baseline:hanging;shape-rendering:crispEdges;white-space:pre;cursor:default;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}}</style>",
+            "<style>.BG{{fill:#00000b;}}.NORMAL{{letter-spacing:0;}}.SCALED{{transform:scaleX(1.667);}}text{{fill:#c2e0fd;font-size:1px;font-family:'Courier New',monospace;dominant-baseline:hanging;shape-rendering:crispEdges;white-space:pre;cursor:default;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}}</style>",
         );
         let bg_tag = format!(
             "<rect class=\"BG\" x=\"-{}\" y=\"-{}\" width=\"{}\" height=\"{}\" />",
