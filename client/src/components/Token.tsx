@@ -13,7 +13,7 @@ export default function TokenRows({
 }: {
   token_id: BigNumberish
 }) {
-  const { tokenExists, name, image, attributes } = useTokenUri(token_id);
+  const { tokenExists, name, image, attributes, isLoading } = useTokenUri(token_id);
   const { ownerAddress } = useTokenOwner(token_id);
   const { total_supply } = useTotalSupply()
 
@@ -32,7 +32,7 @@ export default function TokenRows({
     <>
       <Row columns={'equal'}>
         <Col>
-          <Image src={image ?? '/images/placeholder.svg'} size='large' centered spaced />
+          <Image src={image ?? '/images/placeholder.svg'} size='big' centered spaced />
         </Col>
       </Row>
       <Row columns={'equal'}>
@@ -41,6 +41,13 @@ export default function TokenRows({
           <Divider hidden />
         </Col>
       </Row>
+      {isLoading && <>
+        <Row columns={'equal'}>
+          <Col textAlign="center">
+            fetching...
+          </Col>
+        </Row>
+      </>}
       {tokenExists && <>
         <Row columns={'equal'}>
           <Col textAlign="left">

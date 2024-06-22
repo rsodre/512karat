@@ -24,12 +24,17 @@ export const useTokenUri = (token_id: BigNumberish) => {
   const { contractAddress } = useTokenContract();
 
   const [uri, setUri] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const _fetch = () => {
     if (contractAddress && token_id) {
+      setUri('')
+      setIsLoading(true)
       token_uri(token_id).then((v) => {
         setUri(v ?? '')
+        setIsLoading(false)
       }).catch((e) => {
         console.error(`useTokenUri() ERROR:`, e)
+        setIsLoading(false)
       });
     } else {
       return null
@@ -72,6 +77,7 @@ export const useTokenUri = (token_id: BigNumberish) => {
     description,
     attributes,
     image,
+    isLoading,
   }
 }
 

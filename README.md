@@ -22,12 +22,13 @@ This project sarted from scratch, using a few open source boilerplates, mainly f
 
 #### Smart Contracts
 
-* Dojo [starter](https://book.dojoengine.org/tutorial/dojo-starter) template
+* Installed [Dojo](https://book.dojoengine.org/getting-started)
+* Created a new project using the [dojo-starter](https://book.dojoengine.org/tutorial/dojo-starter) template:
 ```sh
 sozo init dojo
 ```
-* Cloned [origami](https://github.com/dojoengine/origami/tree/v0.7.2) [preset](https://github.com/dojoengine/origami/blob/v0.7.2/token/src/presets/erc721/enumerable_mintable_burnable.cairo): `enumerable_mintable_burnable.cairo` as the erc-721 token contract starting point
-* Cloned origami [component](https://github.com/dojoengine/origami/blob/v0.7.2/token/src/components/token/erc721/erc721_metadata.cairo): `erc721_metadata.cairo` so we can customize `token_uri()`
+* Cloned the Origami [preset](https://github.com/dojoengine/origami/blob/v0.7.2/token/src/presets/erc721/enumerable_mintable_burnable.cairo): `enumerable_mintable_burnable.cairo` as the erc-721 token contract starting point
+* Cloned the Origami [component](https://github.com/dojoengine/origami/blob/v0.7.2/token/src/components/token/erc721/erc721_metadata.cairo): `erc721_metadata.cairo` so we can customize `token_uri()`
 * Generated overlay files for `dojo_init()`
 ```sh
 sozo migrate --generate-overlays
@@ -47,9 +48,9 @@ sozo migrate --generate-overlays
 
 #### Art
 
-* Token art drafted with [p5js](https://editor.p5js.org/rsodre/sketches/Im7yQgmf5) then ported to Cairo.
-* Final image is an SVG fully generated on-chain containing only unicode text.
-* When the p5js script runs, it prints character set for [Cairo](https://github.com/rsodre/512karat/blob/main/dojo/src/models/class.cairo).
+* Token art drafted with [p5js](https://editor.p5js.org/rsodre/sketches/Im7yQgmf5) then ported to Cairo
+* Final image is an SVG fully generated on-chain containing only text (unicode glyphs)
+* When the p5js script runs, it prints the svg compatible character set ready for [Cairo](https://github.com/rsodre/512karat/blob/main/dojo/src/models/class.cairo)
 
 ```rust
 Class::A => array!["&#x26AB;", "&#x26BD;", "&#x26D4;", "&#x26BE;", "&#x26AA;"].span(), 
