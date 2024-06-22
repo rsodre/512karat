@@ -90,6 +90,20 @@
     "interface_name": "karat::systems::minter::IMinter"
   },
   {
+    "type": "enum",
+    "name": "core::bool",
+    "variants": [
+      {
+        "name": "False",
+        "type": "()"
+      },
+      {
+        "name": "True",
+        "type": "()"
+      }
+    ]
+  },
+  {
     "type": "struct",
     "name": "core::byte_array::ByteArray",
     "members": [
@@ -195,6 +209,22 @@
       },
       {
         "type": "function",
+        "name": "set_open",
+        "inputs": [
+          {
+            "name": "contract_address",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "is_open",
+            "type": "core::bool"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
         "name": "get_token_data",
         "inputs": [
           {
@@ -207,7 +237,7 @@
             "type": "karat::models::token_data::TokenData"
           }
         ],
-        "state_mutability": "external"
+        "state_mutability": "view"
       }
     ]
   },
@@ -234,7 +264,7 @@
             "type": "core::byte_array::ByteArray"
           }
         ],
-        "state_mutability": "external"
+        "state_mutability": "view"
       }
     ]
   },
