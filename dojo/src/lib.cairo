@@ -20,6 +20,7 @@ mod utils {
 mod tests {
     mod tester;
     mod test_minter;
+    mod test_profile;
 
     mod token {
         #[cfg(test)]
