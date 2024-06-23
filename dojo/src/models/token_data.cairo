@@ -33,9 +33,6 @@ impl TokenDataTraitImpl of TokenDataTrait {
             class,
         })
     }
-    fn get_type(self: TokenData) -> ByteArray {
-        ("1")
-    }
     fn get_name(self: TokenData) -> ByteArray {
         (format!("512 Karat #{}", self.token_id))
     }

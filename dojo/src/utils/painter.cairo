@@ -14,13 +14,11 @@ mod painter {
     fn build_uri(token_data: TokenData) -> ByteArray {
         let name_tag = _value_tag("name", token_data.get_name());
         let desc_tag = _value_tag("description", token_data.get_description());
-        let type_tag = _value_tag("type", token_data.get_type());
         let attributes_tag = _array_tag("attributes", _attributes_array(token_data));
         let image_tag = _value_tag("image", _encode_svg(_svg(token_data)));
-        (format!("{{{},{},{},{},{}}}",
+        (format!("{{{},{},{},{}}}",
             name_tag,
             desc_tag,
-            type_tag,
             attributes_tag,
             image_tag,
         ))
