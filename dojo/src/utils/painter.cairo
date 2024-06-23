@@ -72,7 +72,7 @@ mod painter {
         // Build text tags
         let class_name: ByteArray = if (token_data.class.is_scaled()) {"SCALED"} else {"NORMAL"};
         let text_length: usize = if (token_data.class.is_scaled()) {SCALED_SIZE} else {SIZE};
-        let char_set: Span<ByteArray> = token_data.class.get_char_set();
+        let char_set: Span<felt252> = token_data.class.get_char_set();
         let char_count: usize = char_set.len();
         let cells: Span<usize> = _make_cells(token_data.seed, char_count);
         let mut text_tags: ByteArray = "";
@@ -84,7 +84,7 @@ mod painter {
             loop {
                 if (x == SIZE) { break; }
                 let value: @usize = cells.at(y * SIZE + x);
-                row.append(char_set.at(*value));
+                row.append_word(*char_set.at(*value), 8);
                 x += 1;
             };
             text_tags.append(@format!(
