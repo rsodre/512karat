@@ -18,6 +18,10 @@ impl ConfigTraitImpl of ConfigTrait {
     fn is_minter(self: Config, address: ContractAddress) -> bool { (self.minter_address == address) }
 }
 
+//-----------------------
+// ConfigManager
+//
+
 #[derive(Copy, Drop)]
 struct ConfigManager {
     world: IWorldDispatcher

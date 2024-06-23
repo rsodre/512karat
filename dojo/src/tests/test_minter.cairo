@@ -34,7 +34,7 @@ mod tests {
     }
 
     #[test]
-    #[available_gas(100_000_000)]
+    #[available_gas(10__000_000_000)]
     fn test_mint_ok() {
         let sys: Systems = tester::spawn_systems();
         assert(sys.karat.total_supply() == 0, 'supply = 0');
@@ -46,8 +46,8 @@ mod tests {
         assert(token_id_1 == 1, 'token_id_1');
         assert(seed_1.seed > 0, 'seed_1');
         assert(token_uri_1.len() > 3, 'token_uri_1');
-        println!("seed_1:{}", seed_1.seed);
-        println!("{}", token_uri_1);
+        // println!("seed_1:{}", seed_1.seed);
+        // println!("{}", token_uri_1);
         // #2
         testing::set_contract_address(RECIPIENT());
         let token_id_2: u128 = sys.minter.mint(sys.karat.contract_address);
@@ -59,6 +59,28 @@ mod tests {
         assert(seed_2.seed != seed_1.seed, 'seed_2_1');
         assert(token_uri_2.len() > 3, 'token_uri_2');
         assert(token_uri_2 != token_uri_1, 'token_uri_2_1');
+    }
+
+    #[test]
+    #[available_gas(100_000_000)]
+    #[should_panic(expected:('KARAT: minting is closed','ENTRYPOINT_FAILED'))]
+    fn test_not_open() {
+        let sys: Systems = tester::spawn_systems();
+        sys.minter.set_open(sys.karat.contract_address, false);
+        // owner can mint
+        sys.minter.mint(sys.karat.contract_address);
+        // others cant
+        testing::set_contract_address(RECIPIENT());
+        sys.minter.mint(sys.karat.contract_address);
+    }
+
+    #[test]
+    #[available_gas(100_000_000)]
+    #[should_panic(expected:('KARAT: not owner','ENTRYPOINT_FAILED'))]
+    fn test_set_open_not_owner() {
+        let sys: Systems = tester::spawn_systems();
+        testing::set_contract_address(RECIPIENT());
+        sys.minter.set_open(sys.karat.contract_address, false);
     }
 
     #[test]

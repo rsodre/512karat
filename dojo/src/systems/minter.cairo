@@ -6,12 +6,19 @@ use karat::models::{
 #[dojo::interface]
 trait IMinter {
     fn mint(ref world: IWorldDispatcher, contract_address: ContractAddress) -> u128;
-    fn get_token_data(ref world: IWorldDispatcher, token_id: u128) -> TokenData;
+    fn set_open(ref world: IWorldDispatcher, contract_address: ContractAddress, is_open: bool);
+    fn get_token_data(world: @IWorldDispatcher, token_id: u128) -> TokenData;
+    // fn get_token_svg(ref world: IWorldDispatcher, token_id: u128) -> ByteArray;
+}
+
+#[dojo::interface]
+trait IMinterInternal {
+    fn assert_caller_is_owner(world: @IWorldDispatcher);
 }
 
 #[dojo::interface]
 trait IPainter {
-    fn paint(ref world: IWorldDispatcher, token_id: u128) -> ByteArray;
+    fn paint(world: @IWorldDispatcher, token_id: u128) -> ByteArray;
 }
 
 #[dojo::contract]
@@ -23,15 +30,17 @@ mod minter {
     use karat::systems::karat_token::{IKaratTokenDispatcher, IKaratTokenDispatcherTrait};
     use karat::utils::painter::{painter};
     use karat::models::{
-        config::{Config, ConfigManager, ConfigManagerTrait},
+        config::{Config, ConfigTrait, ConfigManager, ConfigManagerTrait},
         token_data::{TokenData, TokenDataTrait},
         seed::{Seed, SeedTrait},
     };
 
     mod Errors {
         const INVALID_TOKEN_ADDRESS: felt252 = 'KARAT: invalid token address';
+        const MINT_CLOSED: felt252 = 'KARAT: minting is closed';
         const MINTED_OUT: felt252 = 'KARAT: minted out';
         const NOT_AGAIN: felt252 = 'KARAT: dont be greedy!';
+        const NOT_OWNER: felt252 = 'KARAT: not owner';
     }
 
     //---------------------------------------
@@ -84,19 +93,20 @@ mod minter {
             // check availability
             let config: Config = ConfigManagerTrait::new(world).get(contract_address);
             assert(total_supply.low < config.max_supply, Errors::MINTED_OUT);
+            assert(config.is_open, Errors::MINT_CLOSED);
             
             // get next token_id
             let token_id: u256 = (total_supply + 1);
 
             // very simple cool down rule
             // avoid wallets to make consecutive mints
-            // if (token_id > 1) {
-            //     let owner: ContractAddress = karat.owner_of(token_id - 1);
-            //     assert(
-            //         owner != get_caller_address(),
-            //         Errors::NOT_AGAIN,
-            //     )
-            // }
+            if (token_id > 1) {
+                let owner: ContractAddress = karat.owner_of(token_id - 1);
+                assert(
+                    owner != get_caller_address(),
+                    Errors::NOT_AGAIN,
+                )
+            }
 
             // mint!
             karat.mint(get_caller_address(), token_id);
@@ -108,18 +118,33 @@ mod minter {
             // return minted token id
             (token_id.low)
         }
-        fn get_token_data(ref world: IWorldDispatcher, token_id: u128) -> TokenData {
+
+        fn set_open(ref world: IWorldDispatcher, contract_address: ContractAddress, is_open: bool) {
+            self.assert_caller_is_owner();
+            let manager: ConfigManager = ConfigManagerTrait::new(world);
+            let mut config: Config = manager.get(contract_address);
+            config.is_open = is_open;
+            manager.set(config);
+        }
+
+        fn get_token_data(world: @IWorldDispatcher, token_id: u128) -> TokenData {
             (TokenDataTrait::new(world, token_id))
         }
     }
 
+    impl InternalImpl of super::IMinterInternal<ContractState> {
+        #[inline(always)]
+        fn assert_caller_is_owner(world: @IWorldDispatcher) {
+            assert(world.is_owner(get_caller_address(), get_contract_address().into()), Errors::NOT_OWNER);
+        }
+    }
 
     //---------------------------------------
     // IPainter
     //
     #[abi(embed_v0)]
     impl PainterImpl of super::IPainter<ContractState> {
-        fn paint(ref world: IWorldDispatcher, token_id: u128) -> ByteArray {
+        fn paint(world: @IWorldDispatcher, token_id: u128) -> ByteArray {
             let token_data = self.get_token_data(token_id);
             return painter::build_uri(token_data);
         }
