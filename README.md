@@ -31,7 +31,19 @@ sozo init dojo
 * Cloned the Origami [component](https://github.com/dojoengine/origami/blob/v0.7.2/token/src/components/token/erc721/erc721_metadata.cairo): `erc721_metadata.cairo` so we can customize `token_uri()`
 * Generated overlay files for `dojo_init()`
 ```sh
-sozo migrate --generate-overlays
+sozo migrate generate-overlays
+```
+* Edited minter overlay [file](https://github.com/rsodre/512karat/blob/main/dojo/manifests/dev/base/contracts/karat_systems_minter_minter.toml) `karat_systems_minter_minter.toml`:
+```toml
+name = "karat::systems::minter::minter"
+reads = []
+writes = ["Config", "Seed"]
+computed = []
+init_calldata = [
+  "$contract_address:karat::systems::karat_token::karat_token",
+  "512",
+  "1",
+]
 ```
 * Cloned [ConfigManager](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/src/models/config.cairo) from Pistols (originally from [Dope Wars](https://github.com/cartridge-gg/dopewars))
 * Cloned [migrate script](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/migrate), [cairo hasher](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/src/utils/hash.cairo), [cairo seeder](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/dojo/src/systems/seeder.cairo), [styles](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/styles/styles.scss), [misc utils](https://github.com/underware-gg/pistols/tree/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/src/lib/utils) and [cosmetic components](https://github.com/underware-gg/pistols/blob/b4010c442260cd2ca574fc49d7f2fbdc748cf51f/client/src/lib/ui) from [Pistols](https://github.com/underware-gg/pistols).
@@ -60,3 +72,18 @@ Class::D => array!["&#x2595;", "&#x2595;", "&#x2594;", "&#x2594;", "&#x2597;", "
 Class::E => array!["&#x2B55;", "&#x0020;", "&#x0020;", "&#x002E;", "&#x25C7;", "&#x25C6;", "&#x25E2;", "&#x25E4;", "&#x25E5;", "&#x25E3;", "&#x2D54;"].span(), 
 Class::L => array!["&#x0020;", "&#x005F;", "&#x002E;", "&#x26A1;", "&#x2605;", "&#x0074;", "&#x006F;", "&#x006F;", "&#x004C;", "&#x25C6;"].span(), 
 ```
+
+
+#### Deployment
+
+* Moved Dojo setup inder `StarknetProvider` as `DojoSetup`, using connected chain
+* Created `sepolia` profile in `Scarb.toml`
+* Build for Sepolia to generate manifests (Mainnet is the same)
+```sh
+sozo -P sepolia build
+```
+* Created overlay files for Sepolia
+```sh
+sozo -P sepolia migrate generate-overlays
+```
+* Cloned [`dev`](https://github.com/rsodre/512karat/blob/main/dojo/manifests/dev/base/contracts/karat_systems_minter_minter.toml) overlays to [`sepolia`](https://github.com/rsodre/512karat/blob/main/dojo/manifests/sepolia/base/contracts/karat_systems_minter_minter.toml)
