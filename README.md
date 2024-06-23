@@ -6,21 +6,29 @@ For the [ETHGlobal StarkHack](https://ethglobal.com/events/starkhack) hackaton b
 
 code + art: **Roger Mataleone** ([@matalecode](https://x.com/matalecode))
 
-## Current deployment (Slot)
+## Current deployments
 
-### Slot
+### Sepolia
+
+[https://karat.collect-code.com](https://karat.collect-code.com) or 
+[https://512karat.vercel.app](https://512karat.vercel.app)
+
+* Preferred to connect with **Catridge Controller** or **ArgentX**
+* Also supported (but not tested): **Argent Mobile**, **Argent Web Wallet** and **Braavos**.
+
+* Token contract: [Voyager](https://sepolia.voyager.online/contract/0x02ec22a653460527eacb3b74c07eeb0606a9c47db5f450d140a14f0a0a117e76) / [Starkscan](https://sepolia.starkscan.co/contract/0x02ec22a653460527eacb3b74c07eeb0606a9c47db5f450d140a14f0a0a117e76)
+* Minter contract: [Voyager](https://sepolia.voyager.online/contract/0x03bac2791460aec9d2ce62787c07c4d8c728fbc01ccd48f120f47380bd4ea65a) / [Starkscan](https://sepolia.starkscan.co/contract/0x03bac2791460aec9d2ce62787c07c4d8c728fbc01ccd48f120f47380bd4ea65a)
+
+
+### Slot (no client deployed)
 
 * Preferred to connect with **Catridge Controller**
 
-* Connecting with **ArgentX**:
+* Configuration for **ArgentX**:
   * Chain ID: `WP_512KARAT_SLOT`
   * RPC: `https://api.cartridge.gg/x/512karat-slot/katana`
   * Account Class Hash: `0x05400e90f7e0ae78bd02c77cd75527280470e2fe19c54970dd79dc37a9d3645c`
   * Fee Token: `0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7`
-
-### Sepolia
-
-* Connect with **ArgentX** / **Braavos**
 
 
 ## Project structure
@@ -69,6 +77,7 @@ init_calldata = [
 
 #### Client
 
+* Created from the [`starknet-react-app`](https://github.com/dojoengine/dojo.js/tree/main/examples/react/starknet-react-app) example
 * Added [StarknetKit](https://www.starknetkit.com/) connectors with [starknet-react](https://starknet-react.com/)
 * Added [semantic-ui](https://react.semantic-ui.com) + [scss](https://sass-lang.com/)
 * Added [Saira](https://fonts.google.com/specimen/Saira) font from Google fonts
@@ -77,6 +86,9 @@ init_calldata = [
 #### Art
 
 * Token art drafted with [p5js](https://editor.p5js.org/rsodre/sketches/Im7yQgmf5) then ported to Cairo
+  * Feel free to hit Play and try it out
+  * Keys 1 to 6 will change the charset
+  * Any other keys randomize a new token
 * Final image is an SVG fully generated on-chain containing only text (unicode glyphs)
 * When the p5js script runs, it prints the svg compatible character set ready for [Cairo](https://github.com/rsodre/512karat/blob/main/dojo/src/models/class.cairo)
 
