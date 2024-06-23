@@ -68,66 +68,59 @@ mod painter {
     // SVG builder
     //
     fn _svg(token_data: TokenData) -> ByteArray {
-        //---------------------------
-        // Build text tags
-        let class_name: ByteArray = if (token_data.class.is_scaled()) {"SCALED"} else {"NORMAL"};
-        let text_length: usize = if (token_data.class.is_scaled()) {SCALED_SIZE} else {SIZE};
-        let char_set: Span<felt252> = token_data.class.get_char_set();
-        let char_count: usize = char_set.len();
-        let cells: Span<usize> = _make_cells(token_data.seed, char_count);
-        let mut text_tags: ByteArray = "";
-        let mut y: usize = 0;
-        loop {
-            if (y == SIZE) { break; }
-            let mut row: ByteArray = "";
-            let mut x: usize = 0;
-            loop {
-                if (x == SIZE) { break; }
-                let value: @usize = cells.at(y * SIZE + x);
-                row.append_word(*char_set.at(*value), 8);
-                x += 1;
-            };
-            text_tags.append(@format!(
-                "<text class=\"{}\" x=\"0\" y=\"{}\" textLength=\"{}\">{}</text>",
-                    class_name,
-                    y,
-                    text_length,
-                    row,
-            ));
-            y += 1;
-        };
-        //----------------
-        // Build tags
-        //
-        let svg_tag = format!(
+        let mut result: ByteArray = "";
+        let _WIDTH: usize = (GAP + SIZE + GAP);
+        result.append(@format!(
             "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" width=\"{}\" height=\"{}\" viewBox=\"-{} -{} {} {}\">",
                 RESOLUTION,
                 RESOLUTION,
                 GAP,
                 GAP,
-                GAP + SIZE + GAP,
-                GAP + SIZE + GAP,
-        );
-        let style_tag = format!(
-            "<style>.BG{{fill:#00000b;}}.NORMAL{{letter-spacing:0;}}.SCALED{{transform:scaleX(1.667);}}text{{fill:#c2e0fd;font-size:1px;font-family:'Courier New',monospace;dominant-baseline:hanging;shape-rendering:crispEdges;white-space:pre;cursor:default;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}}</style>",
-        );
-        let bg_tag = format!(
-            "<rect class=\"BG\" x=\"-{}\" y=\"-{}\" width=\"{}\" height=\"{}\" />",
+                _WIDTH,
+                _WIDTH,
+        ));
+        result.append(@"<style>.BG{fill:#00000b;}.NORMAL{letter-spacing:0;}.SCALED{transform:scaleX(1.667);}text{fill:#c2e0fd;font-size:1px;font-family:'Courier New',monospace;dominant-baseline:hanging;shape-rendering:crispEdges;white-space:pre;cursor:default;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>");
+        result.append(@format!(
+            "<g><rect class=\"BG\" x=\"-{}\" y=\"-{}\" width=\"{}\" height=\"{}\" />",
                 GAP,
                 GAP,
-                GAP + SIZE + GAP,
-                GAP + SIZE + GAP,
-        );
-        //----------------
-        // Build svg
+                _WIDTH,
+                _WIDTH,
+        ));
+        //---------------------------
+        // Build text tags
         //
-        (format!(
-            "{}{}<g>{}{}</g></svg>",
-                svg_tag,
-                style_tag,
-                bg_tag,
-                text_tags,
-        ))
+        let class_name: ByteArray = if (token_data.class.is_scaled()) {"SCALED"} else {"NORMAL"};
+        let text_length: usize = if (token_data.class.is_scaled()) {SCALED_SIZE} else {SIZE};
+        let char_set: Span<felt252> = token_data.class.get_char_set();
+        let char_count: usize = char_set.len();
+        let cells: Span<usize> = _make_cells(token_data.seed, char_count);
+        let mut y: usize = 0;
+        loop {
+            if (y == SIZE) { break; }
+            // open <text>
+            result.append(@format!(
+                "<text class=\"{}\" x=\"0\" y=\"{}\" textLength=\"{}\">",
+                    class_name,
+                    y,
+                    text_length,
+            ));
+            let mut x: usize = 0;
+            loop {
+                if (x == SIZE) { break; }
+                let value: @usize = cells.at(y * SIZE + x);
+                result.append_word(*char_set.at(*value), 8);
+                x += 1;
+            };
+            // close <text>
+            result.append(@"</text>");
+            y += 1;
+        };
+        //----------------
+        // close it!
+        //
+        result.append(@"</g></svg>");
+        (result)
     }
 
 
