@@ -1,0 +1,30 @@
+kind = "DojoModel"
+class_hash = "0x22c65e8e896257819191be93cbe76be316102b9314811b88aa8395646958073"
+original_class_hash = "0x22c65e8e896257819191be93cbe76be316102b9314811b88aa8395646958073"
+abi = "manifests/mainnet/abis/base/models/karat_models_config_config.json"
+name = "karat::models::config::config"
+
+[[members]]
+name = "token_address"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "minter_address"
+type = "ContractAddress"
+key = false
+
+[[members]]
+name = "painter_address"
+type = "ContractAddress"
+key = false
+
+[[members]]
+name = "max_supply"
+type = "u128"
+key = false
+
+[[members]]
+name = "is_open"
+type = "bool"
+key = false
