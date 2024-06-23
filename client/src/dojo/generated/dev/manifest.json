@@ -1005,7 +1005,7 @@
     "seed": "karat",
     "metadata": {
       "profile_name": "dev",
-      "rpc_url": "http://localhost:5050/"
+      "rpc_url": "https://starknet-sepolia.blastapi.io/e8d77724-eb9a-4f3c-8eac-fc92c4d9938c/rpc/v0_6"
     },
     "name": "dojo::world::world"
   },
@@ -1894,8 +1894,8 @@
     {
       "kind": "DojoContract",
       "address": "0x3bac2791460aec9d2ce62787c07c4d8c728fbc01ccd48f120f47380bd4ea65a",
-      "class_hash": "0x52a90dbd4d7bf4aba4cb901750b7a1fc14bca867c0bd496f3f3901588b2180e",
-      "original_class_hash": "0x52a90dbd4d7bf4aba4cb901750b7a1fc14bca867c0bd496f3f3901588b2180e",
+      "class_hash": "0x6a9bc726ad88adf0bcd9dc4fa2e30474470c6d59aede1e9581ed3ba02022dfa",
+      "original_class_hash": "0x6a9bc726ad88adf0bcd9dc4fa2e30474470c6d59aede1e9581ed3ba02022dfa",
       "base_class_hash": "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46",
       "abi": [
         {
