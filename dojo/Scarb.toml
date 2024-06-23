@@ -1,8 +1,8 @@
 [tool.dojo.world]
 name = "512 Karat"
 description = "Generative Art made with Dojo."
-cover_uri = "file://assets/cover.png"
-icon_uri = "file://assets/icon.png"
+icon_uri = "https://raw.githubusercontent.com/rsodre/512karat/main/assets/logo.png"
+cover_uri = "https://raw.githubusercontent.com/rsodre/512karat/main/assets/splash.png"
 website = "https://github.com/rsodre/512karat"
 
 [tool.dojo.world.socials]
@@ -63,6 +63,12 @@ rpc_url = "http://localhost:5050"
 world_address = "0x3e42a9746e6c8f868f71a4353ec5d198f0dd1af26f95bd51e2e005358ae14fd"
 account_address = "0xb3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca"
 private_key = "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a"
+
+[profile.slot.tool.dojo.env]
+rpc_url = "https://api.cartridge.gg/x/512karat-slot/katana"
+world_address = "0x3e42a9746e6c8f868f71a4353ec5d198f0dd1af26f95bd51e2e005358ae14fd"
+account_address = "0x5c386e2791e4ba6268c80d2a6dee77e0de33be5bbf4a05a603dac9cfb9cecb3"
+private_key = "0x572781c71db23ea3b4b701ff11764919c8d7917d8460aebd35196309fed19b8"
 
 [profile.sepolia.tool.dojo.env]
 rpc_url = "https://my.provider.com/starknet/sepolia/rpc"

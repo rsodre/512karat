@@ -8,7 +8,7 @@ import { StarknetConfig, argent, braavos, publicProvider } from "@starknet-react
 import { mainnet, sepolia } from "@starknet-react/chains";
 import { ArgentMobileConnector } from "starknetkit/argentMobile";
 import { WebWalletConnector } from "starknetkit/webwallet";
-import { katana, katanaProvider, genericProvider } from "./dojo/katana.tsx";
+import { katana, slot, katanaProvider, genericProvider } from "./dojo/katana.tsx";
 import { makeController } from './components/useController.tsx';
 import { Manifest } from '@dojoengine/core';
 import manifest from "./dojo/generated//dev/manifest.json";
@@ -31,8 +31,9 @@ async function init() {
 
   const chains = [
     katana,
+    slot,
     sepolia,
-    mainnet,
+    // mainnet,
   ];
 
   const connectors = [

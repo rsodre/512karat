@@ -33,14 +33,22 @@ name = "karat::systems::karat_token::karat_token"
 
 [[contracts]]
 kind = "DojoContract"
+address = "0x3bac2791460aec9d2ce62787c07c4d8c728fbc01ccd48f120f47380bd4ea65a"
 class_hash = "0x6a9bc726ad88adf0bcd9dc4fa2e30474470c6d59aede1e9581ed3ba02022dfa"
 original_class_hash = "0x6a9bc726ad88adf0bcd9dc4fa2e30474470c6d59aede1e9581ed3ba02022dfa"
-base_class_hash = "0x0"
+base_class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
 abi = "manifests/slot/abis/deployments/contracts/karat_systems_minter_minter.json"
 reads = []
-writes = []
+writes = [
+    "Config",
+    "Seed",
+]
 computed = []
-init_calldata = []
+init_calldata = [
+    "$contract_address:karat::systems::karat_token::karat_token",
+    "512",
+    "1",
+]
 name = "karat::systems::minter::minter"
 
 [[models]]

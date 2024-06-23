@@ -6,6 +6,22 @@ For the [ETHGlobal StarkHack](https://ethglobal.com/events/starkhack) hackaton b
 
 code + art: **Roger Mataleone** ([@matalecode](https://x.com/matalecode))
 
+## Current deployment (Slot)
+
+### Slot
+
+* Preferred to connect with **Catridge Controller**
+
+* Connecting with **ArgentX**:
+  * Chain ID: `WP_512KARAT_SLOT`
+  * RPC: `https://api.cartridge.gg/x/512karat-slot/katana`
+  * Account Class Hash: `0x05400e90f7e0ae78bd02c77cd75527280470e2fe19c54970dd79dc37a9d3645c`
+  * Fee Token: `0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7`
+
+### Sepolia
+
+* Connect with **ArgentX** / **Braavos**
+
 
 ## Project structure
 
@@ -137,6 +153,10 @@ slot deployments create <SERVICE_NAME> torii --version v0.7.2 --world 0x0545c8af
 * If for any reasons we need to delete and recreate Torii
 ```sh
 slot deployments delete 512karat torii
+```
+* Clear env after all done...
+```sh
+source .env.clear
 ```
 
 

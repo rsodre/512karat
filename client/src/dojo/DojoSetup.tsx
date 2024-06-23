@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { useNetwork } from "@starknet-react/core";
 import { setup, SetupResult } from "./generated/setup.ts";
 import { DojoProvider } from "./DojoContext.tsx";
-import { dojoConfigKatana, dojoConfigSepolia } from "./dojoConfig.ts";
+import { dojoConfigKatana, dojoConfigSepolia, dojoConfigSlot } from "./dojoConfig.ts";
 
 export default function DojoSetup({
   children,
@@ -21,7 +21,10 @@ export default function DojoSetup({
   useEffect(() => {
     const _setup = async () => {
       console.log(`Setup Dojo for chain...`, chain)
-      const config = chain.network == 'sepolia' ? dojoConfigSepolia : dojoConfigKatana
+      const config =
+        chain.network == 'sepolia' ? dojoConfigSepolia
+          : chain.network == 'slot' ? dojoConfigSlot
+            : dojoConfigKatana
       const result = await setup(config);
       console.log(`SetupResult:`, result)
       setSetupResult(result);
