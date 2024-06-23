@@ -43,10 +43,9 @@ function ConnectButtons({
 }: {
   walletHelp: boolean
 }) {
-  const { connect, connectors } = useConnect()
   const { isConnecting } = useAccount()
-
-  console.log(connectors)
+  const { connect, connectors } = useConnect()
+  // console.log(`connectors:`, connectors)
   return (
     <Grid>
         {connectors.map((connector) => {

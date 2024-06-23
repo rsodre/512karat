@@ -3,35 +3,47 @@ import { useConnect, useAccount, useDisconnect } from "@starknet-react/core";
 import { AddressShort } from "./AddressShort";
 import { useOpener } from "../hooks/useOpener";
 import ConnectModal from "./ConnectModal";
+import { feltToString } from "../utils/starknet";
 
 const Row = Grid.Row
 const Col = Grid.Column
 
-export default function Connect() {
-  const { connect, connectors } = useConnect();
-  const { disconnect } = useDisconnect();
-  const { address, isConnected } = useAccount();
+export function Connect() {
+  const { isConnected } = useAccount();
   const opener = useOpener()
-
-  if (isConnected) {
-    return (
-      <Grid>
-        <Row columns={'equal'}>
-          <Col textAlign="left">
-            <Button onClick={() => disconnect()}>Disconnect</Button>
-          </Col>
-          <Col textAlign="right" verticalAlign="middle">
-            <AddressShort address={address ?? 0} />
-          </Col>
-        </Row>
-      </Grid>
-    )
-  }
 
   return (
     <div>
-      <Button onClick={() => opener.open()}>Connect</Button>
+      <Button disabled={isConnected} onClick={() => opener.open()}>Connect</Button>
       <ConnectModal opener={opener} />
     </div>
   );
+}
+
+export function Disconnect() {
+  const { disconnect } = useDisconnect();
+  const { isConnected } = useAccount();
+  return (
+    <div>
+      <Button disabled={!isConnected} onClick={() => disconnect()}>Disconnect</Button>
+    </div>
+  )
+}
+
+export function ConnectedHeader() {
+  const { disconnect } = useDisconnect();
+  const { address, chainId } = useAccount();
+
+  return (
+    <Grid>
+      <Row columns={'equal'}>
+        <Col textAlign="left" verticalAlign="middle">
+          <AddressShort address={address ?? 0} />
+        </Col>
+        <Col textAlign="right" verticalAlign="middle">
+          {chainId ? feltToString(chainId) : '[chain]'}
+        </Col>
+      </Row>
+    </Grid>
+  )
 }

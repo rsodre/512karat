@@ -1,8 +1,8 @@
-import { Container, Grid } from "semantic-ui-react";
+import { Container, Divider, Grid } from "semantic-ui-react";
 import { useAccount } from "@starknet-react/core";
 import { useDebug } from "../hooks/useDebug";
 import { useTokenId } from "../hooks/useTokenId";
-import Connect from "./Connect";
+import { Connect, Disconnect, ConnectedHeader } from "./Connect";
 import Mint from "./Mint";
 import TokenRows from "./Token";
 
@@ -37,7 +37,7 @@ export default function App() {
         {isConnected && <>
           <Row columns={'equal'}>
             <Col>
-              <Connect />
+              <ConnectedHeader />
             </Col>
           </Row>
           <Row>
@@ -51,6 +51,21 @@ export default function App() {
         </>}
 
         {(isDebug || isConnected) && <TokenRows token_id={token_id} />}
+
+        {isConnected && <>
+          <Row columns={'equal'}>
+            <Col>
+              <Divider hidden />
+              <Disconnect />
+            </Col>
+          </Row>
+        </>}
+
+        <Row columns={'equal'}>
+          <Col textAlign="center">
+            <Divider hidden />
+          </Col>
+        </Row>
 
       </Grid>
 

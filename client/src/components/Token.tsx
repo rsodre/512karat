@@ -49,7 +49,7 @@ export default function TokenRows({
         </Row>
       </>}
       {tokenExists && <>
-        <Row columns={'equal'}>
+        <Row columns={'equal'} className="AttributeRow">
           <Col textAlign="left">
             <h5>{name}</h5>
           </Col>
@@ -67,12 +67,6 @@ export default function TokenRows({
           </Col>
         </Row>
       </>}
-
-      <Row columns={'equal'}>
-        <Col textAlign="center">
-          <Divider hidden />
-        </Col>
-      </Row>
 
     </>
   );
