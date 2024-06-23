@@ -1,8 +1,8 @@
 import { Container, Divider, Grid } from "semantic-ui-react";
 import { useAccount } from "@starknet-react/core";
 import { useDebug } from "../hooks/useDebug";
-import { useTokenId } from "../hooks/useTokenId";
 import { Connect, Disconnect, ConnectedHeader } from "./Connect";
+import DojoSetup from "../dojo/DojoSetup";
 import Mint from "./Mint";
 import TokenRows from "./Token";
 
@@ -13,14 +13,13 @@ export default function App() {
   const { isDebug } = useDebug();
   const { address, isConnected } = useAccount();
 
-  const { token_id } = useTokenId()
-
   return (
     <Container text className="CenteredContainer">
-      <Grid>
-        {/* _.⚡★tooL◆ */}
 
-        {!isConnected && <>
+      {/* _.⚡★tooL◆ */}
+
+      {!isConnected &&
+        <Grid>
           <Row columns={'equal'}>
             <Col>
               <h1>512 KARAT</h1>
@@ -29,46 +28,43 @@ export default function App() {
           <Row columns={'equal'}>
             <Col>
               <Connect />
-              {isDebug && <Mint />}
+              {/* {isDebug && <Mint />} */}
             </Col>
           </Row>
-        </>}
+        </Grid>
+      }
 
-        {isConnected && <>
-          <Row columns={'equal'}>
-            <Col>
-              <ConnectedHeader />
-            </Col>
-          </Row>
-          <Row>
-            <Col textAlign="left" width={10}>
-              <h1>512 KARAT</h1>
-            </Col>
-            <Col textAlign="right" width={6}>
-              <Mint />
-            </Col>
-          </Row>
-        </>}
+      {isConnected &&
+        <DojoSetup>
+          <Grid>
+            <Row columns={'equal'}>
+              <Col>
+                <ConnectedHeader />
+              </Col>
+            </Row>
+            <Row>
+              <Col textAlign="left" width={10}>
+                <h1>512 KARAT</h1>
+              </Col>
+              <Col textAlign="right" width={6}>
+                <Mint />
+              </Col>
+            </Row>
 
-        {(isDebug || isConnected) && <TokenRows token_id={token_id} />}
+            <TokenRows />
 
-        {isConnected && <>
-          <Row columns={'equal'}>
-            <Col>
-              <Divider hidden />
-              <Disconnect />
-            </Col>
-          </Row>
-        </>}
+            <Row columns={'equal'}>
+              <Col>
+                <Divider hidden />
+                <Disconnect />
+              </Col>
+            </Row>
+          </Grid>
+        </DojoSetup>
+      }
 
-        <Row columns={'equal'}>
-          <Col textAlign="center">
-            <Divider hidden />
-          </Col>
-        </Row>
+      <Divider hidden />
 
-      </Grid>
-
-    </Container>
+    </Container >
   );
 }

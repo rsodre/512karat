@@ -74,16 +74,77 @@ Class::L => array!["&#x0020;", "&#x005F;", "&#x002E;", "&#x26A1;", "&#x2605;", "
 ```
 
 
-#### Deployment
+#### Deployment steps
 
-* Moved Dojo setup inder `StarknetProvider` as `DojoSetup`, using connected chain
-* Created `sepolia` profile in `Scarb.toml`
-* Build for Sepolia to generate manifests (Mainnet is the same)
+Steps for migrating to Sepolia (Mainnet is the same)
+
+* Create `sepolia` profile in [`Scarb.toml`](https://github.com/rsodre/512karat/blob/main/dojo/Scarb.toml)
+```
+[profile.sepolia.tool.dojo.env]
+rpc_url = "https://my.provider.com/starknet/sepolia/rpc"
+world_address = "0x3e42a9746e6c8f868f71a4353ec5d198f0dd1af26f95bd51e2e005358ae14fd"
+# account_address = "" # env: DOJO_ACCOUNT_ADDRESS
+# private_key = ""     # env: DOJO_PRIVATE_KEY
+```
+* Build for Sepolia to generate manifests
 ```sh
 sozo -P sepolia build
 ```
-* Created overlay files for Sepolia
+* Create overlay files for Sepolia
 ```sh
 sozo -P sepolia migrate generate-overlays
 ```
 * Cloned [`dev`](https://github.com/rsodre/512karat/blob/main/dojo/manifests/dev/base/contracts/karat_systems_minter_minter.toml) overlays to [`sepolia`](https://github.com/rsodre/512karat/blob/main/dojo/manifests/sepolia/base/contracts/karat_systems_minter_minter.toml)
+* Create `.env.sepolia` containing your RPC provider, account and private key
+```sh
+# usage: source .env.sepolia
+export STARKNET_RPC_URL=<YOUR_RPC_VERSION_0.6>
+export DOJO_ACCOUNT_ADDRESS=<YOUR_ACCOUNT_ADDRESS>
+export DOJO_PRIVATE_KEY=<YOUR_ACCOUNT_PRIVATE_KEY>
+```
+* Load `.env.sepolia`
+```sh
+source .env.sepolia
+```
+* Check migration, no errors!
+```sh
+sozo -P sepolia migrate plan
+```
+* Execute migration using the [`migrate`](https://github.com/rsodre/512karat/blob/main/dojo/migrate) script...
+```sh
+./migrate sepolia
+```
+
+Now we need to create a torii server to index our world...
+
+* Install [slot](https://github.com/cartridge-gg/slot) or update it
+```sh
+slotup
+```
+* Authorize
+```sh
+slot auth login
+```
+* Create Torii service...
+  * `SERVICE_NAME` can be the name of the game/dapp. Once you create it, you own that name.
+  * The version is your Dojo version
+  * Fill in your own World address
+  * Check the contracts deployment transaction to use as starting block
+  * Take a note of the endpoints after it is deployed.
+```sh
+slot deployments create <SERVICE_NAME> torii --version v0.7.2 --world 0x0545c8aff15426c3d43b3ba8fd45c61870b30ca4ec0bfbd69193facee4c7b97c --rpc <RPC_URL> --start-block 75600 --index-pending true
+```
+* If for any reasons we need to delete and recreate Torii
+```sh
+slot deployments delete 512karat torii
+```
+
+
+
+#### Multichain client notes
+
+* The `migrate` script is copying manifests to `/client/src/dojo/generated/<PROFILE>`, each chain needs to use their own manifest!
+* Adapted `dojoConfig` to create different setups for each chain, adding the torii endpoint.
+* Moved Dojo setup to new `<DojoSetup>`, and inside `<App>`, only when user is connected, using connected chain
+
+

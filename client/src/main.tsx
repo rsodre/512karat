@@ -4,15 +4,14 @@ import './styles/styles.scss'
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { StarknetConfig, argent, braavos } from "@starknet-react/core";
+import { StarknetConfig, argent, braavos, publicProvider } from "@starknet-react/core";
 import { mainnet, sepolia } from "@starknet-react/chains";
 import { ArgentMobileConnector } from "starknetkit/argentMobile";
 import { WebWalletConnector } from "starknetkit/webwallet";
-import { setup } from "./dojo/generated/setup.ts";
-import { DojoProvider } from "./dojo/DojoContext.tsx";
-import { dojoConfig } from "./dojo/dojoConfig.ts";
-import { provider, katana } from "./dojo/katana.tsx";
+import { katana, katanaProvider, genericProvider } from "./dojo/katana.tsx";
 import { makeController } from './components/useController.tsx';
+import { Manifest } from '@dojoengine/core';
+import manifest from "./dojo/generated//dev/manifest.json";
 import App from "./components/App.tsx";
 
 const router = createBrowserRouter([
@@ -27,14 +26,13 @@ async function init() {
   if (!rootElement) throw new Error("React root not found");
   const root = ReactDOM.createRoot(rootElement as HTMLElement);
 
-  const setupResult = await setup(dojoConfig);
-
-  const controller = makeController(setupResult.manifest)
+  // TODO: should be by chain!
+  const controller = makeController(manifest as Manifest)
 
   const chains = [
     katana,
-    // sepolia,
-    // mainnet,
+    sepolia,
+    mainnet,
   ];
 
   const connectors = [
@@ -51,13 +49,12 @@ async function init() {
     <React.StrictMode>
       <StarknetConfig
         chains={chains}
-        provider={() => provider(katana)}
+        // provider={() => katanaProvider(katana)}
+        provider={genericProvider()}
         connectors={connectors}
         autoConnect={false}
       >
-        <DojoProvider value={setupResult}>
-          <RouterProvider router={router} />
-        </DojoProvider>
+        <RouterProvider router={router} />
       </StarknetConfig>
     </React.StrictMode>
   );

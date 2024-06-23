@@ -1,5 +1,5 @@
 import { Divider, Grid, Image } from "semantic-ui-react";
-import { BigNumberish } from "starknet";
+import { useTokenId } from "../hooks/useTokenId";
 import { useTokenUri } from "../hooks/useTokenUri";
 import { useTokenOwner, useTotalSupply } from "../hooks/useToken";
 import { AddressShort } from "./AddressShort";
@@ -8,11 +8,8 @@ import Navigation from "./Navigation";
 const Row = Grid.Row
 const Col = Grid.Column
 
-export default function TokenRows({
-  token_id,
-}: {
-  token_id: BigNumberish
-}) {
+export default function TokenRows() {
+  const { token_id } = useTokenId()
   const { tokenExists, name, image, attributes, isLoading } = useTokenUri(token_id);
   const { ownerAddress } = useTokenOwner(token_id);
   const { total_supply } = useTotalSupply()

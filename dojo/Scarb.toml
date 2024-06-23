@@ -63,3 +63,15 @@ rpc_url = "http://localhost:5050"
 world_address = "0x3e42a9746e6c8f868f71a4353ec5d198f0dd1af26f95bd51e2e005358ae14fd"
 account_address = "0xb3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca"
 private_key = "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a"
+
+[profile.sepolia.tool.dojo.env]
+rpc_url = "https://my.provider.com/starknet/sepolia/rpc"
+world_address = "0x3e42a9746e6c8f868f71a4353ec5d198f0dd1af26f95bd51e2e005358ae14fd"
+# account_address = "" # env: DOJO_ACCOUNT_ADDRESS
+# private_key = ""     # env: DOJO_PRIVATE_KEY
+
+[profile.mainnet.tool.dojo.env]
+rpc_url = "https://my.provider.com/starknet/mainnet/rpc"
+world_address = "0x3e42a9746e6c8f868f71a4353ec5d198f0dd1af26f95bd51e2e005358ae14fd"
+# account_address = "" # env: DOJO_ACCOUNT_ADDRESS
+# private_key = ""     # env: DOJO_PRIVATE_KEY

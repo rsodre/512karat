@@ -1,6 +1,6 @@
 import { jsonRpcProvider } from "@starknet-react/core";
 import { Chain } from "@starknet-react/chains";
-import { dojoConfig } from "./dojoConfig";
+import { dojoConfigKatana } from "./dojoConfig";
 
 export const katana: Chain = {
   id: BigInt(420),
@@ -24,9 +24,22 @@ export const katana: Chain = {
 };
 
 function rpc(chain: Chain) {
+  console.log(`KATANA RPC chain:`, chain)
   return {
-    nodeUrl: dojoConfig.rpcUrl,
+    nodeUrl: dojoConfigKatana.rpcUrl,
   };
 }
 
-export const provider = jsonRpcProvider({ rpc });
+export const katanaProvider = jsonRpcProvider({ rpc });
+
+export function genericProvider() {
+  return jsonRpcProvider({
+    rpc: (chain) => {
+      const nodeUrl = chain.rpcUrls.default.http[0] ?? chain.rpcUrls.public.http[0];
+      console.warn(`GENERIC RPC:`, nodeUrl, chain);
+      return {
+        nodeUrl,
+      }
+    },
+  });
+}

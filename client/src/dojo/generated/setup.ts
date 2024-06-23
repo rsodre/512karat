@@ -16,6 +16,7 @@ export type SetupResult = Awaited<ReturnType<typeof setup>>;
 
 export async function setup({ ...config }: DojoConfig) {
   // torii client
+  console.log(`SETUP config:`, config)
   const toriiClient = await torii.createClient([], {
     rpcUrl: config.rpcUrl,
     toriiUrl: config.toriiUrl,
