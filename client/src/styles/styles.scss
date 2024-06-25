@@ -875,21 +875,18 @@ td {
 // <Modal>
 .ui.modal {
   @extend ._round_border_inactive;
+  border: 0!important;
 }
 .ui.modal>.header {
   // @extend .Title;
   font-family: $font-family;
   font-size: 2.5rem!important;
   color: $color-text;
-  border-bottom: $border-hr;
   padding: 0.2em;
 }
 .ui.modal>.header:not(.ui) {
   padding: 0.25em 0.5em;
   height: 2em;
-}
-.ui.modal>.actions {
-  border-top: $border-hr;
 }
 .ui.modal,
 .ui.modal>.header,

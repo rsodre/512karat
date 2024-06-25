@@ -19,7 +19,7 @@ export const useMint = () => {
   const { total_supply } = useTotalSupply()
 
   const [isMinting, setIsMinting] = useState(false);
-  const [mintingTokenId, setMintingTokenId] = useState<number>();
+  const [mintingTokenId, setMintingTokenId] = useState(0);
   const _mint = () => {
     if (account && !isMinting) {
       setIsMinting(true);
@@ -28,14 +28,14 @@ export const useMint = () => {
         // wait supply to change...
       }).catch((e) => {
         console.error(`mint error:`, e);
-        setMintingTokenId(undefined);
+        setMintingTokenId(0);
         setIsMinting(false);
       });
     }
   }
 
   useEffect(() => {
-    if (isMinting && mintingTokenId == total_supply) {
+    if (isMinting && total_supply >= mintingTokenId) {
       // ...supply changed, to to token!
       setIsMinting(false);
       goToTokenPage(mintingTokenId, total_supply);
@@ -46,6 +46,7 @@ export const useMint = () => {
 
   const { ownerAddress: lastOwnerAddress } = useTokenOwner(total_supply);
   const isCoolingDown = useMemo(() => (account && canMint && bigintEquals(lastOwnerAddress, account.address)), [account, canMint, lastOwnerAddress])
+  // const isCoolingDown = false;
 
   return {
     canMint: (canMint && !isCoolingDown),
