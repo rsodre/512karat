@@ -4,10 +4,12 @@ import { useDebug } from "../hooks/useDebug";
 
 export default function Mint() {
   const { isDebug } = useDebug();
-  const { canMint, isCoolingDown, mint } = useMint()
+  const { canMint, mint, isMinting, isCoolingDown } = useMint()
   return (
     <>
-      <Button disabled={!canMint && !isDebug} onClick={() => mint?.()}>{isCoolingDown ? 'Cooling down' : 'Mint'}</Button>
+      <Button disabled={!canMint && !isDebug} onClick={() => mint?.()}>
+        {isMinting ? 'Minting...' : isCoolingDown ? 'Cooling Down' : 'Mint'}
+      </Button>
     </>
   );
 }
