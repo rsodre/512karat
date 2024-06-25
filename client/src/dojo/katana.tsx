@@ -1,6 +1,6 @@
 import { jsonRpcProvider } from "@starknet-react/core";
 import { Chain } from "@starknet-react/chains";
-import { dojoConfigKatana } from "./dojoConfig";
+import { getDojoConfig } from "./dojoConfig";
 import { stringToFelt } from "../utils/starknet";
 
 export const katana: Chain = {
@@ -48,7 +48,7 @@ export const slot: Chain = {
 function rpc(chain: Chain) {
   console.log(`KATANA RPC chain:`, chain)
   return {
-    nodeUrl: dojoConfigKatana.rpcUrl,
+    nodeUrl: getDojoConfig(chain).rpcUrl,
   };
 }
 
