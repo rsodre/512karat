@@ -4,15 +4,19 @@ import './styles/styles.scss'
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { StarknetConfig, argent, braavos, publicProvider } from "@starknet-react/core";
+import { StarknetConfig, argent, braavos, injected, publicProvider } from "@starknet-react/core";
 import { mainnet, sepolia } from "@starknet-react/chains";
 import { ArgentMobileConnector } from "starknetkit/argentMobile";
 import { WebWalletConnector } from "starknetkit/webwallet";
+import { StarknetWindowObject } from "get-starknet-core";
+import { RpcProvider } from 'starknet';
 import { katana, slot, katanaProvider, genericProvider } from "./dojo/katana.tsx";
+import { DojoPredeployedStarknetWindowObject, PredeployedManager } from '@dojoengine/create-burner'
 import { makeController } from './components/useController.tsx';
 import { Manifest } from '@dojoengine/core';
 import manifest from "./dojo/generated//dev/manifest.json";
 import App from "./components/App.tsx";
+import { dojoConfigKatana, getPredeployedAccounts } from './dojo/dojoConfig.ts';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +40,17 @@ async function init() {
     // mainnet,
   ];
 
+  // create Katana connector for testing
+  const predeployedManager = new PredeployedManager({
+    rpcProvider: new RpcProvider({ nodeUrl: dojoConfigKatana.rpcUrl }),
+    predeployedAccounts: getPredeployedAccounts(dojoConfigKatana),
+  });
+  await predeployedManager.init();
+  // cloned from usePredeployedWindowObject()...
+  const starknetWindowObject = new DojoPredeployedStarknetWindowObject(predeployedManager);
+  const key = `starknet_${starknetWindowObject.id}`;
+  (window as any)[key as string] = starknetWindowObject as StarknetWindowObject;
+
   const connectors = [
     controller,
     argent(),
@@ -44,6 +59,7 @@ async function init() {
     // new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
     new WebWalletConnector({ url: "https://web.argent.xyz" }),
     new ArgentMobileConnector(),
+    injected({ id: starknetWindowObject.id }),
   ];
 
   root.render(
