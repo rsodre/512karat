@@ -1005,7 +1005,7 @@
     "seed": "karat",
     "metadata": {
       "profile_name": "dev",
-      "rpc_url": "https://starknet-sepolia.blastapi.io/e8d77724-eb9a-4f3c-8eac-fc92c4d9938c/rpc/v0_6"
+      "rpc_url": "http://localhost:5050/"
     },
     "name": "dojo::world::world"
   },
@@ -1020,8 +1020,8 @@
     {
       "kind": "DojoContract",
       "address": "0x2ec22a653460527eacb3b74c07eeb0606a9c47db5f450d140a14f0a0a117e76",
-      "class_hash": "0x7fc5730fa6ae6281da230acee7af1921057cab8cabc4af28d8183b9c0630df",
-      "original_class_hash": "0x7fc5730fa6ae6281da230acee7af1921057cab8cabc4af28d8183b9c0630df",
+      "class_hash": "0x4d75c336cbd11166323c40d904a7ca9872c1ff9f83b0c1de5a3bb8debac7640",
+      "original_class_hash": "0x4d75c336cbd11166323c40d904a7ca9872c1ff9f83b0c1de5a3bb8debac7640",
       "base_class_hash": "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46",
       "abi": [
         {
@@ -1845,42 +1845,42 @@
             {
               "name": "InitializableEvent",
               "type": "token::components::security::initializable::initializable_component::Event",
-              "kind": "nested"
+              "kind": "flat"
             },
             {
               "name": "ERC721ApprovalEvent",
               "type": "token::components::token::erc721::erc721_approval::erc721_approval_component::Event",
-              "kind": "nested"
+              "kind": "flat"
             },
             {
               "name": "ERC721BalanceEvent",
               "type": "token::components::token::erc721::erc721_balance::erc721_balance_component::Event",
-              "kind": "nested"
+              "kind": "flat"
             },
             {
               "name": "ERC721BurnableEvent",
               "type": "token::components::token::erc721::erc721_burnable::erc721_burnable_component::Event",
-              "kind": "nested"
+              "kind": "flat"
             },
             {
               "name": "ERC721EnumerableEvent",
               "type": "token::components::token::erc721::erc721_enumerable::erc721_enumerable_component::Event",
-              "kind": "nested"
+              "kind": "flat"
             },
             {
               "name": "ERC721MintableEvent",
               "type": "token::components::token::erc721::erc721_mintable::erc721_mintable_component::Event",
-              "kind": "nested"
+              "kind": "flat"
             },
             {
               "name": "ERC721OwnerEvent",
               "type": "token::components::token::erc721::erc721_owner::erc721_owner_component::Event",
-              "kind": "nested"
+              "kind": "flat"
             },
             {
               "name": "ERC721MetadataEvent",
               "type": "karat::systems::metadata::erc721_metadata_component::Event",
-              "kind": "nested"
+              "kind": "flat"
             }
           ]
         }
@@ -1894,8 +1894,8 @@
     {
       "kind": "DojoContract",
       "address": "0x3bac2791460aec9d2ce62787c07c4d8c728fbc01ccd48f120f47380bd4ea65a",
-      "class_hash": "0x6a9bc726ad88adf0bcd9dc4fa2e30474470c6d59aede1e9581ed3ba02022dfa",
-      "original_class_hash": "0x6a9bc726ad88adf0bcd9dc4fa2e30474470c6d59aede1e9581ed3ba02022dfa",
+      "class_hash": "0xecdb9b73b6cdaeea32aa1f5335944580a36e782fc821878f2af7d78acd35ea",
+      "original_class_hash": "0xecdb9b73b6cdaeea32aa1f5335944580a36e782fc821878f2af7d78acd35ea",
       "base_class_hash": "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46",
       "abi": [
         {
