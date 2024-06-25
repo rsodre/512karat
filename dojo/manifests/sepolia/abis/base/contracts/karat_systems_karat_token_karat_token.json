@@ -820,42 +820,42 @@
       {
         "name": "InitializableEvent",
         "type": "token::components::security::initializable::initializable_component::Event",
-        "kind": "nested"
+        "kind": "flat"
       },
       {
         "name": "ERC721ApprovalEvent",
         "type": "token::components::token::erc721::erc721_approval::erc721_approval_component::Event",
-        "kind": "nested"
+        "kind": "flat"
       },
       {
         "name": "ERC721BalanceEvent",
         "type": "token::components::token::erc721::erc721_balance::erc721_balance_component::Event",
-        "kind": "nested"
+        "kind": "flat"
       },
       {
         "name": "ERC721BurnableEvent",
         "type": "token::components::token::erc721::erc721_burnable::erc721_burnable_component::Event",
-        "kind": "nested"
+        "kind": "flat"
       },
       {
         "name": "ERC721EnumerableEvent",
         "type": "token::components::token::erc721::erc721_enumerable::erc721_enumerable_component::Event",
-        "kind": "nested"
+        "kind": "flat"
       },
       {
         "name": "ERC721MintableEvent",
         "type": "token::components::token::erc721::erc721_mintable::erc721_mintable_component::Event",
-        "kind": "nested"
+        "kind": "flat"
       },
       {
         "name": "ERC721OwnerEvent",
         "type": "token::components::token::erc721::erc721_owner::erc721_owner_component::Event",
-        "kind": "nested"
+        "kind": "flat"
       },
       {
         "name": "ERC721MetadataEvent",
         "type": "karat::systems::metadata::erc721_metadata_component::Event",
-        "kind": "nested"
+        "kind": "flat"
       }
     ]
   }
