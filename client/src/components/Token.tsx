@@ -30,9 +30,11 @@ export default function TokenRows() {
       <Row columns={'equal'}>
         <Col>
           <Image src={image ?? '/images/placeholder.svg'} size='big' centered spaced />
-          <div className="PlaceholderOverlay">
-            {!image && <Icon name='spinner' loading size='big' />}
-          </div>
+          {!image &&
+            <div className="PlaceholderOverlay">
+              <Icon name='spinner' loading size='big' />
+            </div>
+          }
         </Col>
       </Row>
       <Row columns={'equal'}>
