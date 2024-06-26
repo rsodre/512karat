@@ -41,15 +41,15 @@ async function init() {
   ];
 
   // create Katana connector for testing
-  const predeployedManager = new PredeployedManager({
-    rpcProvider: new RpcProvider({ nodeUrl: dojoConfigKatana.rpcUrl }),
-    predeployedAccounts: getPredeployedAccounts(dojoConfigKatana),
-  });
-  await predeployedManager.init();
-  // cloned from usePredeployedWindowObject()...
-  const starknetWindowObject = new DojoPredeployedStarknetWindowObject(predeployedManager);
-  const key = `starknet_${starknetWindowObject.id}`;
-  (window as any)[key as string] = starknetWindowObject as StarknetWindowObject;
+  // const predeployedManager = new PredeployedManager({
+  //   rpcProvider: new RpcProvider({ nodeUrl: dojoConfigKatana.rpcUrl }),
+  //   predeployedAccounts: getPredeployedAccounts(dojoConfigKatana),
+  // });
+  // await predeployedManager.init();
+  // // cloned from usePredeployedWindowObject()...
+  // const starknetWindowObject = new DojoPredeployedStarknetWindowObject(predeployedManager);
+  // const key = `starknet_${starknetWindowObject.id}`;
+  // (window as any)[key as string] = starknetWindowObject as StarknetWindowObject;
 
   const connectors = [
     controller,
@@ -59,7 +59,7 @@ async function init() {
     // new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
     new WebWalletConnector({ url: "https://web.argent.xyz" }),
     new ArgentMobileConnector(),
-    injected({ id: starknetWindowObject.id }),
+    // injected({ id: starknetWindowObject.id }),
   ];
 
   root.render(
