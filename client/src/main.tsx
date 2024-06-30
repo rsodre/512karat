@@ -40,18 +40,7 @@ async function init() {
     // mainnet,
   ];
 
-  // create Katana connector for testing
-  // const predeployedManager = new PredeployedManager({
-  //   rpcProvider: new RpcProvider({ nodeUrl: dojoConfigKatana.rpcUrl }),
-  //   predeployedAccounts: getPredeployedAccounts(dojoConfigKatana),
-  // });
-  // await predeployedManager.init();
-  // // cloned from usePredeployedWindowObject()...
-  // const starknetWindowObject = new DojoPredeployedStarknetWindowObject(predeployedManager);
-  // const key = `starknet_${starknetWindowObject.id}`;
-  // (window as any)[key as string] = starknetWindowObject as StarknetWindowObject;
-
-  const connectors = [
+  let connectors = [
     controller,
     argent(),
     braavos(),
@@ -59,8 +48,23 @@ async function init() {
     // new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
     new WebWalletConnector({ url: "https://web.argent.xyz" }),
     new ArgentMobileConnector(),
-    // injected({ id: starknetWindowObject.id }),
   ];
+
+  //
+  // create Katana connector for testing
+  const predeployedManager = new PredeployedManager({
+    rpcProvider: new RpcProvider({ nodeUrl: dojoConfigKatana.rpcUrl }),
+    predeployedAccounts: getPredeployedAccounts(dojoConfigKatana),
+  });
+  await predeployedManager.init();
+  try {
+    // cloned from usePredeployedWindowObject()...
+    const predeployedWindowObject = new DojoPredeployedStarknetWindowObject(predeployedManager);
+    const key = `starknet_${predeployedWindowObject.id}`;
+    (window as any)[key as string] = predeployedWindowObject as StarknetWindowObject;
+    connectors.push(injected({ id: predeployedWindowObject.id }))
+  } catch {}
+
 
   root.render(
     <React.StrictMode>
