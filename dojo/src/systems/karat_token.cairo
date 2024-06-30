@@ -87,6 +87,7 @@ mod karat_token {
     use starknet::{get_contract_address, get_caller_address};
 
     use karat::models::config::{Config, ConfigTrait, ConfigManager, ConfigManagerTrait};
+    use karat::systems::minter::{IPainter, IPainterDispatcher, IPainterDispatcherTrait};
 
     use token::components::security::initializable::initializable_component;
     use token::components::token::erc721::erc721_approval::erc721_approval_component;
@@ -95,7 +96,7 @@ mod karat_token {
     use token::components::token::erc721::erc721_enumerable::erc721_enumerable_component;
     use token::components::token::erc721::erc721_mintable::erc721_mintable_component;
     use token::components::token::erc721::erc721_owner::erc721_owner_component;
-    use karat::systems::metadata::erc721_metadata_component;
+    use token::components::token::erc721::erc721_metadata::erc721_metadata_component;
 
     component!(path: initializable_component, storage: initializable, event: InitializableEvent);
     component!(path: erc721_approval_component, storage: erc721_approval, event: ERC721ApprovalEvent);
@@ -261,6 +262,26 @@ mod karat_token {
             self.erc721_enumerable.remove_token_from_all_tokens_enumeration(token_id);
             let owner = self.erc721_owner.owner_of(token_id);
             self.erc721_enumerable.remove_token_from_owner_enumeration(owner, token_id);
+        }
+    }
+
+    //
+    // Metadata Hooks
+    //
+    use super::{IKaratTokenDispatcher, IKaratTokenDispatcherTrait};
+    impl ERC721MetadataHooksImpl<ContractState> of erc721_metadata_component::ERC721MetadataHooksTrait<ContractState> {
+        fn custom_uri(
+            self: @erc721_metadata_component::ComponentState<ContractState>,
+            base_uri: @ByteArray,
+            token_id: u256,
+        ) -> ByteArray {
+            let contract_address = get_contract_address();
+            let selfie = IKaratTokenDispatcher{ contract_address };
+            let world = selfie.world();
+            // call painter
+            let config: Config = ConfigManagerTrait::new(world).get(get_contract_address());
+            let painter = IPainterDispatcher{ contract_address: config.painter_address };
+            return painter.paint(token_id.low);
         }
     }
 }

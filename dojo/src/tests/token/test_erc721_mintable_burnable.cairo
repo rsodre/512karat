@@ -3,8 +3,8 @@ use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
 use dojo::test_utils::spawn_test_world;
 use token::tests::constants::{ZERO, OWNER, SPENDER, RECIPIENT, TOKEN_ID};
 
-use karat::systems::metadata::{erc_721_meta_model, ERC721MetaModel,};
-use karat::systems::metadata::erc721_metadata_component::{
+use token::components::token::erc721::erc721_metadata::{erc_721_meta_model, ERC721MetaModel,};
+use token::components::token::erc721::erc721_metadata::erc721_metadata_component::{
     ERC721MetadataImpl, ERC721MetadataCamelImpl, InternalImpl as ERC721MetadataInternalImpl
 };
 

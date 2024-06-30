@@ -9,21 +9,21 @@ use token::components::token::erc721::erc721_metadata::erc721_metadata_component
 };
 use token::components::token::erc721::erc721_mintable::erc721_mintable_component::InternalImpl as ERC721MintableInternalImpl;
 
-use token::components::tests::mocks::erc721::erc721_metadata_mock::erc721_metadata_mock;
+use token::components::tests::mocks::erc721::erc721_metadata_hooks_mock::erc721_metadata_hooks_mock;
 use starknet::storage::{StorageMemberAccessTrait};
 
 
-fn STATE() -> (IWorldDispatcher, erc721_metadata_mock::ContractState) {
+fn STATE() -> (IWorldDispatcher, erc721_metadata_hooks_mock::ContractState) {
     let world = spawn_test_world(array![erc_721_meta_model::TEST_CLASS_HASH,]);
 
-    let mut state = erc721_metadata_mock::contract_state_for_testing();
+    let mut state = erc721_metadata_hooks_mock::contract_state_for_testing();
     state.world_dispatcher.write(world);
 
     (world, state)
 }
 
 #[test]
-fn test_erc721_metadata_initialize() {
+fn test_erc721_metadata_hooks_initialize() {
     let (_world, mut state) = STATE();
 
     let NAME: ByteArray = "NAME";
@@ -36,6 +36,6 @@ fn test_erc721_metadata_initialize() {
     assert(state.erc721_metadata.symbol() == "SYMBOL", 'Should be SYMBOL');
 
     state.erc721_mintable.mint(OWNER(), 1);
-    assert(state.erc721_metadata.token_uri(1) == "URI1", 'Should be URI1');
-    assert(state.erc721_metadata.tokenURI(1) == "URI1", 'Should be URI1');
+    assert(state.erc721_metadata.token_uri(1) == "CUSTOMURI1", 'Should be CUSTOMURI1');
+    assert(state.erc721_metadata.tokenURI(1) == "CUSTOMURI1", 'Should be CUSTOMURI1');
 }

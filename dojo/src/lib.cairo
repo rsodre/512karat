@@ -1,6 +1,5 @@
 mod systems {
     mod karat_token;
-    mod metadata;
     mod minter;
 }
 
@@ -32,7 +31,8 @@ mod tests {
         #[cfg(test)]
         mod test_erc721_metadata;
         #[cfg(test)]
+        mod test_erc721_metadata_hooks;
+        #[cfg(test)]
         mod test_erc721_mintable_burnable;
-        // mod erc721_metadata_mock;
     }
 }
