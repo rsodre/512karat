@@ -552,11 +552,11 @@
   {
     "type": "impl",
     "name": "ERC721MetadataCamelImpl",
-    "interface_name": "karat::systems::metadata::IERC721MetadataCamel"
+    "interface_name": "token::components::token::erc721::erc721_metadata::IERC721MetadataCamel"
   },
   {
     "type": "interface",
-    "name": "karat::systems::metadata::IERC721MetadataCamel",
+    "name": "token::components::token::erc721::erc721_metadata::IERC721MetadataCamel",
     "items": [
       {
         "type": "function",
@@ -606,11 +606,11 @@
   {
     "type": "impl",
     "name": "ERC721MetadataImpl",
-    "interface_name": "karat::systems::metadata::IERC721Metadata"
+    "interface_name": "token::components::token::erc721::erc721_metadata::IERC721Metadata"
   },
   {
     "type": "interface",
-    "name": "karat::systems::metadata::IERC721Metadata",
+    "name": "token::components::token::erc721::erc721_metadata::IERC721Metadata",
     "items": [
       {
         "type": "function",
@@ -803,7 +803,7 @@
   },
   {
     "type": "event",
-    "name": "karat::systems::metadata::erc721_metadata_component::Event",
+    "name": "token::components::token::erc721::erc721_metadata::erc721_metadata_component::Event",
     "kind": "enum",
     "variants": []
   },
@@ -854,7 +854,7 @@
       },
       {
         "name": "ERC721MetadataEvent",
-        "type": "karat::systems::metadata::erc721_metadata_component::Event",
+        "type": "token::components::token::erc721::erc721_metadata::erc721_metadata_component::Event",
         "kind": "flat"
       }
     ]

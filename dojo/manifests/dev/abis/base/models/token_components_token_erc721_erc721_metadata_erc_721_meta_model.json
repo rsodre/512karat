@@ -320,11 +320,11 @@
   {
     "type": "impl",
     "name": "erc_721_meta_modelImpl",
-    "interface_name": "karat::systems::metadata::Ierc_721_meta_model"
+    "interface_name": "token::components::token::erc721::erc721_metadata::Ierc_721_meta_model"
   },
   {
     "type": "struct",
-    "name": "karat::systems::metadata::ERC721MetaModel",
+    "name": "token::components::token::erc721::erc721_metadata::ERC721MetaModel",
     "members": [
       {
         "name": "token",
@@ -346,7 +346,7 @@
   },
   {
     "type": "interface",
-    "name": "karat::systems::metadata::Ierc_721_meta_model",
+    "name": "token::components::token::erc721::erc721_metadata::Ierc_721_meta_model",
     "items": [
       {
         "type": "function",
@@ -354,7 +354,7 @@
         "inputs": [
           {
             "name": "model",
-            "type": "karat::systems::metadata::ERC721MetaModel"
+            "type": "token::components::token::erc721::erc721_metadata::ERC721MetaModel"
           }
         ],
         "outputs": [],
@@ -364,7 +364,7 @@
   },
   {
     "type": "event",
-    "name": "karat::systems::metadata::erc_721_meta_model::Event",
+    "name": "token::components::token::erc721::erc721_metadata::erc_721_meta_model::Event",
     "kind": "enum",
     "variants": []
   }
