@@ -70,8 +70,8 @@ cp $MANIFEST_FILE_PATH $CLIENT_PATH/
 #------------------------
 # generate components
 #
-# cd ../client
-# npm run create-components --profile=$PROFILE $RPC_URL $WORLD_ADDRESS
+cd ../client
+npm run create-components --profile=$PROFILE $RPC_URL $WORLD_ADDRESS
 
 # list copied files
 ls -ld $CLIENT_PATH/* | grep -E 'ts|json'

@@ -9,11 +9,11 @@ export function defineContractComponents(world: World) {
     Config: (() => {
       return defineComponent(
         world,
-        { token_address: RecsType.BigInt, minter_address: RecsType.BigInt, painter_address: RecsType.BigInt, max_supply: RecsType.BigInt, is_open: RecsType.Boolean },
+        { token_address: RecsType.BigInt, minter_address: RecsType.BigInt, painter_address: RecsType.BigInt, max_supply: RecsType.BigInt, cool_down: RecsType.Boolean, is_open: RecsType.Boolean },
         {
           metadata: {
             name: "Config",
-            types: ["contractaddress","contractaddress","contractaddress","u128","bool"],
+            types: ["contractaddress","contractaddress","contractaddress","u128","bool","bool"],
             customTypes: [],
           },
         }
@@ -32,14 +32,14 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    ERC721MetaModel: (() => {
+    SRC5Model: (() => {
       return defineComponent(
         world,
-        { token: RecsType.BigInt, name: RecsType.String, symbol: RecsType.String, base_uri: RecsType.String },
+        { token: RecsType.BigInt, interface_id: RecsType.BigInt, supports: RecsType.Boolean },
         {
           metadata: {
-            name: "ERC721MetaModel",
-            types: ["contractaddress"],
+            name: "SRC5Model",
+            types: ["contractaddress","felt252","bool"],
             customTypes: [],
           },
         }
@@ -157,6 +157,19 @@ export function defineContractComponents(world: World) {
           metadata: {
             name: "ERC721EnumerableTotalModel",
             types: ["contractaddress","u128"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC721MetaModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, name: RecsType.String, symbol: RecsType.String, base_uri: RecsType.String },
+        {
+          metadata: {
+            name: "ERC721MetaModel",
+            types: ["contractaddress"],
             customTypes: [],
           },
         }
