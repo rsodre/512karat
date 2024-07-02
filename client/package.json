@@ -11,8 +11,8 @@
     "create-components": "npx @dojoengine/core ../dojo/manifests/dev/manifest.json src/dojo/generated/contractComponents.ts"
   },
   "dependencies": {
-    "@cartridge/connector": "^0.3.28",
-    "@cartridge/controller": "^0.3.28",
+    "@cartridge/connector": "^0.3.32",
+    "@cartridge/controller": "^0.3.32",
     "@dojoengine/core": "^0.7.9",
     "@dojoengine/create-burner": "^0.7.9",
     "@dojoengine/react": "^0.7.9",
