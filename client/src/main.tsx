@@ -52,12 +52,12 @@ async function init() {
 
   //
   // create Katana connector for testing
-  const predeployedManager = new PredeployedManager({
-    rpcProvider: new RpcProvider({ nodeUrl: dojoConfigKatana.rpcUrl }),
-    predeployedAccounts: getPredeployedAccounts(dojoConfigKatana),
-  });
-  await predeployedManager.init();
   try {
+    const predeployedManager = new PredeployedManager({
+      rpcProvider: new RpcProvider({ nodeUrl: dojoConfigKatana.rpcUrl }),
+      predeployedAccounts: getPredeployedAccounts(dojoConfigKatana),
+    });
+    await predeployedManager.init();
     // cloned from usePredeployedWindowObject()...
     const predeployedWindowObject = new DojoPredeployedStarknetWindowObject(predeployedManager);
     const key = `starknet_${predeployedWindowObject.id}`;
