@@ -357,6 +357,10 @@
         "type": "core::integer::u128"
       },
       {
+        "name": "cool_down",
+        "type": "core::bool"
+      },
+      {
         "name": "is_open",
         "type": "core::bool"
       }

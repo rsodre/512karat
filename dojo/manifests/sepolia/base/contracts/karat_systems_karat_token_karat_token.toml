@@ -1,6 +1,6 @@
 kind = "DojoContract"
-class_hash = "0x4d75c336cbd11166323c40d904a7ca9872c1ff9f83b0c1de5a3bb8debac7640"
-original_class_hash = "0x4d75c336cbd11166323c40d904a7ca9872c1ff9f83b0c1de5a3bb8debac7640"
+class_hash = "0x247bdd41339a0d9b6b181c3f6a8943a9db091a700d58a3b5cc34a28f3248bd6"
+original_class_hash = "0x247bdd41339a0d9b6b181c3f6a8943a9db091a700d58a3b5cc34a28f3248bd6"
 base_class_hash = "0x0"
 abi = "manifests/sepolia/abis/base/contracts/karat_systems_karat_token_karat_token.json"
 reads = []

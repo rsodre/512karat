@@ -1,9 +1,1 @@
 name = "karat::systems::minter::minter"
-reads = []
-writes = ["Config", "Seed"]
-computed = []
-init_calldata = [
-  "$contract_address:karat::systems::karat_token::karat_token",
-  "512",
-  "1",
-]

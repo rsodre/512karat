@@ -319,52 +319,34 @@
   },
   {
     "type": "impl",
-    "name": "configImpl",
-    "interface_name": "karat::models::config::Iconfig"
-  },
-  {
-    "type": "enum",
-    "name": "core::bool",
-    "variants": [
-      {
-        "name": "False",
-        "type": "()"
-      },
-      {
-        "name": "True",
-        "type": "()"
-      }
-    ]
+    "name": "erc_721_meta_modelImpl",
+    "interface_name": "token::components::token::erc721::erc721_metadata::Ierc_721_meta_model"
   },
   {
     "type": "struct",
-    "name": "karat::models::config::Config",
+    "name": "token::components::token::erc721::erc721_metadata::ERC721MetaModel",
     "members": [
       {
-        "name": "token_address",
+        "name": "token",
         "type": "core::starknet::contract_address::ContractAddress"
       },
       {
-        "name": "minter_address",
-        "type": "core::starknet::contract_address::ContractAddress"
+        "name": "name",
+        "type": "core::byte_array::ByteArray"
       },
       {
-        "name": "painter_address",
-        "type": "core::starknet::contract_address::ContractAddress"
+        "name": "symbol",
+        "type": "core::byte_array::ByteArray"
       },
       {
-        "name": "max_supply",
-        "type": "core::integer::u128"
-      },
-      {
-        "name": "is_open",
-        "type": "core::bool"
+        "name": "base_uri",
+        "type": "core::byte_array::ByteArray"
       }
     ]
   },
   {
     "type": "interface",
-    "name": "karat::models::config::Iconfig",
+    "name": "token::components::token::erc721::erc721_metadata::Ierc_721_meta_model",
     "items": [
       {
         "type": "function",
@@ -372,7 +354,7 @@
         "inputs": [
           {
             "name": "model",
-            "type": "karat::models::config::Config"
+            "type": "token::components::token::erc721::erc721_metadata::ERC721MetaModel"
           }
         ],
         "outputs": [],
@@ -382,7 +364,7 @@
   },
   {
     "type": "event",
-    "name": "karat::models::config::config::Event",
+    "name": "token::components::token::erc721::erc721_metadata::erc_721_meta_model::Event",
     "kind": "enum",
     "variants": []
   }
