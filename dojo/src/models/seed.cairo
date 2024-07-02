@@ -3,8 +3,8 @@ use karat::{
     models::class::{Class, ClassTrait, CLASS_COUNT},
 };
 
-#[derive(Copy, Drop, Serde)]
 #[dojo::model]
+#[derive(Copy, Drop, Serde)]
 struct Seed {
     #[key]
     token_id: u128,

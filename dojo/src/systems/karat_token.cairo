@@ -97,7 +97,7 @@ mod karat_token {
     use starknet::ContractAddress;
     use starknet::{get_contract_address, get_caller_address};
 
-    use karat::models::config::{Config, ConfigTrait, ConfigManager, ConfigManagerTrait};
+    use karat::models::config::{Config, ConfigTrait};
     use karat::systems::minter::{IPainter, IPainterDispatcher, IPainterDispatcherTrait};
 
     use token::components::security::initializable::initializable_component;
@@ -161,9 +161,9 @@ mod karat_token {
     #[storage]
     struct Storage {
         #[substorage(v0)]
-        src5: src5_component::Storage,
-        #[substorage(v0)]
         initializable: initializable_component::Storage,
+        #[substorage(v0)]
+        src5: src5_component::Storage,
         #[substorage(v0)]
         erc721_approval: erc721_approval_component::Storage,
         #[substorage(v0)]
@@ -184,9 +184,9 @@ mod karat_token {
     #[derive(Drop, starknet::Event)]
     enum Event {
         #[flat]
-        SRC5Event: src5_component::Event,
-        #[flat]
         InitializableEvent: initializable_component::Event,
+        #[flat]
+        SRC5Event: src5_component::Event,
         #[flat]
         ERC721ApprovalEvent: erc721_approval_component::Event,
         #[flat]
@@ -235,7 +235,7 @@ mod karat_token {
             to: ContractAddress,
             token_id: u256,
         ) {
-            let config: Config = ConfigManagerTrait::new(self.world()).get(get_contract_address());
+            let config: Config = get!(self.world(), (get_contract_address()), Config);
             assert(
                 config.is_open,
                 Errors::MINTING_IS_CLOSED,
@@ -268,9 +268,10 @@ mod karat_token {
             let selfie = IKaratTokenDispatcher{ contract_address };
             let world = selfie.world();
             // call painter
-            let config: Config = ConfigManagerTrait::new(world).get(get_contract_address());
+            let config: Config = get!(world, (contract_address), Config);
             let painter = IPainterDispatcher{ contract_address: config.painter_address };
             return painter.paint(token_id.low);
+            ""
         }
     }
 }

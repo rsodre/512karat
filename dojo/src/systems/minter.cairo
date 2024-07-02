@@ -5,8 +5,8 @@ use karat::models::{
 
 #[dojo::interface]
 trait IMinter {
-    fn mint(ref world: IWorldDispatcher, contract_address: ContractAddress) -> u128;
-    fn set_open(ref world: IWorldDispatcher, contract_address: ContractAddress, is_open: bool);
+    fn mint(ref world: IWorldDispatcher, token_contract_address: ContractAddress) -> u128;
+    fn set_open(ref world: IWorldDispatcher, token_contract_address: ContractAddress, is_open: bool);
     fn get_token_data(world: @IWorldDispatcher, token_id: u128) -> TokenData;
     // fn get_token_svg(ref world: IWorldDispatcher, token_id: u128) -> ByteArray;
 }
@@ -30,13 +30,14 @@ mod minter {
     use karat::systems::karat_token::{IKaratTokenDispatcher, IKaratTokenDispatcherTrait};
     use karat::utils::painter::{painter};
     use karat::models::{
-        config::{Config, ConfigTrait, ConfigManager, ConfigManagerTrait},
+        config::{Config, ConfigTrait},
         token_data::{TokenData, TokenDataTrait},
         seed::{Seed, SeedTrait},
     };
 
     mod Errors {
         const INVALID_TOKEN_ADDRESS: felt252 = 'KARAT: invalid token address';
+        const INVALID_SUPPLY: felt252 = 'KARAT: invalid supply';
         const MINT_CLOSED: felt252 = 'KARAT: minting is closed';
         const MINTED_OUT: felt252 = 'KARAT: minted out';
         const NOT_AGAIN: felt252 = 'KARAT: dont be greedy!';
@@ -58,24 +59,25 @@ mod minter {
         // 'dojo_init()...'.print();
         
         //*******************************
-        let TOKEN_NAME = "KARAT";
-        let TOKEN_SYMBOL = "512 KARAT";
+        let TOKEN_NAME = "512 KARAT";
+        let TOKEN_SYMBOL = "512KARAT";
         let BASE_URI = "/";
         //*******************************
 
-        //
-        // Config minter
         assert(token_address.is_non_zero(), Errors::INVALID_TOKEN_ADDRESS);
-        let manager = ConfigManagerTrait::new(world);
-        manager.set(Config{
+        assert(max_supply > 0, Errors::INVALID_SUPPLY);
+
+        //
+        // Config
+        set!(world, (Config{
             token_address,
             minter_address: get_contract_address(),
             painter_address: get_contract_address(),
             max_supply,
             cool_down: true,
             is_open: (is_open != 0),
-        });
-        
+        }));
+
         //
         // initialize token
         let karat = (IKaratTokenDispatcher{ contract_address: token_address });
@@ -87,12 +89,12 @@ mod minter {
     //
     #[abi(embed_v0)]
     impl MinterImpl of IMinter<ContractState> {
-        fn mint(ref world: IWorldDispatcher, contract_address: ContractAddress) -> u128 {
-            let karat = (IKaratTokenDispatcher{contract_address});
+        fn mint(ref world: IWorldDispatcher, token_contract_address: ContractAddress) -> u128 {
+            let karat = (IKaratTokenDispatcher{contract_address:token_contract_address});
             let total_supply: u256 = karat.total_supply();
 
             // check availability
-            let config: Config = ConfigManagerTrait::new(world).get(contract_address);
+            let config: Config = get!(world, (token_contract_address), Config);
             assert(total_supply.low < config.max_supply, Errors::MINTED_OUT);
             assert(config.is_open, Errors::MINT_CLOSED);
             
@@ -120,12 +122,11 @@ mod minter {
             (token_id.low)
         }
 
-        fn set_open(ref world: IWorldDispatcher, contract_address: ContractAddress, is_open: bool) {
+        fn set_open(ref world: IWorldDispatcher, token_contract_address: ContractAddress, is_open: bool) {
             self.assert_caller_is_owner();
-            let manager: ConfigManager = ConfigManagerTrait::new(world);
-            let mut config: Config = manager.get(contract_address);
+            let mut config: Config = get!(world, (token_contract_address), Config);
             config.is_open = is_open;
-            manager.set(config);
+            set!(world, (config));
         }
 
         fn get_token_data(world: @IWorldDispatcher, token_id: u128) -> TokenData {
