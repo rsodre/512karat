@@ -27,7 +27,7 @@ export default function MintingModal({
       open={mounted && opener.isOpen && isMinting}
       size='tiny'
     >
-      <Modal.Content className='NoBorder' textAlign='center'>
+      <Modal.Content className='NoBorder'>
         <Container textAlign='center'>
           <h3>Minting...</h3>
         </Container>

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAccount } from "@starknet-react/core";
 import { useDojo } from "../dojo/useDojo"
-import { useTokenContract, useTokenOwner, useTotalSupply } from "./useToken";
+import { useConfig, useTokenContract, useTokenOwner, useTotalSupply } from "./useToken";
 import { bigintEquals } from "../utils/types";
 import { goToTokenPage } from "../components/Navigation";
 
@@ -14,6 +14,7 @@ export const useMint = () => {
   } = useDojo();
 
   const { contractAddress } = useTokenContract();
+  const { isCoolDown } = useConfig();
   const { isConnected } = useAccount();
 
   const { total_supply } = useTotalSupply()
@@ -45,13 +46,13 @@ export const useMint = () => {
   const canMint = useMemo(() => (account && isConnected && contractAddress && !isMinting), [isConnected, account, contractAddress, isMinting]);
 
   const { ownerAddress: lastOwnerAddress } = useTokenOwner(total_supply);
-  const isCoolingDown = useMemo(() => (account && canMint && bigintEquals(lastOwnerAddress, account.address)), [account, canMint, lastOwnerAddress])
+  const isCoolingDown = useMemo(() => (account ? bigintEquals(lastOwnerAddress, account.address) : undefined), [account, lastOwnerAddress])
   // const isCoolingDown = false;
 
   return {
-    canMint: (canMint && !isCoolingDown),
+    canMint,
     isMinting,
-    isCoolingDown,
+    isCoolingDown: (isCoolingDown && isCoolDown),
     mint: _mint,
   }
 }
