@@ -1,6 +1,6 @@
 kind = "DojoContract"
-class_hash = "0x247bdd41339a0d9b6b181c3f6a8943a9db091a700d58a3b5cc34a28f3248bd6"
-original_class_hash = "0x247bdd41339a0d9b6b181c3f6a8943a9db091a700d58a3b5cc34a28f3248bd6"
+class_hash = "0x1a41503b68d679caa0c9925e9033083385cef47309d72455bb1728444ebc771"
+original_class_hash = "0x1a41503b68d679caa0c9925e9033083385cef47309d72455bb1728444ebc771"
 base_class_hash = "0x0"
 abi = "manifests/dev/abis/base/contracts/karat_systems_karat_token_karat_token.json"
 reads = []
