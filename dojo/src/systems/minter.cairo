@@ -72,6 +72,7 @@ mod minter {
             minter_address: get_contract_address(),
             painter_address: get_contract_address(),
             max_supply,
+            cool_down: true,
             is_open: (is_open != 0),
         });
         
@@ -100,7 +101,7 @@ mod minter {
 
             // very simple cool down rule
             // avoid wallets to make consecutive mints
-            if (token_id > 1) {
+            if (config.cool_down && token_id > 1) {
                 let owner: ContractAddress = karat.owner_of(token_id - 1);
                 assert(
                     owner != get_caller_address(),
