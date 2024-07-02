@@ -50,6 +50,7 @@ fi
 echo "- Token auth..."
 sozo -P $PROFILE auth grant --world $WORLD_ADDRESS --wait writer \
   InitializableModel,$TOKEN_ADDRESS \
+  SRC5Model,$TOKEN_ADDRESS \
   ERC721MetaModel,$TOKEN_ADDRESS \
   ERC721OperatorApprovalModel,$TOKEN_ADDRESS \
   ERC721TokenApprovalModel,$TOKEN_ADDRESS \
