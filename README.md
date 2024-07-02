@@ -110,7 +110,7 @@ Steps for migrating to Sepolia (Mainnet is the same)
 ```
 [profile.sepolia.tool.dojo.env]
 rpc_url = "https://my.provider.com/starknet/sepolia/rpc"
-world_address = "0x3e42a9746e6c8f868f71a4353ec5d198f0dd1af26f95bd51e2e005358ae14fd"
+world_address = "0x21cc3925e3837c1c174aaa524d0493337ee0269d252b7debe5ea41879452071"
 # account_address = "" # env: DOJO_ACCOUNT_ADDRESS
 # private_key = ""     # env: DOJO_PRIVATE_KEY
 ```
