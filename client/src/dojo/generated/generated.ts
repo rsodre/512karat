@@ -2,6 +2,8 @@
 
 import { Account, AccountInterface, BigNumberish } from "starknet";
 import { DojoProvider } from "@dojoengine/core";
+import { ethToWei } from "../../utils/starknet";
+import { bigintToHex } from "../../utils/types";
 
 export type IWorld = Awaited<ReturnType<typeof setupWorld>>;
 
@@ -17,6 +19,8 @@ export async function setupWorld(provider: DojoProvider) {
           contractName: "minter",
           entrypoint: "mint",
           calldata: [contract_address],
+        }, {
+          maxFee: bigintToHex(ethToWei(1) / 10000n),
         });
       } catch (error) {
         console.error("Error executing mint:", error);
