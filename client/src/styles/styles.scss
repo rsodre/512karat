@@ -894,6 +894,9 @@ td {
 .ui.modal>.actions {
   background-color: $color-darkest;
 }
+.ui.mini.modal {
+  min-width: 320px;
+}
 .ui.header {
   @extend .TitleCase;
   font-family: $font-family;

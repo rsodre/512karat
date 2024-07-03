@@ -18,7 +18,7 @@ export const makeController = (manifest: Manifest, contractNames?: string[]) => 
         if (abi.type == 'interface') {
           abi.items.forEach((item) => {
             // functions
-            if (item.type == 'function') {
+            if (item.type == 'function' && item.state_mutability == 'external') {
               policies.push({
                 target: contract.address,
                 method: item.name,
@@ -35,7 +35,7 @@ export const makeController = (manifest: Manifest, contractNames?: string[]) => 
 }
 
 export const useController = (manifest: Manifest, contractNames?: string[]) => {
-  const controller = useMemo(() => makeController(manifest), [manifest])
+  const controller = useMemo(() => makeController(manifest, contractNames), [manifest])
   return {
     controller,
   }

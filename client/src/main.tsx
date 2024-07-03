@@ -31,7 +31,7 @@ async function init() {
   const root = ReactDOM.createRoot(rootElement as HTMLElement);
 
   // TODO: should be by chain!
-  const controller = makeController(manifest as Manifest)
+  const controller = makeController(manifest as Manifest, ['minter'])
 
   const chains = [
     katana,
