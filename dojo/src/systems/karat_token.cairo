@@ -204,14 +204,8 @@ mod karat_token {
     }
 
     mod Errors {
-        const CALLER_IS_NOT_OWNER: felt252 = 'ERC721: caller is not owner';
         const CALLER_IS_NOT_MINTER: felt252 = 'ERC721: caller is not minter';
         const MINTING_IS_CLOSED: felt252 = 'ERC721: minting closed';
-        const INVALID_ACCOUNT: felt252 = 'ERC721: invalid account';
-        const UNAUTHORIZED: felt252 = 'ERC721: unauthorized caller';
-        const INVALID_RECEIVER: felt252 = 'ERC721: invalid receiver';
-        const WRONG_SENDER: felt252 = 'ERC721: wrong sender';
-        const SAFE_TRANSFER_FAILED: felt252 = 'ERC721: safe transfer failed';
     }
 
     #[abi(embed_v0)]
