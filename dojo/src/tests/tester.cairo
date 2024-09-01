@@ -2,9 +2,10 @@
 mod tester {
     use debug::PrintTrait;
     use starknet::testing;
+    use starknet::{ContractAddress};
     use starknet::class_hash::Felt252TryIntoClassHash;
     use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
-    use dojo::test_utils::{spawn_test_world, deploy_contract};
+    use dojo::utils::test::{spawn_test_world, deploy_contract};
 
     // karat
     use karat::{
@@ -13,16 +14,18 @@ mod tester {
     };
 
     // token
-    use origami_token::tests::constants::{ZERO, OWNER, SPENDER, RECIPIENT, VALUE, TOKEN_ID, TOKEN_ID_2};
-    use origami_token::tests::utils;
-    use origami_token::components::token::erc721::erc721_enumerable::{
-        erc_721_enumerable_index_model, ERC721EnumerableIndexModel,
-        erc_721_enumerable_owner_index_model, ERC721EnumerableOwnerIndexModel,
-        erc_721_enumerable_total_model, ERC721EnumerableTotalModel
-    };
     use origami_token::components::token::erc721::erc721_enumerable::erc721_enumerable_component::{
         ERC721EnumerableImpl, InternalImpl as ERC721EnumerableInternalImpl
     };
+    use origami_token::tests::constants::{ZERO, OWNER, SPENDER, RECIPIENT, VALUE, TOKEN_ID, TOKEN_ID_2};
+    use origami_token::tests::utils;
+
+    // set_contract_address : to define the address of the calling contract,
+    // set_account_contract_address : to define the address of the account used for the current transaction.
+    fn impersonate(address: ContractAddress) {
+        testing::set_contract_address(address);
+        testing::set_account_contract_address(address);
+    }
 
     #[derive(Drop, Copy, Serde)]
     struct Systems {
@@ -33,37 +36,35 @@ mod tester {
     }
 
     fn spawn_systems() -> Systems {
-        let mut models = array![
-            erc_721_enumerable_index_model::TEST_CLASS_HASH,
-            erc_721_enumerable_owner_index_model::TEST_CLASS_HASH,
-            erc_721_enumerable_total_model::TEST_CLASS_HASH,
-        ];
-        let world = spawn_test_world(models);
+        let world = spawn_test_world(["dojo", "origami_token", "karat"].span(),  get_models_test_class_hashes!());
 
         let max_supply: u128 = 4;
         
-        let karat_address = world.deploy_contract('karat', karat_token::TEST_CLASS_HASH.try_into().unwrap(), array![].span());
-        let karat = IKaratTokenDispatcher { contract_address: karat_address };
+        let karat = IKaratTokenDispatcher {
+            contract_address: world.deploy_contract('karat', karat_token::TEST_CLASS_HASH.try_into().unwrap())
+        };
+        world.grant_owner(dojo::utils::bytearray_hash(@"origami_token"), karat.contract_address);
 
-        let init_calldata: Span<felt252> = array![
-            karat_address.into(),
+        let minter_calldata: Span<felt252> = array![
+            karat.contract_address.into(),
             max_supply.into(),
             1,
         ].span();
-        let minter_address = world.deploy_contract('salt', minter::TEST_CLASS_HASH.try_into().unwrap(), init_calldata);
-        let minter = IMinterDispatcher { contract_address: minter_address };
+        let minter = IMinterDispatcher {
+            contract_address:world.deploy_contract('minter', minter::TEST_CLASS_HASH.try_into().unwrap())
+        };
+        world.grant_owner(dojo::utils::bytearray_hash(@"origami_token"), minter.contract_address);
+        world.grant_owner(dojo::utils::bytearray_hash(@"karat"), minter.contract_address);
+        world.grant_owner(selector_from_tag!("karat-minter"), OWNER());
+        world.init_contract(selector_from_tag!("karat-minter"), minter_calldata);
 
-        // testing::set_caller_address(OWNER()); // not it!
-        testing::set_contract_address(OWNER()); // it!
+        impersonate(OWNER());
 
-        let systems = Systems{
+        (Systems{
             world,
             karat,
             minter,
             max_supply,
-        };
-
-        (systems)
+        })
     }
-
 }

@@ -1,37 +1,29 @@
-use integer::BoundedInt;
+use debug::PrintTrait;
 use starknet::{ContractAddress, get_contract_address, get_caller_address};
-use starknet::storage::{StorageMemberAccessTrait};
 use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
-use dojo::test_utils::spawn_test_world;
+use dojo::model::{Model, ModelTest, ModelIndex, ModelEntityTest};
+use dojo::utils::test::spawn_test_world;
 use origami_token::tests::constants::{ZERO, OWNER, SPENDER, RECIPIENT, TOKEN_ID, TOKEN_ID_2, TOKEN_ID_3};
 
 use origami_token::tests::utils;
 
-use origami_token::components::introspection::src5::src5_component::{SRC5Impl};
 use origami_token::components::token::erc721::interface::{
     IERC721_ID, IERC721_METADATA_ID, IERC721_ENUMERABLE_ID,
 };
 
-use origami_token::components::token::erc721::erc721_approval::{
-    erc_721_token_approval_model, ERC721TokenApprovalModel, erc_721_operator_approval_model,
-    ERC721OperatorApprovalModel
-};
-use origami_token::components::token::erc721::erc721_approval::erc721_approval_component;
+use origami_token::components::introspection::src5::src5_component::{SRC5Impl};
+use origami_token::components::token::erc721::erc721_approval::{ERC721TokenApprovalModel, ERC721OperatorApprovalModel };
 use origami_token::components::token::erc721::erc721_approval::erc721_approval_component::{
     Approval, ApprovalForAll, ERC721ApprovalImpl, InternalImpl as ERC721ApprovalInternalImpl
 };
-
-
-use origami_token::components::token::erc721::erc721_metadata::{erc_721_meta_model, ERC721MetaModel,};
+use origami_token::components::token::erc721::erc721_metadata::{ERC721MetaModel,};
 use origami_token::components::token::erc721::erc721_metadata::erc721_metadata_component::{
     ERC721MetadataImpl, ERC721MetadataCamelImpl, InternalImpl as ERC721MetadataInternalImpl
 };
-
-use origami_token::components::token::erc721::erc721_balance::{erc_721_balance_model, ERC721BalanceModel,};
+use origami_token::components::token::erc721::erc721_balance::{ERC721BalanceModel,};
 use origami_token::components::token::erc721::erc721_balance::erc721_balance_component::{
     Transfer, ERC721BalanceImpl, InternalImpl as ERC721BalanceInternalImpl
 };
-
 use origami_token::components::token::erc721::erc721_mintable::erc721_mintable_component::InternalImpl as ERC721MintableInternalImpl;
 use origami_token::components::token::erc721::erc721_burnable::erc721_burnable_component::InternalImpl as ERC721BurnableInternalImpl;
 
@@ -39,7 +31,7 @@ use karat::systems::karat_token::{
     karat_token, IKaratTokenDispatcher, IKaratTokenDispatcherTrait,
 };
 use karat::models::{
-    config::{Config, ConfigTrait, ConfigManager, ConfigManagerTrait},
+    config::{Config, ConfigTrait},
     seed::{Seed, SeedTrait},
 };
 
@@ -85,60 +77,26 @@ fn assert_only_event_approval(
 //
 
 fn setup_uninitialized() -> (IWorldDispatcher, IKaratTokenDispatcher) {
-    let world = spawn_test_world(
-        array![
-            erc_721_token_approval_model::TEST_CLASS_HASH,
-            erc_721_balance_model::TEST_CLASS_HASH,
-            erc_721_meta_model::TEST_CLASS_HASH,
-        ]
-    );
+    let world = spawn_test_world(["dojo", "origami_token", "karat"].span(),  get_models_test_class_hashes!());
 
     // deploy contract
     let mut token_dispatcher = IKaratTokenDispatcher {
-        contract_address: world.deploy_contract('salt', karat_token::TEST_CLASS_HASH.try_into().unwrap(), array![].span())
+        contract_address: world.deploy_contract('salt', karat_token::TEST_CLASS_HASH.try_into().unwrap())
     };
+    world.grant_owner(dojo::utils::bytearray_hash(@"origami_token"), token_dispatcher.contract_address);
 
-    // setup auth
-    world.grant_writer(selector!("SRC5Model"), token_dispatcher.contract_address);
-    world.grant_writer(selector!("InitializableModel"), token_dispatcher.contract_address);
-    world.grant_writer(selector!("ERC721MetaModel"), token_dispatcher.contract_address);
-    world.grant_writer(selector!("ERC721TokenApprovalModel"), token_dispatcher.contract_address);
-    world.grant_writer(selector!("ERC721BalanceModel"), token_dispatcher.contract_address);
-    world.grant_writer(selector!("ERC721EnumerableIndexModel"),token_dispatcher.contract_address);
-    world.grant_writer(selector!("ERC721EnumerableOwnerIndexModel"),token_dispatcher.contract_address);
-    world.grant_writer(selector!("ERC721EnumerableTokenModel"),token_dispatcher.contract_address);
-    world.grant_writer(selector!("ERC721EnumerableOwnerTokenModel"),token_dispatcher.contract_address);
-    world.grant_writer(selector!("ERC721EnumerableTotalModel"),token_dispatcher.contract_address);
-    world.grant_writer(selector!("ERC721MetadataModel"), token_dispatcher.contract_address);
-    world.grant_writer(selector!("ERC721OwnerModel"), token_dispatcher.contract_address);
-    world.grant_writer(selector!("Config"), token_dispatcher.contract_address);
-    world.grant_writer(selector!("TokenData"), token_dispatcher.contract_address);
-    
-    world.grant_writer(selector!("SRC5Model"), OWNER());
-    world.grant_writer(selector!("InitializableModel"), OWNER());
-    world.grant_writer(selector!("ERC721MetaModel"), OWNER());
-    world.grant_writer(selector!("ERC721TokenApprovalModel"),  OWNER());
-    world.grant_writer(selector!("ERC721BalanceModel"),  OWNER());
-    world.grant_writer(selector!("ERC721EnumerableIndexModel"), OWNER());
-    world.grant_writer(selector!("ERC721EnumerableOwnerIndexModel"), OWNER());
-    world.grant_writer(selector!("ERC721EnumerableTokenModel"), OWNER());
-    world.grant_writer(selector!("ERC721EnumerableOwnerTokenModel"), OWNER());
-    world.grant_writer(selector!("ERC721EnumerableTotalModel"), OWNER());
-    world.grant_writer(selector!("ERC721MetadataModel"),  OWNER());
-    world.grant_writer(selector!("ERC721OwnerModel"),  OWNER());
-    world.grant_writer(selector!("Config"), OWNER());
-    world.grant_writer(selector!("TokenData"), OWNER());
-
-    utils::impersonate(OWNER());
-    let manager = ConfigManagerTrait::new(world);
-    manager.set(Config{
+    // config minter
+    let config = Config{
         token_address: token_dispatcher.contract_address,
         minter_address: OWNER(),
         painter_address: token_dispatcher.contract_address,
         max_supply: 512,
         cool_down: false,
         is_open: true,
-    });
+    };
+    config.set_test(world);
+
+    utils::impersonate(OWNER());
 
     (world, token_dispatcher)
 }
