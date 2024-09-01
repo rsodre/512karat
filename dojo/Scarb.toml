@@ -1,33 +1,19 @@
-[tool.dojo.world]
-name = "512 Karat"
-description = "Generative Art made with Dojo."
-icon_uri = "https://raw.githubusercontent.com/rsodre/512karat/main/assets/logo.png"
-cover_uri = "https://raw.githubusercontent.com/rsodre/512karat/main/assets/splash.png"
-website = "https://github.com/rsodre/512karat"
-
-[tool.dojo.world.socials]
-x = "https://x.com/matalecode"
-discord = "https://discord.gg/EWfmkemdyG"
-github = "https://github.com/rsodre"
-telegram = "https://t.me/mataleone"
-
 [package]
-cairo-version = "2.6.3"
 name = "karat"
-version = "0.1.0"
+version = "1.0.0"
+cairo-version = "2.7.0"
 
 [cairo]
 sierra-replace-ids = true
 
 [scripts]
-migrate = "sozo build && sozo migrate apply"
+migrate = "./migrate"
 mint = "./scripts/mint.sh"
 
 [dependencies]
-dojo = { git = "https://github.com/dojoengine/dojo", tag = "v0.7.2" }
-token = { git = "https://github.com/rsodre/origami", branch = "balance-enumerable" }
-# token = { git = "https://github.com/dojoengine/origami", tag = "v0.7.2" }
-alexandria_math = { git = "https://github.com/keep-starknet-strange/alexandria.git", rev = "417c5a80ed2fef05ce159d643f3e34a5386ee06c" }
+dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.0-alpha.9" }
+origami_token = { git = "https://github.com/rsodre/origami", branch = "karat" }
+# origami_token = { git = "https://github.com/dojoengine/origami", tag = "v1.0.0-alpha.6" }
 
 
 [[target.dojo]]
@@ -36,47 +22,24 @@ alexandria_math = { git = "https://github.com/keep-starknet-strange/alexandria.g
 # sozo build
 # ls -l target/dev | grep model
 build-external-contracts = [
-  "token::components::security::initializable::initializable_model",
-  "token::components::introspection::src5::src_5_model",
-  "token::components::token::erc721::erc721_approval::erc_721_operator_approval_model",
-  "token::components::token::erc721::erc721_approval::erc_721_token_approval_model",
-  "token::components::token::erc721::erc721_balance::erc_721_balance_model",
-  "token::components::token::erc721::erc721_enumerable::erc_721_enumerable_index_model",
-  "token::components::token::erc721::erc721_enumerable::erc_721_enumerable_owner_index_model",
-  "token::components::token::erc721::erc721_enumerable::erc_721_enumerable_owner_token_model",
-  "token::components::token::erc721::erc721_enumerable::erc_721_enumerable_token_model",
-  "token::components::token::erc721::erc721_enumerable::erc_721_enumerable_total_model",
-  "token::components::token::erc721::erc721_metadata::erc_721_meta_model",
-  "token::components::token::erc721::erc721_owner::erc_721_owner_model",
+  "origami_token::components::security::initializable::initializable_model",
+  "origami_token::components::introspection::src5::src_5_model",
+  "origami_token::components::token::erc721::erc721_owner::ERC721OwnerModel",
+  "origami_token::components::token::erc721::erc721_balance::ERC721BalanceModel",
+  "origami_token::components::token::erc721::erc721_metadata::ERC721MetaModel",
+  "origami_token::components::token::erc721::erc721_enumerable::ERC721EnumerableIndexModel",
+  "origami_token::components::token::erc721::erc721_enumerable::ERC721EnumerableOwnerIndexModel",
+  "origami_token::components::token::erc721::erc721_enumerable::ERC721EnumerableOwnerTokenModel",
+  "origami_token::components::token::erc721::erc721_enumerable::ERC721EnumerableTokenModel",
+  "origami_token::components::token::erc721::erc721_enumerable::ERC721EnumerableTotalModel",
+  "origami_token::components::token::erc721::erc721_approval::ERC721TokenApprovalModel",
+  "origami_token::components::token::erc721::erc721_approval::ERC721OperatorApprovalModel",
 ]
 
 
-[tool.dojo]
-initializer_class_hash = "0xdeadcode"
-
-[tool.dojo.env]
-# world_address = ""
-
-[profile.dev.tool.dojo.env]
-rpc_url = "http://localhost:5050"
-world_address = "0x21cc3925e3837c1c174aaa524d0493337ee0269d252b7debe5ea41879452071"
-account_address = "0xb3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca"
-private_key = "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a"
-
-# [profile.slot.tool.dojo.env]
-# rpc_url = "https://api.cartridge.gg/x/512karat-slot/katana"
-# world_address = "0x21cc3925e3837c1c174aaa524d0493337ee0269d252b7debe5ea41879452071"
-# account_address = "0x5c386e2791e4ba6268c80d2a6dee77e0de33be5bbf4a05a603dac9cfb9cecb3"
-# private_key = "0x572781c71db23ea3b4b701ff11764919c8d7917d8460aebd35196309fed19b8"
-
-[profile.sepolia.tool.dojo.env]
-rpc_url = "https://my.provider.com/starknet/sepolia/rpc"
-world_address = "0x21cc3925e3837c1c174aaa524d0493337ee0269d252b7debe5ea41879452071"
-# account_address = "" # env: DOJO_ACCOUNT_ADDRESS
-# private_key = ""     # env: DOJO_PRIVATE_KEY
-
-[profile.mainnet.tool.dojo.env]
-rpc_url = "https://my.provider.com/starknet/mainnet/rpc"
-world_address = "0x21cc3925e3837c1c174aaa524d0493337ee0269d252b7debe5ea41879452071"
-# account_address = "" # env: DOJO_ACCOUNT_ADDRESS
-# private_key = ""     # env: DOJO_PRIVATE_KEY
+#--------------------------
+# Dojo profiles declaration
+#
+[profile.dev]
+[profile.sepolia]
+[profile.mainnet]

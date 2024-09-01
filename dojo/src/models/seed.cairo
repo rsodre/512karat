@@ -5,10 +5,10 @@ use karat::{
 
 #[dojo::model]
 #[derive(Copy, Drop, Serde)]
-struct Seed {
+pub struct Seed {
     #[key]
-    token_id: u128,
-    seed: u128,
+    pub token_id: u128,
+    pub seed: u128,
 }
 
 trait SeedTrait {

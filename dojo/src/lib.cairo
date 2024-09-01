@@ -14,6 +14,7 @@ mod utils {
     mod encoding;
     mod hash;
     mod painter;
+    mod misc;
 }
 
 #[cfg(test)]

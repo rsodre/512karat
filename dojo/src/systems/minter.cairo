@@ -29,6 +29,7 @@ mod minter {
     use starknet::{ContractAddress, get_contract_address, get_caller_address};
     use karat::systems::karat_token::{IKaratTokenDispatcher, IKaratTokenDispatcherTrait};
     use karat::utils::painter::{painter};
+    use karat::utils::misc::{WORLD};
     use karat::models::{
         config::{Config, ConfigTrait},
         token_data::{TokenData, TokenDataTrait},
@@ -137,7 +138,7 @@ mod minter {
     impl InternalImpl of super::IMinterInternal<ContractState> {
         #[inline(always)]
         fn assert_caller_is_owner(world: @IWorldDispatcher) {
-            assert(world.is_owner(get_caller_address(), get_contract_address().into()), Errors::NOT_OWNER);
+            assert(world.is_owner(self.selector().into(), get_caller_address()), Errors::NOT_OWNER);
         }
     }
 
@@ -147,6 +148,7 @@ mod minter {
     #[abi(embed_v0)]
     impl PainterImpl of super::IPainter<ContractState> {
         fn paint(world: @IWorldDispatcher, token_id: u128) -> ByteArray {
+            WORLD(world);
             let token_data = self.get_token_data(token_id);
             return painter::build_uri(token_data);
         }

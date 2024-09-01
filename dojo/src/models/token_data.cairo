@@ -6,12 +6,12 @@ use karat::{
 
 #[derive(Copy, Drop, Serde)]
 // #[dojo::model]
-struct TokenData {
-    token_id: u128,
-    seed: u128,
-    trait_names: Span<ByteArray>,
-    trait_values: Span<ByteArray>,
-    class: Class,
+pub struct TokenData {
+    pub token_id: u128,
+    pub seed: u128,
+    pub trait_names: Span<ByteArray>,
+    pub trait_values: Span<ByteArray>,
+    pub class: Class,
 }
 
 #[generate_trait]

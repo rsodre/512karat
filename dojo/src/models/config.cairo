@@ -3,15 +3,15 @@ use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
 
 #[dojo::model]
 #[derive(Copy, Drop, Serde)]
-struct Config {
+pub struct Config {
     #[key]
-    token_address: ContractAddress,
+    pub token_address: ContractAddress,
     //------
-    minter_address: ContractAddress,
-    painter_address: ContractAddress,
-    max_supply: u128,
-    cool_down: bool,
-    is_open: bool,
+    pub minter_address: ContractAddress,
+    pub painter_address: ContractAddress,
+    pub max_supply: u128,
+    pub cool_down: bool,
+    pub is_open: bool,
 }
 
 #[generate_trait]

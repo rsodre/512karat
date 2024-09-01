@@ -1,4 +1,3 @@
-use alexandria_encoding::base64::get_base64_char_set;
 
 /// Convert bytes array to base64 encoded bytes array
 ///
@@ -75,5 +74,77 @@ fn encode_bytes(mut bytes: ByteArray, base64_chars: Span<u8>) -> ByteArray {
 
         i += 3;
     };
+    result
+}
+
+
+// from:
+// https://github.com/keep-starknet-strange/alexandria/blob/main/packages/encoding/src/base64.cairo
+// use alexandria_encoding::base64::get_base64_char_set;
+fn get_base64_char_set() -> Array<u8> {
+    let mut result = array![
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J',
+        'K',
+        'L',
+        'M',
+        'N',
+        'O',
+        'P',
+        'Q',
+        'R',
+        'S',
+        'T',
+        'U',
+        'V',
+        'W',
+        'X',
+        'Y',
+        'Z',
+        'a',
+        'b',
+        'c',
+        'd',
+        'e',
+        'f',
+        'g',
+        'h',
+        'i',
+        'j',
+        'k',
+        'l',
+        'm',
+        'n',
+        'o',
+        'p',
+        'q',
+        'r',
+        's',
+        't',
+        'u',
+        'v',
+        'w',
+        'x',
+        'y',
+        'z',
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9'
+    ];
     result
 }

@@ -13,14 +13,14 @@ mod tester {
     };
 
     // token
-    use token::tests::constants::{ZERO, OWNER, SPENDER, RECIPIENT, VALUE, TOKEN_ID, TOKEN_ID_2};
-    use token::tests::utils;
-    use token::components::token::erc721::erc721_enumerable::{
+    use origami_token::tests::constants::{ZERO, OWNER, SPENDER, RECIPIENT, VALUE, TOKEN_ID, TOKEN_ID_2};
+    use origami_token::tests::utils;
+    use origami_token::components::token::erc721::erc721_enumerable::{
         erc_721_enumerable_index_model, ERC721EnumerableIndexModel,
         erc_721_enumerable_owner_index_model, ERC721EnumerableOwnerIndexModel,
         erc_721_enumerable_total_model, ERC721EnumerableTotalModel
     };
-    use token::components::token::erc721::erc721_enumerable::erc721_enumerable_component::{
+    use origami_token::components::token::erc721::erc721_enumerable::erc721_enumerable_component::{
         ERC721EnumerableImpl, InternalImpl as ERC721EnumerableInternalImpl
     };
 
