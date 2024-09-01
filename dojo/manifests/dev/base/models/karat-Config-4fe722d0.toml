@@ -1,0 +1,37 @@
+kind = "DojoModel"
+class_hash = "0x68a476d1a6443fdf9be1883ab0169929af2871ac9257bd091201eb292b9653b"
+original_class_hash = "0x68a476d1a6443fdf9be1883ab0169929af2871ac9257bd091201eb292b9653b"
+abi = "manifests/dev/base/abis/models/karat-Config-4fe722d0.json"
+tag = "karat-Config"
+qualified_path = "karat::models::config::config"
+manifest_name = "karat-Config-4fe722d0"
+
+[[members]]
+name = "token_address"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "minter_address"
+type = "ContractAddress"
+key = false
+
+[[members]]
+name = "painter_address"
+type = "ContractAddress"
+key = false
+
+[[members]]
+name = "max_supply"
+type = "u128"
+key = false
+
+[[members]]
+name = "cool_down"
+type = "bool"
+key = false
+
+[[members]]
+name = "is_open"
+type = "bool"
+key = false

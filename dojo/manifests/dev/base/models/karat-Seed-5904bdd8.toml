@@ -1,0 +1,17 @@
+kind = "DojoModel"
+class_hash = "0x6ed4b9bc3eabae89e10ec9d3c527c6867b3b310612bfb1513f595e476873012"
+original_class_hash = "0x6ed4b9bc3eabae89e10ec9d3c527c6867b3b310612bfb1513f595e476873012"
+abi = "manifests/dev/base/abis/models/karat-Seed-5904bdd8.json"
+tag = "karat-Seed"
+qualified_path = "karat::models::seed::seed"
+manifest_name = "karat-Seed-5904bdd8"
+
+[[members]]
+name = "token_id"
+type = "u128"
+key = true
+
+[[members]]
+name = "seed"
+type = "u128"
+key = false

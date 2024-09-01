@@ -12,7 +12,7 @@ export function defineContractComponents(world: World) {
         { token_address: RecsType.BigInt, minter_address: RecsType.BigInt, painter_address: RecsType.BigInt, max_supply: RecsType.BigInt, cool_down: RecsType.Boolean, is_open: RecsType.Boolean },
         {
           metadata: {
-            name: "Config",
+            name: "karat-Config",
             types: ["contractaddress","contractaddress","contractaddress","u128","bool","bool"],
             customTypes: [],
           },
@@ -25,60 +25,8 @@ export function defineContractComponents(world: World) {
         { token_id: RecsType.BigInt, seed: RecsType.BigInt },
         {
           metadata: {
-            name: "Seed",
+            name: "karat-Seed",
             types: ["u128","u128"],
-            customTypes: [],
-          },
-        }
-      );
-    })(),
-    SRC5Model: (() => {
-      return defineComponent(
-        world,
-        { token: RecsType.BigInt, interface_id: RecsType.BigInt, supports: RecsType.Boolean },
-        {
-          metadata: {
-            name: "SRC5Model",
-            types: ["contractaddress","felt252","bool"],
-            customTypes: [],
-          },
-        }
-      );
-    })(),
-    InitializableModel: (() => {
-      return defineComponent(
-        world,
-        { token: RecsType.BigInt, initialized: RecsType.Boolean },
-        {
-          metadata: {
-            name: "InitializableModel",
-            types: ["contractaddress","bool"],
-            customTypes: [],
-          },
-        }
-      );
-    })(),
-    ERC721OperatorApprovalModel: (() => {
-      return defineComponent(
-        world,
-        { token: RecsType.BigInt, owner: RecsType.BigInt, operator: RecsType.BigInt, approved: RecsType.Boolean },
-        {
-          metadata: {
-            name: "ERC721OperatorApprovalModel",
-            types: ["contractaddress","contractaddress","contractaddress","bool"],
-            customTypes: [],
-          },
-        }
-      );
-    })(),
-    ERC721TokenApprovalModel: (() => {
-      return defineComponent(
-        world,
-        { token: RecsType.BigInt, token_id: RecsType.BigInt, address: RecsType.BigInt },
-        {
-          metadata: {
-            name: "ERC721TokenApprovalModel",
-            types: ["contractaddress","u128","contractaddress"],
             customTypes: [],
           },
         }
@@ -90,7 +38,7 @@ export function defineContractComponents(world: World) {
         { token: RecsType.BigInt, account: RecsType.BigInt, amount: RecsType.BigInt },
         {
           metadata: {
-            name: "ERC721BalanceModel",
+            name: "origami_token-ERC721BalanceModel",
             types: ["contractaddress","contractaddress","u128"],
             customTypes: [],
           },
@@ -103,7 +51,7 @@ export function defineContractComponents(world: World) {
         { token: RecsType.BigInt, index: RecsType.BigInt, token_id: RecsType.BigInt },
         {
           metadata: {
-            name: "ERC721EnumerableIndexModel",
+            name: "origami_token-ERC721EnumerableIndexModel",
             types: ["contractaddress","u128","u128"],
             customTypes: [],
           },
@@ -116,7 +64,7 @@ export function defineContractComponents(world: World) {
         { token: RecsType.BigInt, owner: RecsType.BigInt, index: RecsType.BigInt, token_id: RecsType.BigInt },
         {
           metadata: {
-            name: "ERC721EnumerableOwnerIndexModel",
+            name: "origami_token-ERC721EnumerableOwnerIndexModel",
             types: ["contractaddress","contractaddress","u128","u128"],
             customTypes: [],
           },
@@ -129,7 +77,7 @@ export function defineContractComponents(world: World) {
         { token: RecsType.BigInt, owner: RecsType.BigInt, token_id: RecsType.BigInt, index: RecsType.BigInt },
         {
           metadata: {
-            name: "ERC721EnumerableOwnerTokenModel",
+            name: "origami_token-ERC721EnumerableOwnerTokenModel",
             types: ["contractaddress","contractaddress","u128","u128"],
             customTypes: [],
           },
@@ -142,7 +90,7 @@ export function defineContractComponents(world: World) {
         { token: RecsType.BigInt, token_id: RecsType.BigInt, index: RecsType.BigInt },
         {
           metadata: {
-            name: "ERC721EnumerableTokenModel",
+            name: "origami_token-ERC721EnumerableTokenModel",
             types: ["contractaddress","u128","u128"],
             customTypes: [],
           },
@@ -155,7 +103,7 @@ export function defineContractComponents(world: World) {
         { token: RecsType.BigInt, total_supply: RecsType.BigInt },
         {
           metadata: {
-            name: "ERC721EnumerableTotalModel",
+            name: "origami_token-ERC721EnumerableTotalModel",
             types: ["contractaddress","u128"],
             customTypes: [],
           },
@@ -168,8 +116,21 @@ export function defineContractComponents(world: World) {
         { token: RecsType.BigInt, name: RecsType.String, symbol: RecsType.String, base_uri: RecsType.String },
         {
           metadata: {
-            name: "ERC721MetaModel",
+            name: "origami_token-ERC721MetaModel",
             types: ["contractaddress"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC721OperatorApprovalModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, owner: RecsType.BigInt, operator: RecsType.BigInt, approved: RecsType.Boolean },
+        {
+          metadata: {
+            name: "origami_token-ERC721OperatorApprovalModel",
+            types: ["contractaddress","contractaddress","contractaddress","bool"],
             customTypes: [],
           },
         }
@@ -181,8 +142,47 @@ export function defineContractComponents(world: World) {
         { token: RecsType.BigInt, token_id: RecsType.BigInt, address: RecsType.BigInt },
         {
           metadata: {
-            name: "ERC721OwnerModel",
+            name: "origami_token-ERC721OwnerModel",
             types: ["contractaddress","u128","contractaddress"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC721TokenApprovalModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, token_id: RecsType.BigInt, address: RecsType.BigInt },
+        {
+          metadata: {
+            name: "origami_token-ERC721TokenApprovalModel",
+            types: ["contractaddress","u128","contractaddress"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    InitializableModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, initialized: RecsType.Boolean },
+        {
+          metadata: {
+            name: "origami_token-InitializableModel",
+            types: ["contractaddress","bool"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    SRC5Model: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, interface_id: RecsType.BigInt, supports: RecsType.Boolean },
+        {
+          metadata: {
+            name: "origami_token-SRC5Model",
+            types: ["contractaddress","felt252","bool"],
             customTypes: [],
           },
         }
