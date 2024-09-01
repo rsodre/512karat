@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { useNetwork } from "@starknet-react/core";
 import { setup, SetupResult } from "./generated/setup.ts";
 import { DojoProvider } from "./DojoContext.tsx";
-import { getDojoConfig } from "./dojoConfig.ts";
+import { getDojoChainConfig } from "./dojoConfig.ts";
 
 export default function DojoSetup({
   children,
@@ -21,8 +21,8 @@ export default function DojoSetup({
   useEffect(() => {
     const _setup = async () => {
       console.log(`Setup Dojo for chain...`, chain)
-      const config = getDojoConfig(chain)
-      const result = await setup(config);
+      const dojoConfig = getDojoChainConfig(chain.id).dojoConfig
+      const result = await setup(dojoConfig);
       console.log(`SetupResult:`, result)
       setSetupResult(result);
     }

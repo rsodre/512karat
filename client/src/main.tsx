@@ -4,19 +4,16 @@ import './styles/styles.scss'
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { StarknetConfig, argent, braavos, injected, publicProvider } from "@starknet-react/core";
-import { mainnet, sepolia } from "@starknet-react/chains";
+import { StarknetConfig, argent, braavos, injected, jsonRpcProvider } from "@starknet-react/core";
 import { ArgentMobileConnector } from "starknetkit/argentMobile";
 import { WebWalletConnector } from "starknetkit/webwallet";
 import { StarknetWindowObject } from "get-starknet-core";
 import { RpcProvider } from 'starknet';
-import { katana, slot, katanaProvider, genericProvider } from "./dojo/katana.tsx";
 import { DojoPredeployedStarknetWindowObject, PredeployedManager } from '@dojoengine/create-burner'
+import { ChainId, defaultChainId, getDojoChainConfig } from './dojo/dojoConfig.ts';
 import { makeController } from './components/useController.tsx';
-import { Manifest } from '@dojoengine/core';
-import manifest from "./dojo/generated//dev/manifest.json";
 import App from "./components/App.tsx";
-import { dojoConfigKatana, getPredeployedAccounts } from './dojo/dojoConfig.ts';
+
 
 const router = createBrowserRouter([
   {
@@ -25,19 +22,36 @@ const router = createBrowserRouter([
   },
 ]);
 
+export function genericProvider() {
+  return jsonRpcProvider({
+    rpc: (chain) => {
+      const nodeUrl = chain.rpcUrls.default.http[0] ?? chain.rpcUrls.public.http[0];
+      console.warn(`GENERIC RPC:`, nodeUrl, chain);
+      return {
+        nodeUrl,
+      }
+    },
+  });
+}
+
 async function init() {
   const rootElement = document.getElementById("root");
   if (!rootElement) throw new Error("React root not found");
   const root = ReactDOM.createRoot(rootElement as HTMLElement);
 
-  // TODO: should be by chain!
-  const controller = makeController(manifest as Manifest, ['minter'])
+  const dojoChainConfig = getDojoChainConfig(defaultChainId)
+
+  const controller = makeController(
+    dojoChainConfig.dojoConfig.manifest,
+    dojoChainConfig.dojoConfig.rpcUrl,
+    'karat',
+    {
+      minter: ['IMinter'],
+    },
+  )
 
   const chains = [
-    katana,
-    slot,
-    sepolia,
-    // mainnet,
+    dojoChainConfig.chain,
   ];
 
   let connectors = [
@@ -51,11 +65,18 @@ async function init() {
   ];
 
   //
-  // create Katana connector for testing
+  // ONLY ON KATANA: create predeployed connector for testing
   try {
+    const katana = getDojoChainConfig(ChainId.KATANA_LOCAL).dojoConfig
+    const predeployedAccounts = (katana.masterAddress && katana.masterPrivateKey) ? [{
+      name: 'Master Account',
+      address: katana.masterAddress,
+      privateKey: katana.masterPrivateKey,
+      active: false,
+    }] : []
     const predeployedManager = new PredeployedManager({
-      rpcProvider: new RpcProvider({ nodeUrl: dojoConfigKatana.rpcUrl }),
-      predeployedAccounts: getPredeployedAccounts(dojoConfigKatana),
+      rpcProvider: new RpcProvider({ nodeUrl: katana.rpcUrl }),
+      predeployedAccounts,
     });
     await predeployedManager.init();
     // cloned from usePredeployedWindowObject()...
@@ -63,14 +84,13 @@ async function init() {
     const key = `starknet_${predeployedWindowObject.id}`;
     (window as any)[key as string] = predeployedWindowObject as StarknetWindowObject;
     connectors.push(injected({ id: predeployedWindowObject.id }))
-  } catch {}
+  } catch { }
 
 
   root.render(
     <React.StrictMode>
       <StarknetConfig
         chains={chains}
-        // provider={() => katanaProvider(katana)}
         provider={genericProvider()}
         connectors={connectors}
         autoConnect={false}
