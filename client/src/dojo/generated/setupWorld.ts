@@ -7,6 +7,8 @@ import { bigintToHex } from "../../utils/types";
 
 export type IWorld = Awaited<ReturnType<typeof setupWorld>>;
 
+export const NAMESPACE = 'karat'
+
 export async function setupWorld(provider: DojoProvider) {
   
   //
@@ -19,7 +21,7 @@ export async function setupWorld(provider: DojoProvider) {
           contractName: "minter",
           entrypoint: "mint",
           calldata: [contract_address],
-        }, {
+        }, NAMESPACE, {
           maxFee: bigintToHex(ethToWei(1) / 10000n),
         });
       } catch (error) {
@@ -36,7 +38,7 @@ export async function setupWorld(provider: DojoProvider) {
   function karat_token() {
     const token_uri = async ({ token_id }: { token_id: BigNumberish }) => {
       try {
-        return await provider.call({
+        return await provider.call(NAMESPACE, {
           contractName: "karat_token",
           entrypoint: "token_uri",
           calldata: [token_id],

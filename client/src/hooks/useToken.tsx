@@ -10,7 +10,7 @@ export const useTokenContract = () => {
   
   const { setup: { manifest } } = useDojo()
   useEffect(() => {
-    const contract = getContractByName(manifest, 'karat_token');
+    const contract = getContractByName(manifest, 'karat', 'karat_token');
     setContractAddress(contract?.address ?? '')
   },[])
 

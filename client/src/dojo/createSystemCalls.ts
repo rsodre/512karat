@@ -1,7 +1,7 @@
 import { AccountInterface, BigNumberish } from "starknet";
 import { ContractComponents } from "./generated/contractComponents";
 import { ClientComponents } from "./createClientComponents";
-import type { IWorld } from "./generated/generated";
+import type { IWorld } from "./generated/setupWorld";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
