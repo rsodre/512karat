@@ -4,7 +4,7 @@ description = "Generative Art made with Dojo."
 icon_uri = "https://raw.githubusercontent.com/rsodre/512karat/main/assets/logo.png"
 cover_uri = "https://raw.githubusercontent.com/rsodre/512karat/main/assets/splash.png"
 website = "https://github.com/rsodre/512karat"
-seed = "512karat"
+seed = "512karat_6"
 
 [world.socials]
 x = "https://x.com/matalecode"
@@ -20,4 +20,4 @@ mappings = { "origami_token" = "origami_karat" }
 # rpc_url = "https://my.provider.com/starknet/sepolia/rpc" # STARKNET_RPC_URL
 # account_address = "" # env: DOJO_ACCOUNT_ADDRESS
 # private_key = ""     # env: DOJO_PRIVATE_KEY
-world_address = "0x4c0970c9f52045ef8eeedd1e11265ebb69ed90fce58c96ad103aecf7f91302a"
+world_address = "0x200d01c9f8cffdc13fa0d9aed9b8c5729659b67ee6ad68c6d5fa2e519825bf3"
