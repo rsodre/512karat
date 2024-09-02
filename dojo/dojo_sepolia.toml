@@ -14,7 +14,7 @@ github = "https://github.com/rsodre/512karat"
 
 [namespace]
 default = "karat"
-# mappings = { "origami_token" = "origami_karat" }
+mappings = { "origami_token" = "origami_karat" }
 
 [env]
 # rpc_url = "https://my.provider.com/starknet/sepolia/rpc" # STARKNET_RPC_URL

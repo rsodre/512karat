@@ -77,13 +77,13 @@ fn assert_only_event_approval(
 //
 
 fn setup_uninitialized() -> (IWorldDispatcher, IKaratTokenDispatcher) {
-    let world = spawn_test_world(["dojo", "origami_token", "karat"].span(),  get_models_test_class_hashes!());
+    let world = spawn_test_world(["dojo", "origami_karat", "karat"].span(),  get_models_test_class_hashes!());
 
     // deploy contract
     let mut token_dispatcher = IKaratTokenDispatcher {
         contract_address: world.deploy_contract('salt', karat_token::TEST_CLASS_HASH.try_into().unwrap())
     };
-    world.grant_owner(dojo::utils::bytearray_hash(@"origami_token"), token_dispatcher.contract_address);
+    world.grant_owner(dojo::utils::bytearray_hash(@"origami_karat"), token_dispatcher.contract_address);
 
     // config minter
     let config = Config{
