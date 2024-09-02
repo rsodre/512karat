@@ -32,7 +32,9 @@ export ACCOUNT_ADDRESS=${DOJO_ACCOUNT_ADDRESS:-$(get_profile_env "account_addres
 export RPC_URL=${STARKNET_RPC_URL:-$(get_profile_env "rpc_url")}
 export WORLD_ADDRESS=$(get_profile_env "world_address")
 export MANIFEST_FILE_PATH="./manifests/$PROFILE/deployment/manifest.json"
-export CLIENT_PATH="../client/src/dojo/generated/$PROFILE"
+export CLIENT_PATH="../client/src/dojo/generated"
+export CLIENT_PROFILE_PATH="$CLIENT_PATH/$PROFILE"
+export BINDINGS_PATH="./bindings/typescript"
 
 echo "------------------------------------------------------------------------------"
 echo ""
@@ -41,7 +43,9 @@ echo "PROFILE: $PROFILE"
 echo "RPC_URL: $RPC_URL"
 echo "WORLD_ADDRESS: $WORLD_ADDRESS"
 echo "MANIFEST_FILE_PATH: $MANIFEST_FILE_PATH"
+echo "BINDINGS_PATH: $BINDINGS_PATH"
 echo "CLIENT_PATH: $CLIENT_PATH"
+echo "CLIENT_PROFILE_PATH: $CLIENT_PROFILE_PATH"
 echo ""
 
 if [[
@@ -62,6 +66,7 @@ fi
   echo "Cleaning..."
   sozo -P $PROFILE clean
   echo "Building..."
+  # sozo -P $PROFILE build --typescript
   sozo -P $PROFILE build
 # fi
 
@@ -86,14 +91,18 @@ echo "👍"
 # copy manifest to client
 #
 echo "------------------------------------------------------------------------------"
-echo ">>> Copying manifest [$MANIFEST_FILE_PATH] to [$CLIENT_PATH/]"
-mkdir -p $CLIENT_PATH
-cp $MANIFEST_FILE_PATH $CLIENT_PATH/
+echo ">>> Copying manifest [$MANIFEST_FILE_PATH] to [$CLIENT_PROFILE_PATH/]"
+mkdir -p $CLIENT_PROFILE_PATH
+cp $MANIFEST_FILE_PATH $CLIENT_PROFILE_PATH/
 
 #------------------------
 # generate components
 #
 if [[ "$PROFILE" == "dev" ]]; then
+  # echo "------------------------------------------------------------------------------"
+  # echo ">>> Copying bindings [$BINDINGS_PATH] to [$CLIENT_PATH/]"
+  # # generate and copy bindings
+  # cp $BINDINGS_PATH/* $CLIENT_PATH/
   echo "------------------------------------------------------------------------------"
   echo ">>> Generate sources..."
   cd ../client
