@@ -5,6 +5,12 @@ import manifest_slot from "./generated/slot/manifest.json";
 import manifest_sepolia from "./generated/sepolia/manifest.json";
 import { feltToString, stringToFelt } from "../utils/starknet";
 
+export const defaultChainId: ChainId = import.meta.env.VITE_PUBLIC_CHAIN_ID as ChainId;
+
+if (!defaultChainId) {
+  throw new Error('VITE_PUBLIC_CHAIN_ID must be set')
+}
+
 //--------------------------------
 // Dojo Configs
 //
@@ -87,8 +93,6 @@ export const sepolia: Chain = {
 //--------------------------------
 // Chain mapping
 //
-
-export const defaultChainId: ChainId = import.meta.env.VITE_PUBLIC_CHAIN_ID! as ChainId;
 
 export type DojoChainConfig = {
   chain: Chain
