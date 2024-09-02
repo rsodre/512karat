@@ -6,29 +6,10 @@ For the [ETHGlobal StarkHack](https://ethglobal.com/events/starkhack) hackaton b
 
 code + art: **Roger Mataleone** ([@matalecode](https://x.com/matalecode))
 
-## Current deployments
 
-### Sepolia
+## Minting
 
-[https://karat.collect-code.com](https://karat.collect-code.com) or 
-[https://512karat.vercel.app](https://512karat.vercel.app)
-
-* Preferred to connect with **Catridge Controller** or **ArgentX**
-* Also supported (but not tested): **Argent Mobile**, **Argent Web Wallet** and **Braavos**.
-
-* Token contract: [Voyager](https://sepolia.voyager.online/contract/0x02ec22a653460527eacb3b74c07eeb0606a9c47db5f450d140a14f0a0a117e76) / [Starkscan](https://sepolia.starkscan.co/contract/0x02ec22a653460527eacb3b74c07eeb0606a9c47db5f450d140a14f0a0a117e76)
-* Minter contract: [Voyager](https://sepolia.voyager.online/contract/0x03bac2791460aec9d2ce62787c07c4d8c728fbc01ccd48f120f47380bd4ea65a) / [Starkscan](https://sepolia.starkscan.co/contract/0x03bac2791460aec9d2ce62787c07c4d8c728fbc01ccd48f120f47380bd4ea65a)
-
-
-### Slot (no client deployed)
-
-* Preferred to connect with **Catridge Controller**
-
-* Configuration for **ArgentX**:
-  * Chain ID: `WP_512KARAT_SLOT`
-  * RPC: `https://api.cartridge.gg/x/512karat-slot/katana`
-  * Account Class Hash: `0x05400e90f7e0ae78bd02c77cd75527280470e2fe19c54970dd79dc37a9d3645c`
-  * Fee Token: `0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7`
+TBD
 
 
 ## Project structure
@@ -37,6 +18,179 @@ code + art: **Roger Mataleone** ([@matalecode](https://x.com/matalecode))
 * `/client`: Typescript Vite client
 * `/draft`: Token experiments (metadata, svg)
 * [p5js](https://editor.p5js.org/rsodre/sketches/Im7yQgmf5): Art playground
+
+
+
+
+
+## Sepolia / Mainnet Deployment
+
+This is a generic guide to deploy a Dojo world to Sepolia.
+The steps for Mainnet are exactly the same, just replace the chain name and ID when necessary.
+
+
+### Setup
+
+* You need a [Starknet RPC Provider](https://www.starknet.io/fullnodes-rpc-services/) to deploy contracts on-chain. So get your and check if it works and is on the chain you want to deploy (`SN_SEPOLIA` or `SN_MAINNET`)
+
+```sh
+# Run this...
+curl --location '<RPC_PROVIDER_URL>' \
+--header 'Content-Type: application/json' \
+--data '{"id": 0,"jsonrpc": "2.0","method": "starknet_chainId","params": {}}'
+
+# you should get an output like this...
+{"jsonrpc":"2.0","result":"0x534e5f5345504f4c4941","id":0}
+
+# now paste the hex result part on this command... 
+echo 0x534e5f5345504f4c4941 | xxd -r -p
+
+# which !must! output SN_SEPOLIA or SN_MAINNET
+SN_SEPOLIA
+```
+
+* Declare the `sepolia` profile in [`Scarb.toml`](https://github.com/rsodre/512karat/blob/main/dojo/Scarb.toml)
+
+```
+[profile.sepolia]
+```
+
+* Create the [`dojo_sepolia.toml`](https://github.com/rsodre/512karat/blob/main/dojo/dojo_sepolia.toml) dojo config file, with the same contents of [`dojo_dev.toml`](https://github.com/rsodre/512karat/blob/main/dojo/dojo_dev.toml), except for `[env]`, in which we're going to expose the `world_address` only:
+
+```
+[env]
+# rpc_url = ""         # env: STARKNET_RPC_URL
+# account_address = "" # env: DOJO_ACCOUNT_ADDRESS
+# private_key = ""     # env: DOJO_PRIVATE_KEY
+world_address = "0x30ce813d2c4d55298764d676bbc1f37fb8b6337e29337692c7133f52d106878"
+```
+
+* Clone the [`dev`](https://github.com/rsodre/512karat/blob/main/dojo/overlays/dev/) overlays to [`sepolia`](https://github.com/rsodre/512karat/blob/main/dojo/overlays/sepolia/)
+
+* Create `.env.sepolia` containing your RPC provider, account and private key. Make sure that account is deployed and has some [ETH](https://starknet-faucet.vercel.app) in it (0.001 is more than enough).
+
+```sh
+# usage: source .env.sepolia
+export STARKNET_RPC_URL=<RPC_PROVIDER_URL>
+export DOJO_ACCOUNT_ADDRESS=<YOUR_ACCOUNT_ADDRESS>
+export DOJO_PRIVATE_KEY=<YOUR_ACCOUNT_PRIVATE_KEY>
+```
+
+
+
+### Deployment
+
+* Load `.env.sepolia`.
+
+**IF FOR ANY REASON YOU ABORT THE DEPLOYMENT, JUMP TO THE CLEANUP STEP TO UNDO THIS**
+
+```sh
+source .env.sepolia
+```
+
+* Build and check for errors. If the `migrate plan` command raises any errors, fix and try again before continuing.
+
+```sh
+cd dojo
+sozo -P sepolia clean
+sozo -P sepolia build
+sozo -P sepolia migrate plan
+```
+
+* Execute migration using the [`migrate`](https://github.com/rsodre/512karat/blob/main/dojo/migrate) script...
+
+```sh
+cd dojo
+./migrate sepolia
+```
+
+Your world is deployed!
+
+
+### Cleanup env !!!!!!!
+
+Clear env after all is done...
+
+**THIS IS VERY IMPORTANT, OR YOUR NEXT LOCAL DEPLOYMENT MAY GO TO SEPOLIA OR MAINNET!**
+
+```sh
+source .env.clear
+```
+
+
+
+### Torii Indexer
+
+Now, if you're building a Dojo client, you will need a Torii service to index our world...
+
+* Install [slot](https://github.com/cartridge-gg/slot) or update it
+
+```sh
+slotup
+```
+
+* Authorize
+
+```sh
+slot auth login
+```
+
+* Find your world starting block. Replace your world address on the following link, clink on **Deployed At Transaction Hash** and write down the **Block Number**. (it may take a while before the link works if you use it right after deployment)
+
+[https://sepolia.starkscan.co/contract/0x04c0970c9f52045ef8eeedd1e11265ebb69ed90fce58c96ad103aecf7f91302a](https://sepolia.starkscan.co/contract/0x04c0970c9f52045ef8eeedd1e11265ebb69ed90fce58c96ad103aecf7f91302a)
+
+* Create Torii service with this command, replacing...
+  * `SERVICE_NAME` can be the name of the game/dapp. Once you create it, you own that name.
+  * `DOJO_VERSION`: your Dojo version (ex: `v1.0.0-alpha.9`)
+  * `WORLD_ADDRESS`: from your Dojo config file [`dojo_sepolia.toml`](https://github.com/rsodre/512karat/blob/main/dojo/dojo_sepolia.toml)
+  * `RPC_URL`: your RPC provider url
+  * `STARTING_BLOCK`: the deployment transaction block we just found before
+  * Take a note of the endpoints after it is deployed...
+
+```sh
+slot deployments create <SERVICE_NAME> torii --version <DOJO_VERSION> --world <WORLD_ADDRESS> --rpc <RPC_URL> --start-block <STARTING_BLOCK> --index-pending true
+```
+
+* slot will output something like this. Save it for later, you will need the endpoints on your client.
+
+```
+Deployment success 🚀
+
+Configuration:
+  World: 0x4c0970c9f52045ef8eeedd1e11265ebb69ed90fce58c96ad103aecf7f91302a
+  RPC: https://api.cartridge.gg/rpc/starknet-sepolia
+  Start Block: 155777
+  Index Pending: false
+
+Endpoints:
+  GRAPHQL: https://api.cartridge.gg/x/512karat-sepolia/torii/graphql
+  GRPC: https://api.cartridge.gg/x/512karat-sepolia/torii
+
+Stream logs with `slot deployments logs 512karat-sepolia torii -f`
+```
+
+
+* If for any reasons we need to recreate Torii, we can just delete it and run the create command again. This is safe, all your data is on-chain.
+
+```sh
+slot deployments delete <SERVICE_NAME> torii
+```
+
+
+### Some notes on the client side
+
+* The `migrate` script is copying manifests to `/client/src/dojo/generated/<PROFILE>`, each chain needs to use their own manifest!
+
+* Take a look at [`dojoConfig.ts`](/client/src/dojo/dojoConfig.ts) to create different setups for each chain, adding the torii endpoint.
+
+* The client needs the env variable `VITE_PUBLIC_CHAIN_ID` to be set to your chain id. Configure on your sever and add it to your `.env` to access your deployment localy:
+
+```
+VITE_PUBLIC_CHAIN_ID=SN_SEPOLIA
+```
+
+
+
 
 
 ## Resources and Process
@@ -100,83 +254,3 @@ Class::D => array!["&#x2595;", "&#x2595;", "&#x2594;", "&#x2594;", "&#x2597;", "
 Class::E => array!["&#x2B55;", "&#x0020;", "&#x0020;", "&#x002E;", "&#x25C7;", "&#x25C6;", "&#x25E2;", "&#x25E4;", "&#x25E5;", "&#x25E3;", "&#x2D54;"].span(), 
 Class::L => array!["&#x0020;", "&#x005F;", "&#x002E;", "&#x26A1;", "&#x2605;", "&#x0074;", "&#x006F;", "&#x006F;", "&#x004C;", "&#x25C6;"].span(), 
 ```
-
-
-#### Deployment steps
-
-Steps for migrating to Sepolia (Mainnet is the same)
-
-* Create `sepolia` profile in [`Scarb.toml`](https://github.com/rsodre/512karat/blob/main/dojo/Scarb.toml)
-```
-[profile.sepolia.tool.dojo.env]
-rpc_url = "https://my.provider.com/starknet/sepolia/rpc"
-world_address = "0x21cc3925e3837c1c174aaa524d0493337ee0269d252b7debe5ea41879452071"
-# account_address = "" # env: DOJO_ACCOUNT_ADDRESS
-# private_key = ""     # env: DOJO_PRIVATE_KEY
-```
-* Build for Sepolia to generate manifests
-```sh
-sozo -P sepolia build
-```
-* Create overlay files for Sepolia
-```sh
-sozo -P sepolia migrate generate-overlays
-```
-* Cloned [`dev`](https://github.com/rsodre/512karat/blob/main/dojo/manifests/dev/base/contracts/karat_systems_minter_minter.toml) overlays to [`sepolia`](https://github.com/rsodre/512karat/blob/main/dojo/manifests/sepolia/base/contracts/karat_systems_minter_minter.toml)
-* Create `.env.sepolia` containing your RPC provider, account and private key
-```sh
-# usage: source .env.sepolia
-export STARKNET_RPC_URL=<YOUR_RPC_VERSION_0.6>
-export DOJO_ACCOUNT_ADDRESS=<YOUR_ACCOUNT_ADDRESS>
-export DOJO_PRIVATE_KEY=<YOUR_ACCOUNT_PRIVATE_KEY>
-```
-* Load `.env.sepolia`
-```sh
-source .env.sepolia
-```
-* Check migration, no errors!
-```sh
-sozo -P sepolia migrate plan
-```
-* Execute migration using the [`migrate`](https://github.com/rsodre/512karat/blob/main/dojo/migrate) script...
-```sh
-./migrate sepolia
-```
-
-Now we need to create a torii server to index our world...
-
-* Install [slot](https://github.com/cartridge-gg/slot) or update it
-```sh
-slotup
-```
-* Authorize
-```sh
-slot auth login
-```
-* Create Torii service...
-  * `SERVICE_NAME` can be the name of the game/dapp. Once you create it, you own that name.
-  * The version is your Dojo version
-  * Fill in your own World address
-  * Check the contracts deployment transaction to use as starting block
-  * Take a note of the endpoints after it is deployed.
-```sh
-slot deployments create <SERVICE_NAME> torii --version v0.7.2 --world 0x0545c8aff15426c3d43b3ba8fd45c61870b30ca4ec0bfbd69193facee4c7b97c --rpc <RPC_URL> --start-block 75600 --index-pending true
-```
-* If for any reasons we need to delete and recreate Torii
-```sh
-slot deployments delete 512karat torii
-```
-* Clear env after all done...
-```sh
-source .env.clear
-```
-
-
-
-#### Multichain client notes
-
-* The `migrate` script is copying manifests to `/client/src/dojo/generated/<PROFILE>`, each chain needs to use their own manifest!
-* Adapted `dojoConfig` to create different setups for each chain, adding the torii endpoint.
-* Moved Dojo setup to new `<DojoSetup>`, and inside `<App>`, only when user is connected, using connected chain
-
-

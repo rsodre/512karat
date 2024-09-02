@@ -1,0 +1,23 @@
+[world]
+name = "512 Karat"
+description = "Generative Art made with Dojo."
+icon_uri = "https://raw.githubusercontent.com/rsodre/512karat/main/assets/logo.png"
+cover_uri = "https://raw.githubusercontent.com/rsodre/512karat/main/assets/splash.png"
+website = "https://github.com/rsodre/512karat"
+seed = "512karat"
+
+[world.socials]
+x = "https://x.com/matalecode"
+github = "https://github.com/rsodre/512karat"
+# discord = "https://discord.gg/xxx"
+# telegram = "https://t.me/xxx"
+
+[namespace]
+default = "karat"
+# mappings = { "origami_token" = "origami_karat" }
+
+[env]
+# rpc_url = "https://my.provider.com/starknet/sepolia/rpc" # STARKNET_RPC_URL
+# account_address = "" # env: DOJO_ACCOUNT_ADDRESS
+# private_key = ""     # env: DOJO_PRIVATE_KEY
+world_address = "0x4c0970c9f52045ef8eeedd1e11265ebb69ed90fce58c96ad103aecf7f91302a"
