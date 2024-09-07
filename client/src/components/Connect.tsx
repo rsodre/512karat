@@ -1,14 +1,15 @@
 import { Button, Grid } from "semantic-ui-react";
 import { useConnect, useAccount, useDisconnect } from "@starknet-react/core";
-import { AddressShort } from "./AddressShort";
+import { AddressShort } from "./ui/AddressShort";
 import { useOpener } from "../hooks/useOpener";
 import ConnectModal from "./ConnectModal";
 import { feltToString } from "../utils/starknet";
+import { IconClick } from "./ui/Icons";
 
 const Row = Grid.Row
 const Col = Grid.Column
 
-export function Connect() {
+export function ConnectButton() {
   const { isConnected } = useAccount();
   const opener = useOpener()
 
@@ -20,7 +21,7 @@ export function Connect() {
   );
 }
 
-export function Disconnect() {
+export function DisconnectButton() {
   const { disconnect } = useDisconnect();
   const { isConnected } = useAccount();
   return (
@@ -30,10 +31,17 @@ export function Disconnect() {
   )
 }
 
-export function ConnectedHeader() {
+export function DisconnectIcon() {
   const { disconnect } = useDisconnect();
-  const { address, chainId } = useAccount();
+  const { isConnected } = useAccount();
+  return (
+    <IconClick name='sign-out' disabled={!isConnected} onClick={() => disconnect()} />
+  )
+}
 
+export function ConnectedHeader() {
+  const { address, chainId, isConnected } = useAccount();
+  if (!isConnected) return <></>
   return (
     <Grid>
       <Row columns={'equal'}>
@@ -42,6 +50,8 @@ export function ConnectedHeader() {
         </Col>
         <Col textAlign="right" verticalAlign="middle">
           {chainId ? feltToString(chainId) : '[chain]'}
+          {' '}
+          <DisconnectIcon />
         </Col>
       </Row>
     </Grid>

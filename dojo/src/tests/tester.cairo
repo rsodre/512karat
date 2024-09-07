@@ -36,14 +36,14 @@ mod tester {
     }
 
     fn spawn_systems() -> Systems {
-        let world = spawn_test_world(["dojo", "origami_token", "karat"].span(),  get_models_test_class_hashes!());
+        let world = spawn_test_world(["dojo", "origami_karat", "karat"].span(),  get_models_test_class_hashes!());
 
         let max_supply: u128 = 4;
         
         let karat = IKaratTokenDispatcher {
             contract_address: world.deploy_contract('karat', karat_token::TEST_CLASS_HASH.try_into().unwrap())
         };
-        world.grant_owner(dojo::utils::bytearray_hash(@"origami_token"), karat.contract_address);
+        world.grant_owner(dojo::utils::bytearray_hash(@"origami_karat"), karat.contract_address);
 
         let minter_calldata: Span<felt252> = array![
             karat.contract_address.into(),
@@ -53,7 +53,7 @@ mod tester {
         let minter = IMinterDispatcher {
             contract_address:world.deploy_contract('minter', minter::TEST_CLASS_HASH.try_into().unwrap())
         };
-        world.grant_owner(dojo::utils::bytearray_hash(@"origami_token"), minter.contract_address);
+        world.grant_owner(dojo::utils::bytearray_hash(@"origami_karat"), minter.contract_address);
         world.grant_owner(dojo::utils::bytearray_hash(@"karat"), minter.contract_address);
         world.grant_owner(selector_from_tag!("karat-minter"), OWNER());
         world.init_contract(selector_from_tag!("karat-minter"), minter_calldata);

@@ -3,9 +3,9 @@ kind = "WorldContract"
 class_hash = "0xa349b743d361ce4567361475a89b84a386bb383448c6926954e5fe0b525597"
 original_class_hash = "0xa349b743d361ce4567361475a89b84a386bb383448c6926954e5fe0b525597"
 abi = "manifests/sepolia/deployment/abis/dojo-world.json"
-address = "0x4c0970c9f52045ef8eeedd1e11265ebb69ed90fce58c96ad103aecf7f91302a"
-transaction_hash = "0x44cd3ed294de500e3661738c1b4d1b83f7378c34dd0bde8abccd7df642ae9ed"
-seed = "512karat"
+address = "0x200d01c9f8cffdc13fa0d9aed9b8c5729659b67ee6ad68c6d5fa2e519825bf3"
+transaction_hash = "0x71683e57bfbca18b4cde4b50bf7085512369939ad09531fa204f27087faf7f1"
+seed = "512karat_6"
 manifest_name = "dojo-world"
 
 [world.metadata]
@@ -22,25 +22,25 @@ manifest_name = "dojo-base"
 
 [[contracts]]
 kind = "DojoContract"
-address = "0x410af9215196e74822373a0ca51854a420005360f36e2893b9612676a0f49cb"
-class_hash = "0x709d1aeeb211e41b12f308f76a9ddc2c8593909ba61cb552febff69635955a7"
-original_class_hash = "0x709d1aeeb211e41b12f308f76a9ddc2c8593909ba61cb552febff69635955a7"
+address = "0x5a2c005d0d50fcd19828cb0af4252a9dcd980d196676d441a200b1a0ed0b252"
+class_hash = "0x54594a464d9ff3985eb3312f93e8b1220b13b71cc5b357d1f395b03c20c46f"
+original_class_hash = "0x54594a464d9ff3985eb3312f93e8b1220b13b71cc5b357d1f395b03c20c46f"
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/sepolia/deployment/abis/contracts/karat-karat_token-6eea4d34.json"
 reads = []
 writes = [
-    "origami_token-SRC5Model",
-    "origami_token-InitializableModel",
-    "origami_token-ERC721OwnerModel",
-    "origami_token-ERC721BalanceModel",
-    "origami_token-ERC721MetaModel",
-    "origami_token-ERC721EnumerableIndexModel",
-    "origami_token-ERC721EnumerableOwnerIndexModel",
-    "origami_token-ERC721EnumerableOwnerTokenModel",
-    "origami_token-ERC721EnumerableTokenModel",
-    "origami_token-ERC721EnumerableTotalModel",
-    "origami_token-ERC721TokenApprovalModel",
-    "origami_token-ERC721OperatorApprovalModel",
+    "origami_karat-SRC5Model",
+    "origami_karat-InitializableModel",
+    "origami_karat-ERC721OwnerModel",
+    "origami_karat-ERC721BalanceModel",
+    "origami_karat-ERC721MetaModel",
+    "origami_karat-ERC721EnumerableIndexModel",
+    "origami_karat-ERC721EnumerableOwnerIndexModel",
+    "origami_karat-ERC721EnumerableOwnerTokenModel",
+    "origami_karat-ERC721EnumerableTokenModel",
+    "origami_karat-ERC721EnumerableTotalModel",
+    "origami_karat-ERC721TokenApprovalModel",
+    "origami_karat-ERC721OperatorApprovalModel",
 ]
 init_calldata = []
 tag = "karat-karat_token"
@@ -53,9 +53,9 @@ manifest_name = "karat-karat_token-6eea4d34"
 
 [[contracts]]
 kind = "DojoContract"
-address = "0x2b1cb5c53db5f07974585b8788ec4f4b57f732c71c4a0e66b8b282fdca29889"
-class_hash = "0xb8318f43fd776835901c7d1554ff3ae460d4c73f49163f225de6b109bc4088"
-original_class_hash = "0xb8318f43fd776835901c7d1554ff3ae460d4c73f49163f225de6b109bc4088"
+address = "0x6ec76c43746c44ec8edd8317400579685c7b0506a8a84f1bb8bbf341310d5e4"
+class_hash = "0x3070ef774baee12e79e80b64f1ebec122da9000a980560fcceb524ad353e7de"
+original_class_hash = "0x3070ef774baee12e79e80b64f1ebec122da9000a980560fcceb524ad353e7de"
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/sepolia/deployment/abis/contracts/karat-minter-2f247449.json"
 reads = []
@@ -135,12 +135,12 @@ key = false
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x36dc2b76dcd77b58fe987c0b8836c2ce7fa08cb9d44838634218fad353bec83"
-original_class_hash = "0x36dc2b76dcd77b58fe987c0b8836c2ce7fa08cb9d44838634218fad353bec83"
-abi = "manifests/sepolia/deployment/abis/models/origami_token-ERC721BalanceModel-246a8e17.json"
-tag = "origami_token-ERC721BalanceModel"
+class_hash = "0x730809cf076982eef7705be526e16a5821a0ccbc2a9dee431f0f836d95bfb47"
+original_class_hash = "0x730809cf076982eef7705be526e16a5821a0ccbc2a9dee431f0f836d95bfb47"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-ERC721BalanceModel-310d3b4b.json"
+tag = "origami_karat-ERC721BalanceModel"
 qualified_path = "origami_token::components::token::erc721::erc721_balance::erc_721_balance_model"
-manifest_name = "origami_token-ERC721BalanceModel-246a8e17"
+manifest_name = "origami_karat-ERC721BalanceModel-310d3b4b"
 
 [[models.members]]
 name = "token"
@@ -159,12 +159,12 @@ key = false
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x5d3394057bbdf2262c0ba952ec0bbc13b8a315ad8bd9e684650225abc4152ac"
-original_class_hash = "0x5d3394057bbdf2262c0ba952ec0bbc13b8a315ad8bd9e684650225abc4152ac"
-abi = "manifests/sepolia/deployment/abis/models/origami_token-ERC721EnumerableIndexModel-1a4200e7.json"
-tag = "origami_token-ERC721EnumerableIndexModel"
+class_hash = "0x6845784f221a8ebd916dadec974d486ce1d43f637484ece3f2430615ed54b6a"
+original_class_hash = "0x6845784f221a8ebd916dadec974d486ce1d43f637484ece3f2430615ed54b6a"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-ERC721EnumerableIndexModel-2f673b2e.json"
+tag = "origami_karat-ERC721EnumerableIndexModel"
 qualified_path = "origami_token::components::token::erc721::erc721_enumerable::erc_721_enumerable_index_model"
-manifest_name = "origami_token-ERC721EnumerableIndexModel-1a4200e7"
+manifest_name = "origami_karat-ERC721EnumerableIndexModel-2f673b2e"
 
 [[models.members]]
 name = "token"
@@ -183,12 +183,12 @@ key = false
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x2fd76867b943befb036da828bd1d2bec2386863ad70aafa770360c5b3e9acfc"
-original_class_hash = "0x2fd76867b943befb036da828bd1d2bec2386863ad70aafa770360c5b3e9acfc"
-abi = "manifests/sepolia/deployment/abis/models/origami_token-ERC721EnumerableOwnerIndexModel-573cb336.json"
-tag = "origami_token-ERC721EnumerableOwnerIndexModel"
+class_hash = "0x6591d013f5ac2840c72ff073667554ec9a370ca2ba443d0545673dd0021e428"
+original_class_hash = "0x6591d013f5ac2840c72ff073667554ec9a370ca2ba443d0545673dd0021e428"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-ERC721EnumerableOwnerIndexModel-323d04e8.json"
+tag = "origami_karat-ERC721EnumerableOwnerIndexModel"
 qualified_path = "origami_token::components::token::erc721::erc721_enumerable::erc_721_enumerable_owner_index_model"
-manifest_name = "origami_token-ERC721EnumerableOwnerIndexModel-573cb336"
+manifest_name = "origami_karat-ERC721EnumerableOwnerIndexModel-323d04e8"
 
 [[models.members]]
 name = "token"
@@ -212,12 +212,12 @@ key = false
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x45871731d39993b19571f03348d6932fba0445f6eb94e1e37d2db5c4474d61c"
-original_class_hash = "0x45871731d39993b19571f03348d6932fba0445f6eb94e1e37d2db5c4474d61c"
-abi = "manifests/sepolia/deployment/abis/models/origami_token-ERC721EnumerableOwnerTokenModel-74966560.json"
-tag = "origami_token-ERC721EnumerableOwnerTokenModel"
+class_hash = "0x66e476c25b0d17546f3c87fa0b353e2dc446d7e664fe44bb1355558c49e492f"
+original_class_hash = "0x66e476c25b0d17546f3c87fa0b353e2dc446d7e664fe44bb1355558c49e492f"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-ERC721EnumerableOwnerTokenModel-4b4f3beb.json"
+tag = "origami_karat-ERC721EnumerableOwnerTokenModel"
 qualified_path = "origami_token::components::token::erc721::erc721_enumerable::erc_721_enumerable_owner_token_model"
-manifest_name = "origami_token-ERC721EnumerableOwnerTokenModel-74966560"
+manifest_name = "origami_karat-ERC721EnumerableOwnerTokenModel-4b4f3beb"
 
 [[models.members]]
 name = "token"
@@ -241,12 +241,12 @@ key = false
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0xf5a9baf34c431fc11c05e15ddff7eb4750847ada1db57528ddad2966a7f3ec"
-original_class_hash = "0xf5a9baf34c431fc11c05e15ddff7eb4750847ada1db57528ddad2966a7f3ec"
-abi = "manifests/sepolia/deployment/abis/models/origami_token-ERC721EnumerableTokenModel-5c383d9f.json"
-tag = "origami_token-ERC721EnumerableTokenModel"
+class_hash = "0x1e2561e8f1cad22840c39a0b20ca1514d11265cf5fa1832e43675e23c88124a"
+original_class_hash = "0x1e2561e8f1cad22840c39a0b20ca1514d11265cf5fa1832e43675e23c88124a"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-ERC721EnumerableTokenModel-46ae9a70.json"
+tag = "origami_karat-ERC721EnumerableTokenModel"
 qualified_path = "origami_token::components::token::erc721::erc721_enumerable::erc_721_enumerable_token_model"
-manifest_name = "origami_token-ERC721EnumerableTokenModel-5c383d9f"
+manifest_name = "origami_karat-ERC721EnumerableTokenModel-46ae9a70"
 
 [[models.members]]
 name = "token"
@@ -265,12 +265,12 @@ key = false
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x476254a3660ac696486628f6fb9c531a94de4b0addcc00bc43eafc207638968"
-original_class_hash = "0x476254a3660ac696486628f6fb9c531a94de4b0addcc00bc43eafc207638968"
-abi = "manifests/sepolia/deployment/abis/models/origami_token-ERC721EnumerableTotalModel-5674a124.json"
-tag = "origami_token-ERC721EnumerableTotalModel"
+class_hash = "0x3bd5a95d8ba6c91b6ee50affe73d427651257b3bd4ae881aee17138e7f0ba5f"
+original_class_hash = "0x3bd5a95d8ba6c91b6ee50affe73d427651257b3bd4ae881aee17138e7f0ba5f"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-ERC721EnumerableTotalModel-4ef0f6e0.json"
+tag = "origami_karat-ERC721EnumerableTotalModel"
 qualified_path = "origami_token::components::token::erc721::erc721_enumerable::erc_721_enumerable_total_model"
-manifest_name = "origami_token-ERC721EnumerableTotalModel-5674a124"
+manifest_name = "origami_karat-ERC721EnumerableTotalModel-4ef0f6e0"
 
 [[models.members]]
 name = "token"
@@ -284,12 +284,12 @@ key = false
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x4310a938ba169a6d12cd0aa9dbeaf2992ddc4b55621bdeb883c0b43a3726d6d"
-original_class_hash = "0x4310a938ba169a6d12cd0aa9dbeaf2992ddc4b55621bdeb883c0b43a3726d6d"
-abi = "manifests/sepolia/deployment/abis/models/origami_token-ERC721MetaModel-423fffaa.json"
-tag = "origami_token-ERC721MetaModel"
+class_hash = "0x245d514173e0e62b83bfe45e34f72901d677493a7a50497d0bf6f819259c595"
+original_class_hash = "0x245d514173e0e62b83bfe45e34f72901d677493a7a50497d0bf6f819259c595"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-ERC721MetaModel-5b878968.json"
+tag = "origami_karat-ERC721MetaModel"
 qualified_path = "origami_token::components::token::erc721::erc721_metadata::erc_721_meta_model"
-manifest_name = "origami_token-ERC721MetaModel-423fffaa"
+manifest_name = "origami_karat-ERC721MetaModel-5b878968"
 
 [[models.members]]
 name = "token"
@@ -313,12 +313,12 @@ key = false
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x29f6fcd504ae293bec1139611e0fe870deda9be6a41ef7e1ffacfa5c76c4dd5"
-original_class_hash = "0x29f6fcd504ae293bec1139611e0fe870deda9be6a41ef7e1ffacfa5c76c4dd5"
-abi = "manifests/sepolia/deployment/abis/models/origami_token-ERC721OperatorApprovalModel-1083d4d1.json"
-tag = "origami_token-ERC721OperatorApprovalModel"
+class_hash = "0x1e29a660fe1d206b03bbb264a6a97863186c723ad0bf20abcc92ae5040de985"
+original_class_hash = "0x1e29a660fe1d206b03bbb264a6a97863186c723ad0bf20abcc92ae5040de985"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-ERC721OperatorApprovalModel-723f0a3d.json"
+tag = "origami_karat-ERC721OperatorApprovalModel"
 qualified_path = "origami_token::components::token::erc721::erc721_approval::erc_721_operator_approval_model"
-manifest_name = "origami_token-ERC721OperatorApprovalModel-1083d4d1"
+manifest_name = "origami_karat-ERC721OperatorApprovalModel-723f0a3d"
 
 [[models.members]]
 name = "token"
@@ -342,12 +342,12 @@ key = false
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x356e5dea0e7529f6c2617074b151c03b23cfb408d0a1ef8e123c226502cf115"
-original_class_hash = "0x356e5dea0e7529f6c2617074b151c03b23cfb408d0a1ef8e123c226502cf115"
-abi = "manifests/sepolia/deployment/abis/models/origami_token-ERC721OwnerModel-61577880.json"
-tag = "origami_token-ERC721OwnerModel"
+class_hash = "0xccdd862153020ce7680e7a6efa3a73743337293cbb2f7d219ab2de1be899fc"
+original_class_hash = "0xccdd862153020ce7680e7a6efa3a73743337293cbb2f7d219ab2de1be899fc"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-ERC721OwnerModel-25f64520.json"
+tag = "origami_karat-ERC721OwnerModel"
 qualified_path = "origami_token::components::token::erc721::erc721_owner::erc_721_owner_model"
-manifest_name = "origami_token-ERC721OwnerModel-61577880"
+manifest_name = "origami_karat-ERC721OwnerModel-25f64520"
 
 [[models.members]]
 name = "token"
@@ -366,12 +366,12 @@ key = false
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x290d67abdcfd26f1d9768cec5ff48842cd405ce33417c6e8a212da0baa77e86"
-original_class_hash = "0x290d67abdcfd26f1d9768cec5ff48842cd405ce33417c6e8a212da0baa77e86"
-abi = "manifests/sepolia/deployment/abis/models/origami_token-ERC721TokenApprovalModel-560d5854.json"
-tag = "origami_token-ERC721TokenApprovalModel"
+class_hash = "0x28b413c3ab4ecdfea7e4a3cdb318835fcde26a4acb1803386c6b81c927732bd"
+original_class_hash = "0x28b413c3ab4ecdfea7e4a3cdb318835fcde26a4acb1803386c6b81c927732bd"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-ERC721TokenApprovalModel-87684520.json"
+tag = "origami_karat-ERC721TokenApprovalModel"
 qualified_path = "origami_token::components::token::erc721::erc721_approval::erc_721_token_approval_model"
-manifest_name = "origami_token-ERC721TokenApprovalModel-560d5854"
+manifest_name = "origami_karat-ERC721TokenApprovalModel-87684520"
 
 [[models.members]]
 name = "token"
@@ -390,12 +390,12 @@ key = false
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x43c7452e01d3ecb9f7460490397bd17c0d3461bd322d93bbfac4925dc9ee1ed"
-original_class_hash = "0x43c7452e01d3ecb9f7460490397bd17c0d3461bd322d93bbfac4925dc9ee1ed"
-abi = "manifests/sepolia/deployment/abis/models/origami_token-InitializableModel-5c624096.json"
-tag = "origami_token-InitializableModel"
+class_hash = "0x181f798c43df3b3646ae4966f257fdbabb994d8618c82e0d923fd643b8437a6"
+original_class_hash = "0x181f798c43df3b3646ae4966f257fdbabb994d8618c82e0d923fd643b8437a6"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-InitializableModel-79e5ed1c.json"
+tag = "origami_karat-InitializableModel"
 qualified_path = "origami_token::components::security::initializable::initializable_model"
-manifest_name = "origami_token-InitializableModel-5c624096"
+manifest_name = "origami_karat-InitializableModel-79e5ed1c"
 
 [[models.members]]
 name = "token"
@@ -409,12 +409,12 @@ key = false
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x25d17f5223a69a8f5a4b9bdd2bba1121a9da6e5bdb83592402943158e5946b9"
-original_class_hash = "0x25d17f5223a69a8f5a4b9bdd2bba1121a9da6e5bdb83592402943158e5946b9"
-abi = "manifests/sepolia/deployment/abis/models/origami_token-SRC5Model-72fc8945.json"
-tag = "origami_token-SRC5Model"
+class_hash = "0x5534950c83f5267cce9d7fc68b82362d9bf1f1322d00ad2ebd99f88aa30e808"
+original_class_hash = "0x5534950c83f5267cce9d7fc68b82362d9bf1f1322d00ad2ebd99f88aa30e808"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-SRC5Model-40cfc113.json"
+tag = "origami_karat-SRC5Model"
 qualified_path = "origami_token::components::introspection::src5::src_5_model"
-manifest_name = "origami_token-SRC5Model-72fc8945"
+manifest_name = "origami_karat-SRC5Model-40cfc113"
 
 [[models.members]]
 name = "token"

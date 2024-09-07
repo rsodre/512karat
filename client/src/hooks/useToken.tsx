@@ -4,8 +4,10 @@ import { useComponentValue } from "@dojoengine/react"
 import { useDojo } from "../dojo/useDojo"
 import { bigintToEntity, keysToEntity } from "../utils/types"
 import { BigNumberish } from "starknet"
+import { useOrigamiERC721AllTokensOfOwner, useOrigamiERC721BalanceOf, useOrigamiERC721OwnerOf, useOrigamiERC721TokenOfOwnerByIndex, useOrigamiERC721TotalSupply } from "./useOrigamiERC721"
 
 export const useTokenContract = () => {
+  const { setup: { clientComponents } } = useDojo();
   const [contractAddress, setContractAddress] = useState<string>('')
   
   const { setup: { manifest } } = useDojo()
@@ -19,37 +21,94 @@ export const useTokenContract = () => {
   return {
     contractAddress,
     contractEntityId,
+    components: clientComponents,
   }
 }
 
-export const useConfig = () => {
+type useConfigResult = {
+  minterAddress: bigint
+  painterAddress: bigint
+  maxSupply: number
+  isCoolDown: boolean
+  isClosed: boolean
+  isPending: boolean
+}
+export const useConfig = (): useConfigResult => {
   const { setup: { clientComponents: { Config } } } = useDojo();
   const { contractEntityId } = useTokenContract()
-  const data = useComponentValue(Config, contractEntityId);
+  const data: any = useComponentValue(Config, contractEntityId);
   return {
     minterAddress: BigInt(data?.minter_address ?? 0),
     painterAddress: BigInt(data?.painter_address ?? 0),
     maxSupply: Number(data?.max_supply ?? 0),
     isCoolDown: Boolean(data?.cool_down ?? false),
     isClosed: !Boolean(data?.is_open ?? false),
+    isPending: (data == null),
   }
 }
 
-export const useTotalSupply = () => {
-  const { setup: { clientComponents: { ERC721EnumerableTotalModel } } } = useDojo();
-  const { contractEntityId } = useTokenContract()
-  const data = useComponentValue(ERC721EnumerableTotalModel, contractEntityId);
+type useTotalSupplyResult = {
+  total_supply: number
+  isPending: boolean
+}
+export const useTotalSupply = (): useTotalSupplyResult => {
+  const { contractAddress, components } = useTokenContract()
+  const { totalSupply, isPending } = useOrigamiERC721TotalSupply(contractAddress, components)
   return {
-    total_supply: Number(data?.total_supply ?? 0)
+    total_supply: totalSupply ?? 0,
+    isPending,
   }
 }
 
-export const useTokenOwner = (token_id: BigNumberish) => {
-  const { setup: { clientComponents: { ERC721OwnerModel } } } = useDojo();
-  const { contractAddress } = useTokenContract()
-  const entityId = useMemo(() => keysToEntity([contractAddress, BigInt(token_id ?? 0) > 0 ? token_id : 0]), [contractAddress, token_id])
-  const data = useComponentValue(ERC721OwnerModel, entityId);
+type useTokenOwnerResult = {
+  ownerAddress: bigint | null
+  isPending: boolean
+}
+export const useTokenOwner = (token_id: BigNumberish): useTokenOwnerResult => {
+  const { contractAddress, components } = useTokenContract()
+  const { owner, isPending } = useOrigamiERC721OwnerOf(contractAddress, token_id, components)
   return {
-    ownerAddress: data?.address ? BigInt(data?.address) : null
+    ownerAddress: owner,
+    isPending,
   }
 }
+
+type useOwnerBalanceResult = {
+  balance: number
+  isPending: boolean
+}
+export const useOwnerBalance = (account: BigNumberish): useOwnerBalanceResult => {
+  const { contractAddress, components } = useTokenContract()
+  const { amount, isPending } = useOrigamiERC721BalanceOf(contractAddress, account, components)
+  return {
+    balance: amount ?? 0,
+    isPending,
+  }
+}
+
+type useTokenOfOwnerByIndexResult = {
+  tokenId: bigint
+  isPending: boolean
+}
+export const useTokenOfOwnerByIndex = (address: BigNumberish, index: BigNumberish): useTokenOfOwnerByIndexResult => {
+  const { contractAddress, components } = useTokenContract()
+  const { tokenId, isPending } = useOrigamiERC721TokenOfOwnerByIndex(contractAddress, address, index, components)
+  return {
+    tokenId,
+    isPending,
+  } 
+}
+
+type useAllTokensOfOwnerResult = {
+  tokenIds: bigint[]
+  isPending: boolean
+}
+export const useAllTokensOfOwner = (address: BigNumberish): useAllTokensOfOwnerResult => {
+  const { contractAddress, components } = useTokenContract()
+  const { tokenIds, isPending } = useOrigamiERC721AllTokensOfOwner(contractAddress, address, components)
+  return {
+    tokenIds,
+    isPending,
+  }
+}
+

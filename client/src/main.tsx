@@ -11,7 +11,7 @@ import { StarknetWindowObject } from "get-starknet-core";
 import { RpcProvider } from 'starknet';
 import { DojoPredeployedStarknetWindowObject, PredeployedManager } from '@dojoengine/create-burner'
 import { ChainId, defaultChainId, getDojoChainConfig } from './dojo/dojoConfig.ts';
-import { makeController } from './components/useController.tsx';
+import { makeController } from './hooks/useController.tsx';
 import App from "./components/App.tsx";
 
 
@@ -26,7 +26,7 @@ export function genericProvider() {
   return jsonRpcProvider({
     rpc: (chain) => {
       const nodeUrl = chain.rpcUrls.default.http[0] ?? chain.rpcUrls.public.http[0];
-      console.warn(`GENERIC RPC:`, nodeUrl, chain);
+      // console.warn(`GENERIC RPC:`, nodeUrl, chain);
       return {
         nodeUrl,
       }
@@ -93,7 +93,7 @@ async function init() {
         chains={chains}
         provider={genericProvider()}
         connectors={connectors}
-        autoConnect={false}
+        autoConnect={true}
       >
         <RouterProvider router={router} />
       </StarknetConfig>
