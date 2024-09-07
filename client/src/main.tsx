@@ -93,7 +93,7 @@ async function init() {
         chains={chains}
         provider={genericProvider()}
         connectors={connectors}
-        autoConnect={false}
+        autoConnect={true}
       >
         <RouterProvider router={router} />
       </StarknetConfig>

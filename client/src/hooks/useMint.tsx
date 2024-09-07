@@ -3,7 +3,7 @@ import { useAccount } from "@starknet-react/core";
 import { useDojo } from "../dojo/useDojo"
 import { useConfig, useTokenContract, useTokenOwner, useTotalSupply } from "./useToken";
 import { bigintEquals } from "../utils/types";
-import { goToTokenPage } from "../components/Navigation";
+import { goToTokenPage } from "../utils/karat";
 
 export const useMint = () => {
   const {
@@ -39,7 +39,7 @@ export const useMint = () => {
     if (isMinting && total_supply >= mintingTokenId) {
       // ...supply changed, to to token!
       setIsMinting(false);
-      goToTokenPage(mintingTokenId, total_supply);
+      goToTokenPage(mintingTokenId);
     }
   }, [mintingTokenId, total_supply]);
 

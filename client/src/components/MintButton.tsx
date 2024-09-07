@@ -6,7 +6,7 @@ import { useMint } from "../hooks/useMint";
 import { useOpener } from "../hooks/useOpener";
 import MintModal from "./MintModal";
 
-export default function Mint() {
+export default function MintButton() {
   // const { isDebug } = useDebug();
   const { isClosed } = useConfig();
   const { canMint, mint, isMinting, isCoolingDown } = useMint()

@@ -60,7 +60,7 @@ export const useTokenUri = (token_id: BigNumberish) => {
 
   const { name, description, image, attributes: rawAttributes } = metadata
 
-  const attributes = useMemo(() => (rawAttributes ?? []).reduce((acc: Attributes, attr: any) => {
+  const attributes = useMemo(() => rawAttributes?.reduce((acc: Attributes, attr: any) => {
     acc[attr.trait] = attr.value
     return acc
   }, {} as Attributes), [rawAttributes])
@@ -73,7 +73,7 @@ export const useTokenUri = (token_id: BigNumberish) => {
     tokenExists: Boolean(name),
     token_id,
     uri,
-    name,
+    name: name ?? `512 Karat #${token_id}`,
     description,
     attributes,
     image,

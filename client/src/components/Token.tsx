@@ -1,32 +1,37 @@
+import { useMemo } from "react";
 import { Divider, Grid, Icon, Image } from "semantic-ui-react";
 import { useTokenId } from "../hooks/useTokenId";
 import { useTokenUri } from "../hooks/useTokenUri";
 import { useTokenOwner, useTotalSupply } from "../hooks/useToken";
 import { AddressShort } from "./ui/AddressShort";
-import Navigation from "./Navigation";
 
 const Row = Grid.Row
 const Col = Grid.Column
 
-export default function TokenRows() {
+export default function Token() {
   const { token_id } = useTokenId()
   const { tokenExists, name, image, attributes, isLoading } = useTokenUri(token_id);
   const { ownerAddress } = useTokenOwner(token_id);
   const { total_supply } = useTotalSupply()
 
-  let attributesRows = Object.keys(attributes ?? {}).map(key => (
+  const fakeAttributes = useMemo(() => ({
+    'Class': '...',
+    'Realm': '...',
+  }), [])
+
+  let attributesRows = useMemo(() => Object.keys(attributes ?? fakeAttributes).map(key => (
     <Row key={key} columns={'equal'} className="AttributeRow">
       <Col textAlign="left">
         {key}
       </Col>
       <Col textAlign="right">
-        {attributes[key]}
+        {(attributes ?? fakeAttributes)[key]}
       </Col>
     </Row>
-  ))
+  )), [attributes, isLoading])
 
   return (
-    <>
+    <Grid>
       <Row columns={'equal'}>
         <Col>
           <Image src={image ?? '/images/placeholder.svg'} size='big' centered spaced />
@@ -37,39 +42,33 @@ export default function TokenRows() {
           }
         </Col>
       </Row>
-      <Row columns={'equal'}>
+
+      {/* <Row columns={'equal'} className="AttributeRow">
+        <Col textAlign="left">
+          <h5>{name}</h5>
+        </Col>
+        <Col textAlign="right">
+          {token_id.toString()} of {total_supply}
+        </Col>
+      </Row> */}
+
+      <Row columns={'equal'} className="AttributeRow">
         <Col textAlign="center">
-          <Navigation />
-          <Divider hidden />
+          <h4>{name}</h4>
         </Col>
       </Row>
-      {isLoading && <>
-        <Row columns={'equal'}>
-          <Col textAlign="center">
-            fetching...
-          </Col>
-        </Row>
-      </>}
-      {tokenExists && <>
-        <Row columns={'equal'} className="AttributeRow">
-          <Col textAlign="left">
-            <h5>{name}</h5>
-          </Col>
-          <Col textAlign="right">
-            {token_id.toString()} of {total_supply}
-          </Col>
-        </Row>
-        {attributesRows}
-        <Row columns={'equal'} className="AttributeRow">
-          <Col textAlign="left">
-            Owner
-          </Col>
-          <Col textAlign="right">
-            <AddressShort address={ownerAddress ?? 0} />
-          </Col>
-        </Row>
-      </>}
 
-    </>
+      {attributesRows}
+
+      <Row columns={'equal'} className="AttributeRow">
+        <Col textAlign="left">
+          Owner
+        </Col>
+        <Col textAlign="right">
+          {isLoading ? '...' : <AddressShort address={ownerAddress ?? 0} />}
+        </Col>
+      </Row>
+
+    </Grid>
   );
 }

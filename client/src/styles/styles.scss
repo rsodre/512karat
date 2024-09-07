@@ -407,6 +407,7 @@ TextArea::selection {
 
 .AttributeRow {
   border-bottom: 1px solid rgba($color-medium, 0.1);
+  margin: 0 1rem;
 }
 
 .Navigation {
@@ -417,6 +418,7 @@ TextArea::selection {
 }
 
 .PlaceholderOverlay {
+  @extend .NoMouse;
   position: absolute;
   top: 50%;
   width: 100%;
@@ -425,6 +427,9 @@ TextArea::selection {
   vertical-align: middle;
 }
 
+.Attributes {
+  margin: 0 3.5rem;
+}
 
 //
 // <IconXXX>
@@ -569,21 +574,21 @@ $logo-url: '/logos/logo_avante.svg';
 //
 ._round_border {
   border: $border-button!important;
-  border-radius: 0.5em!important;
+  border-radius: 0.1em!important;
 }
 ._round_border_active {
   border: $border-button-active!important;
-  border-radius: 0.5em!important;
+  border-radius: 0.1em!important;
 }
 ._round_border_inactive {
   border: $border-button-inactive!important;
-  border-radius: 0.5em!important;
+  border-radius: 0.1em!important;
 }
 //
 // <Container>
 .ui.text.container {
   font-family: $font-family;
-  // max-width: 450px!important;
+  max-width: 640px!important;
 }
 // 
 // <Input>
@@ -779,7 +784,7 @@ input::placeholder {
   padding-left: 5px;
 }
 .ui.secondary.pointing.menu .item {
-  padding: 0.5em 0.5em; // semantic: 0.85714286em 1.14285714em;
+  padding: 0.5em 5.5em; // semantic: 0.85714286em 1.14285714em;
   background-color: transparent;
   border: 0!important;
   border-radius: 0!important;
@@ -788,16 +793,16 @@ input::placeholder {
 .ui.secondary.pointing.menu .active.item:hover,
 .ui.secondary.pointing.menu a.item:hover,
 .ui.secondary.pointing.menu a.item:active {
-  border-bottom: 2px solid $color-brightest!important;;
+  border-bottom: 2px solid $color-brightest!important;
   color: $color-brightest;
 }
 // Tab contents
 .ui.tab.active {
   background-color: transparent;
   border: 0;
-  border-top: 0.5px solid $color-brightest!important;
-  margin: 1px 0 0 0;
-  padding: 1em 0;
+  // border-top: 0.5px solid $color-brightest!important;
+  // margin: 1px 0 0 0;
+  padding: 0em;
 }
 //
 // <Table>
@@ -945,7 +950,8 @@ a.active.step:hover,
 .ui.segment {
   @extend ._round_border;
   background-color: $color-dark;
-  border: 0.5px solid rgba($color-bright, 0.8)!important;
+  // border: 0.5px solid rgba($color-bright, 0.8)!important;
+  border: 0!important;
 }
 //
 // <ProgressBar>
