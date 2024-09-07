@@ -1,6 +1,6 @@
 import { Button, Grid } from "semantic-ui-react";
 import { useConnect, useAccount, useDisconnect } from "@starknet-react/core";
-import { AddressShort } from "./AddressShort";
+import { AddressShort } from "./ui/AddressShort";
 import { useOpener } from "../hooks/useOpener";
 import ConnectModal from "./ConnectModal";
 import { feltToString } from "../utils/starknet";

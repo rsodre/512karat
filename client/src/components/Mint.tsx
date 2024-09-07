@@ -4,7 +4,7 @@ import { Button } from "semantic-ui-react";
 import { useConfig } from "../hooks/useToken";
 import { useMint } from "../hooks/useMint";
 import { useOpener } from "../hooks/useOpener";
-import MintingModal from "./MintingModal";
+import MintModal from "./MintModal";
 
 export default function Mint() {
   // const { isDebug } = useDebug();
@@ -26,7 +26,7 @@ export default function Mint() {
       <Button disabled={disabled} onClick={() => mint?.()}>
         {label}
       </Button>
-      <MintingModal opener={opener} isMinting={isMinting} />
+      <MintModal opener={opener} isMinting={isMinting} />
     </>
   );
 }

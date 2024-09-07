@@ -6,7 +6,7 @@ import { useEffectOnce } from '../hooks/useEffectOnce'
 const Row = Grid.Row
 const Col = Grid.Column
 
-export default function MintingModal({
+export default function MintModal({
   opener,
   isMinting,
 }: {

@@ -11,7 +11,7 @@ import { StarknetWindowObject } from "get-starknet-core";
 import { RpcProvider } from 'starknet';
 import { DojoPredeployedStarknetWindowObject, PredeployedManager } from '@dojoengine/create-burner'
 import { ChainId, defaultChainId, getDojoChainConfig } from './dojo/dojoConfig.ts';
-import { makeController } from './components/useController.tsx';
+import { makeController } from './hooks/useController.tsx';
 import App from "./components/App.tsx";
 
 

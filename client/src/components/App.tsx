@@ -1,17 +1,16 @@
 import { Container, Divider, Grid, Image } from "semantic-ui-react";
 import { useAccount } from "@starknet-react/core";
 import { useDebug } from "../hooks/useDebug";
-import { Connect, Disconnect, ConnectedHeader } from "./Connect";
+import { Connect } from "./Connect";
 import DojoSetup from "../dojo/DojoSetup";
-import Mint from "./Mint";
-import TokenRows from "./Token";
+import Main from "./Main";
 
 const Row = Grid.Row
 const Col = Grid.Column
 
 export default function App() {
   const { isDebug } = useDebug();
-  const { address, isConnected } = useAccount();
+  const { isConnected } = useAccount();
 
   return (
     <Container text className="CenteredContainer">
@@ -20,15 +19,15 @@ export default function App() {
 
       {!isConnected &&
         <Grid>
-          <Col textAlign="left" width={10}>
+          <Col textAlign="center" width={10}>
             <h1>512 KARAT</h1>
           </Col>
-          <Col textAlign="right" width={6}>
+          <Col textAlign="center" width={6}>
             <Connect />
           </Col>
           <Row columns={'equal'}>
             <Col>
-              <Image src={'/images/home.svg'} size='large' centered spaced />
+              <Image src={'/images/home.svg'} size='big' fluid centered spaced />
             </Col>
           </Row>
           <Row columns={'equal'}>
@@ -43,30 +42,7 @@ export default function App() {
 
       {isConnected &&
         <DojoSetup>
-          <Grid>
-            <Row columns={'equal'}>
-              <Col>
-                <ConnectedHeader />
-              </Col>
-            </Row>
-            <Row>
-              <Col textAlign="left" width={10}>
-                <h1>512 KARAT</h1>
-              </Col>
-              <Col textAlign="right" width={6}>
-                <Mint />
-              </Col>
-            </Row>
-
-            <TokenRows />
-
-            <Row columns={'equal'}>
-              <Col>
-                <Divider hidden />
-                <Disconnect />
-              </Col>
-            </Row>
-          </Grid>
+          <Main />
         </DojoSetup>
       }
 

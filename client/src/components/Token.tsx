@@ -2,7 +2,7 @@ import { Divider, Grid, Icon, Image } from "semantic-ui-react";
 import { useTokenId } from "../hooks/useTokenId";
 import { useTokenUri } from "../hooks/useTokenUri";
 import { useTokenOwner, useTotalSupply } from "../hooks/useToken";
-import { AddressShort } from "./AddressShort";
+import { AddressShort } from "./ui/AddressShort";
 import Navigation from "./Navigation";
 
 const Row = Grid.Row
