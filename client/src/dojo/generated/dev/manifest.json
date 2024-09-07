@@ -1235,7 +1235,7 @@
     "seed": "512karat",
     "metadata": {
       "profile_name": "dev",
-      "rpc_url": "http://localhost:5050/"
+      "rpc_url": "https://api.cartridge.gg/rpc/starknet-sepolia"
     },
     "manifest_name": "dojo-world"
   },
@@ -1251,8 +1251,8 @@
     {
       "kind": "DojoContract",
       "address": "0x410af9215196e74822373a0ca51854a420005360f36e2893b9612676a0f49cb",
-      "class_hash": "0x709d1aeeb211e41b12f308f76a9ddc2c8593909ba61cb552febff69635955a7",
-      "original_class_hash": "0x709d1aeeb211e41b12f308f76a9ddc2c8593909ba61cb552febff69635955a7",
+      "class_hash": "0x54594a464d9ff3985eb3312f93e8b1220b13b71cc5b357d1f395b03c20c46f",
+      "original_class_hash": "0x54594a464d9ff3985eb3312f93e8b1220b13b71cc5b357d1f395b03c20c46f",
       "base_class_hash": "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2",
       "abi": [
         {
@@ -2336,18 +2336,18 @@
       ],
       "reads": [],
       "writes": [
-        "origami_token-SRC5Model",
-        "origami_token-InitializableModel",
-        "origami_token-ERC721OwnerModel",
-        "origami_token-ERC721BalanceModel",
-        "origami_token-ERC721MetaModel",
-        "origami_token-ERC721EnumerableIndexModel",
-        "origami_token-ERC721EnumerableOwnerIndexModel",
-        "origami_token-ERC721EnumerableOwnerTokenModel",
-        "origami_token-ERC721EnumerableTokenModel",
-        "origami_token-ERC721EnumerableTotalModel",
-        "origami_token-ERC721TokenApprovalModel",
-        "origami_token-ERC721OperatorApprovalModel"
+        "origami_karat-SRC5Model",
+        "origami_karat-InitializableModel",
+        "origami_karat-ERC721OwnerModel",
+        "origami_karat-ERC721BalanceModel",
+        "origami_karat-ERC721MetaModel",
+        "origami_karat-ERC721EnumerableIndexModel",
+        "origami_karat-ERC721EnumerableOwnerIndexModel",
+        "origami_karat-ERC721EnumerableOwnerTokenModel",
+        "origami_karat-ERC721EnumerableTokenModel",
+        "origami_karat-ERC721EnumerableTotalModel",
+        "origami_karat-ERC721TokenApprovalModel",
+        "origami_karat-ERC721OperatorApprovalModel"
       ],
       "init_calldata": [],
       "tag": "karat-karat_token",
@@ -2361,8 +2361,8 @@
     {
       "kind": "DojoContract",
       "address": "0x2b1cb5c53db5f07974585b8788ec4f4b57f732c71c4a0e66b8b282fdca29889",
-      "class_hash": "0xb8318f43fd776835901c7d1554ff3ae460d4c73f49163f225de6b109bc4088",
-      "original_class_hash": "0xb8318f43fd776835901c7d1554ff3ae460d4c73f49163f225de6b109bc4088",
+      "class_hash": "0x6652aadafa3e073ac7829c8a423021d962fba14f1c736ccc9e6b632c15de64d",
+      "original_class_hash": "0x6652aadafa3e073ac7829c8a423021d962fba14f1c736ccc9e6b632c15de64d",
       "base_class_hash": "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2",
       "abi": [
         {
@@ -3691,8 +3691,8 @@
           "key": false
         }
       ],
-      "class_hash": "0x36dc2b76dcd77b58fe987c0b8836c2ce7fa08cb9d44838634218fad353bec83",
-      "original_class_hash": "0x36dc2b76dcd77b58fe987c0b8836c2ce7fa08cb9d44838634218fad353bec83",
+      "class_hash": "0x730809cf076982eef7705be526e16a5821a0ccbc2a9dee431f0f836d95bfb47",
+      "original_class_hash": "0x730809cf076982eef7705be526e16a5821a0ccbc2a9dee431f0f836d95bfb47",
       "abi": [
         {
           "type": "impl",
@@ -4104,9 +4104,9 @@
           "variants": []
         }
       ],
-      "tag": "origami_token-ERC721BalanceModel",
+      "tag": "origami_karat-ERC721BalanceModel",
       "qualified_path": "origami_token::components::token::erc721::erc721_balance::erc_721_balance_model",
-      "manifest_name": "origami_token-ERC721BalanceModel-246a8e17"
+      "manifest_name": "origami_karat-ERC721BalanceModel-310d3b4b"
     },
     {
       "kind": "DojoModel",
@@ -4127,8 +4127,8 @@
           "key": false
         }
       ],
-      "class_hash": "0x5d3394057bbdf2262c0ba952ec0bbc13b8a315ad8bd9e684650225abc4152ac",
-      "original_class_hash": "0x5d3394057bbdf2262c0ba952ec0bbc13b8a315ad8bd9e684650225abc4152ac",
+      "class_hash": "0x6845784f221a8ebd916dadec974d486ce1d43f637484ece3f2430615ed54b6a",
+      "original_class_hash": "0x6845784f221a8ebd916dadec974d486ce1d43f637484ece3f2430615ed54b6a",
       "abi": [
         {
           "type": "impl",
@@ -4540,9 +4540,9 @@
           "variants": []
         }
       ],
-      "tag": "origami_token-ERC721EnumerableIndexModel",
+      "tag": "origami_karat-ERC721EnumerableIndexModel",
       "qualified_path": "origami_token::components::token::erc721::erc721_enumerable::erc_721_enumerable_index_model",
-      "manifest_name": "origami_token-ERC721EnumerableIndexModel-1a4200e7"
+      "manifest_name": "origami_karat-ERC721EnumerableIndexModel-2f673b2e"
     },
     {
       "kind": "DojoModel",
@@ -4568,8 +4568,8 @@
           "key": false
         }
       ],
-      "class_hash": "0x2fd76867b943befb036da828bd1d2bec2386863ad70aafa770360c5b3e9acfc",
-      "original_class_hash": "0x2fd76867b943befb036da828bd1d2bec2386863ad70aafa770360c5b3e9acfc",
+      "class_hash": "0x6591d013f5ac2840c72ff073667554ec9a370ca2ba443d0545673dd0021e428",
+      "original_class_hash": "0x6591d013f5ac2840c72ff073667554ec9a370ca2ba443d0545673dd0021e428",
       "abi": [
         {
           "type": "impl",
@@ -4985,9 +4985,9 @@
           "variants": []
         }
       ],
-      "tag": "origami_token-ERC721EnumerableOwnerIndexModel",
+      "tag": "origami_karat-ERC721EnumerableOwnerIndexModel",
       "qualified_path": "origami_token::components::token::erc721::erc721_enumerable::erc_721_enumerable_owner_index_model",
-      "manifest_name": "origami_token-ERC721EnumerableOwnerIndexModel-573cb336"
+      "manifest_name": "origami_karat-ERC721EnumerableOwnerIndexModel-323d04e8"
     },
     {
       "kind": "DojoModel",
@@ -5013,8 +5013,8 @@
           "key": false
         }
       ],
-      "class_hash": "0x45871731d39993b19571f03348d6932fba0445f6eb94e1e37d2db5c4474d61c",
-      "original_class_hash": "0x45871731d39993b19571f03348d6932fba0445f6eb94e1e37d2db5c4474d61c",
+      "class_hash": "0x66e476c25b0d17546f3c87fa0b353e2dc446d7e664fe44bb1355558c49e492f",
+      "original_class_hash": "0x66e476c25b0d17546f3c87fa0b353e2dc446d7e664fe44bb1355558c49e492f",
       "abi": [
         {
           "type": "impl",
@@ -5430,9 +5430,9 @@
           "variants": []
         }
       ],
-      "tag": "origami_token-ERC721EnumerableOwnerTokenModel",
+      "tag": "origami_karat-ERC721EnumerableOwnerTokenModel",
       "qualified_path": "origami_token::components::token::erc721::erc721_enumerable::erc_721_enumerable_owner_token_model",
-      "manifest_name": "origami_token-ERC721EnumerableOwnerTokenModel-74966560"
+      "manifest_name": "origami_karat-ERC721EnumerableOwnerTokenModel-4b4f3beb"
     },
     {
       "kind": "DojoModel",
@@ -5453,8 +5453,8 @@
           "key": false
         }
       ],
-      "class_hash": "0xf5a9baf34c431fc11c05e15ddff7eb4750847ada1db57528ddad2966a7f3ec",
-      "original_class_hash": "0xf5a9baf34c431fc11c05e15ddff7eb4750847ada1db57528ddad2966a7f3ec",
+      "class_hash": "0x1e2561e8f1cad22840c39a0b20ca1514d11265cf5fa1832e43675e23c88124a",
+      "original_class_hash": "0x1e2561e8f1cad22840c39a0b20ca1514d11265cf5fa1832e43675e23c88124a",
       "abi": [
         {
           "type": "impl",
@@ -5866,9 +5866,9 @@
           "variants": []
         }
       ],
-      "tag": "origami_token-ERC721EnumerableTokenModel",
+      "tag": "origami_karat-ERC721EnumerableTokenModel",
       "qualified_path": "origami_token::components::token::erc721::erc721_enumerable::erc_721_enumerable_token_model",
-      "manifest_name": "origami_token-ERC721EnumerableTokenModel-5c383d9f"
+      "manifest_name": "origami_karat-ERC721EnumerableTokenModel-46ae9a70"
     },
     {
       "kind": "DojoModel",
@@ -5884,8 +5884,8 @@
           "key": false
         }
       ],
-      "class_hash": "0x476254a3660ac696486628f6fb9c531a94de4b0addcc00bc43eafc207638968",
-      "original_class_hash": "0x476254a3660ac696486628f6fb9c531a94de4b0addcc00bc43eafc207638968",
+      "class_hash": "0x3bd5a95d8ba6c91b6ee50affe73d427651257b3bd4ae881aee17138e7f0ba5f",
+      "original_class_hash": "0x3bd5a95d8ba6c91b6ee50affe73d427651257b3bd4ae881aee17138e7f0ba5f",
       "abi": [
         {
           "type": "impl",
@@ -6293,9 +6293,9 @@
           "variants": []
         }
       ],
-      "tag": "origami_token-ERC721EnumerableTotalModel",
+      "tag": "origami_karat-ERC721EnumerableTotalModel",
       "qualified_path": "origami_token::components::token::erc721::erc721_enumerable::erc_721_enumerable_total_model",
-      "manifest_name": "origami_token-ERC721EnumerableTotalModel-5674a124"
+      "manifest_name": "origami_karat-ERC721EnumerableTotalModel-4ef0f6e0"
     },
     {
       "kind": "DojoModel",
@@ -6321,8 +6321,8 @@
           "key": false
         }
       ],
-      "class_hash": "0x4310a938ba169a6d12cd0aa9dbeaf2992ddc4b55621bdeb883c0b43a3726d6d",
-      "original_class_hash": "0x4310a938ba169a6d12cd0aa9dbeaf2992ddc4b55621bdeb883c0b43a3726d6d",
+      "class_hash": "0x245d514173e0e62b83bfe45e34f72901d677493a7a50497d0bf6f819259c595",
+      "original_class_hash": "0x245d514173e0e62b83bfe45e34f72901d677493a7a50497d0bf6f819259c595",
       "abi": [
         {
           "type": "impl",
@@ -6738,9 +6738,9 @@
           "variants": []
         }
       ],
-      "tag": "origami_token-ERC721MetaModel",
+      "tag": "origami_karat-ERC721MetaModel",
       "qualified_path": "origami_token::components::token::erc721::erc721_metadata::erc_721_meta_model",
-      "manifest_name": "origami_token-ERC721MetaModel-423fffaa"
+      "manifest_name": "origami_karat-ERC721MetaModel-5b878968"
     },
     {
       "kind": "DojoModel",
@@ -6766,8 +6766,8 @@
           "key": false
         }
       ],
-      "class_hash": "0x29f6fcd504ae293bec1139611e0fe870deda9be6a41ef7e1ffacfa5c76c4dd5",
-      "original_class_hash": "0x29f6fcd504ae293bec1139611e0fe870deda9be6a41ef7e1ffacfa5c76c4dd5",
+      "class_hash": "0x1e29a660fe1d206b03bbb264a6a97863186c723ad0bf20abcc92ae5040de985",
+      "original_class_hash": "0x1e29a660fe1d206b03bbb264a6a97863186c723ad0bf20abcc92ae5040de985",
       "abi": [
         {
           "type": "impl",
@@ -7197,9 +7197,9 @@
           "variants": []
         }
       ],
-      "tag": "origami_token-ERC721OperatorApprovalModel",
+      "tag": "origami_karat-ERC721OperatorApprovalModel",
       "qualified_path": "origami_token::components::token::erc721::erc721_approval::erc_721_operator_approval_model",
-      "manifest_name": "origami_token-ERC721OperatorApprovalModel-1083d4d1"
+      "manifest_name": "origami_karat-ERC721OperatorApprovalModel-723f0a3d"
     },
     {
       "kind": "DojoModel",
@@ -7220,8 +7220,8 @@
           "key": false
         }
       ],
-      "class_hash": "0x356e5dea0e7529f6c2617074b151c03b23cfb408d0a1ef8e123c226502cf115",
-      "original_class_hash": "0x356e5dea0e7529f6c2617074b151c03b23cfb408d0a1ef8e123c226502cf115",
+      "class_hash": "0xccdd862153020ce7680e7a6efa3a73743337293cbb2f7d219ab2de1be899fc",
+      "original_class_hash": "0xccdd862153020ce7680e7a6efa3a73743337293cbb2f7d219ab2de1be899fc",
       "abi": [
         {
           "type": "impl",
@@ -7633,9 +7633,9 @@
           "variants": []
         }
       ],
-      "tag": "origami_token-ERC721OwnerModel",
+      "tag": "origami_karat-ERC721OwnerModel",
       "qualified_path": "origami_token::components::token::erc721::erc721_owner::erc_721_owner_model",
-      "manifest_name": "origami_token-ERC721OwnerModel-61577880"
+      "manifest_name": "origami_karat-ERC721OwnerModel-25f64520"
     },
     {
       "kind": "DojoModel",
@@ -7656,8 +7656,8 @@
           "key": false
         }
       ],
-      "class_hash": "0x290d67abdcfd26f1d9768cec5ff48842cd405ce33417c6e8a212da0baa77e86",
-      "original_class_hash": "0x290d67abdcfd26f1d9768cec5ff48842cd405ce33417c6e8a212da0baa77e86",
+      "class_hash": "0x28b413c3ab4ecdfea7e4a3cdb318835fcde26a4acb1803386c6b81c927732bd",
+      "original_class_hash": "0x28b413c3ab4ecdfea7e4a3cdb318835fcde26a4acb1803386c6b81c927732bd",
       "abi": [
         {
           "type": "impl",
@@ -8069,9 +8069,9 @@
           "variants": []
         }
       ],
-      "tag": "origami_token-ERC721TokenApprovalModel",
+      "tag": "origami_karat-ERC721TokenApprovalModel",
       "qualified_path": "origami_token::components::token::erc721::erc721_approval::erc_721_token_approval_model",
-      "manifest_name": "origami_token-ERC721TokenApprovalModel-560d5854"
+      "manifest_name": "origami_karat-ERC721TokenApprovalModel-87684520"
     },
     {
       "kind": "DojoModel",
@@ -8087,8 +8087,8 @@
           "key": false
         }
       ],
-      "class_hash": "0x43c7452e01d3ecb9f7460490397bd17c0d3461bd322d93bbfac4925dc9ee1ed",
-      "original_class_hash": "0x43c7452e01d3ecb9f7460490397bd17c0d3461bd322d93bbfac4925dc9ee1ed",
+      "class_hash": "0x181f798c43df3b3646ae4966f257fdbabb994d8618c82e0d923fd643b8437a6",
+      "original_class_hash": "0x181f798c43df3b3646ae4966f257fdbabb994d8618c82e0d923fd643b8437a6",
       "abi": [
         {
           "type": "impl",
@@ -8510,9 +8510,9 @@
           "variants": []
         }
       ],
-      "tag": "origami_token-InitializableModel",
+      "tag": "origami_karat-InitializableModel",
       "qualified_path": "origami_token::components::security::initializable::initializable_model",
-      "manifest_name": "origami_token-InitializableModel-5c624096"
+      "manifest_name": "origami_karat-InitializableModel-79e5ed1c"
     },
     {
       "kind": "DojoModel",
@@ -8533,8 +8533,8 @@
           "key": false
         }
       ],
-      "class_hash": "0x25d17f5223a69a8f5a4b9bdd2bba1121a9da6e5bdb83592402943158e5946b9",
-      "original_class_hash": "0x25d17f5223a69a8f5a4b9bdd2bba1121a9da6e5bdb83592402943158e5946b9",
+      "class_hash": "0x5534950c83f5267cce9d7fc68b82362d9bf1f1322d00ad2ebd99f88aa30e808",
+      "original_class_hash": "0x5534950c83f5267cce9d7fc68b82362d9bf1f1322d00ad2ebd99f88aa30e808",
       "abi": [
         {
           "type": "impl",
@@ -8960,9 +8960,9 @@
           "variants": []
         }
       ],
-      "tag": "origami_token-SRC5Model",
+      "tag": "origami_karat-SRC5Model",
       "qualified_path": "origami_token::components::introspection::src5::src_5_model",
-      "manifest_name": "origami_token-SRC5Model-72fc8945"
+      "manifest_name": "origami_karat-SRC5Model-40cfc113"
     }
   ]
 }
