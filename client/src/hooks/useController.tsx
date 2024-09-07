@@ -55,7 +55,7 @@ export const makeController = (manifest: Manifest, rpcUrl: string, nameSpace: st
   const options: ControllerOptions = {
     paymaster,
     rpc: rpcUrl,
-    theme: "pistols",
+    // theme: "pistols",
     colorMode: "dark",
     policies,
   }
