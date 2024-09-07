@@ -40,59 +40,11 @@ export const DojoProvider = ({
     );
   }
 
-  // const burnerManager = new BurnerManager({
-  //   masterAccount: new Account(
-  //     {
-  //       nodeUrl: dojoConfig.rpcUrl,
-  //     },
-  //     dojoConfig.masterAddress,
-  //     dojoConfig.masterPrivateKey
-  //   ),
-  //   accountClassHash: dojoConfig.accountClassHash,
-  //   rpcProvider: dojoProvider.provider,
-  //   feeTokenAddress: dojoConfig.feeTokenAddress,
-  // });
-
-  // const {
-  //   create,
-  //   list,
-  //   get,
-  //   select,
-  //   deselect,
-  //   remove,
-  //   clear,
-  //   account,
-  //   isDeploying,
-  //   count,
-  //   copyToClipboard,
-  //   applyFromClipboard,
-  //   checkIsDeployed,
-  // } = useBurnerManager({
-  //   burnerManager,
-  // });
-
   return (
     <DojoContext.Provider
       value={{
         ...value,
         masterAccount,
-        // account: {
-        //   create,
-        //   list,
-        //   get,
-        //   select,
-        //   deselect,
-        //   remove,
-        //   clear,
-        //   account: (account as any)
-        //     ? (account as any)
-        //     : masterAccount,
-        //   isDeploying,
-        //   count,
-        //   copyToClipboard,
-        //   applyFromClipboard,
-        //   checkIsDeployed,
-        // },
       }}
     >
       {children}
