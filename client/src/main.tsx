@@ -26,7 +26,7 @@ export function genericProvider() {
   return jsonRpcProvider({
     rpc: (chain) => {
       const nodeUrl = chain.rpcUrls.default.http[0] ?? chain.rpcUrls.public.http[0];
-      console.warn(`GENERIC RPC:`, nodeUrl, chain);
+      // console.warn(`GENERIC RPC:`, nodeUrl, chain);
       return {
         nodeUrl,
       }

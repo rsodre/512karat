@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Grid, TabPane, Tab, TabProps } from "semantic-ui-react";
+import { BigNumberish } from "starknet";
 import { useAccount } from "@starknet-react/core";
 import { useTokenId } from "../hooks/useTokenId";
+import { useAllTokensOfOwner, useTotalSupply } from "../hooks/useToken";
+import { MetadataProvider } from "../hooks/MetadataContext";
 import { goToTokenPage } from "../utils/karat";
 import Token from "./Token";
 import Navigation from "./Navigation";
-import { useAllTokensOfOwner, useTotalSupply } from "../hooks/useToken";
-import { BigNumberish } from "starknet";
 import TokenGrid from "./TokenGrid";
 
 const Row = Grid.Row
@@ -62,9 +63,9 @@ export default function Main() {
   }, [isConnected, gridMode, allTokens, tokensOfOwner])
 
   return (
-    <>
+    <MetadataProvider>
       <Tab menu={{ secondary: true, pointing: true, attached: true }} panes={panes} onTabChange={(e, data) => _changedTab(data)} />
-    </>
+    </MetadataProvider>
   );
 }
 
