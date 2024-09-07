@@ -420,11 +420,20 @@ TextArea::selection {
 .PlaceholderOverlay {
   @extend .NoMouse;
   position: absolute;
-  top: 50%;
   width: 100%;
   height: 100%;
+  top: 50%;
   text-align: center;
   vertical-align: middle;
+}
+
+.PlaceholderOverlayId {
+  @extend .PlaceholderOverlay;
+  top: 5px;
+  left: 16px;
+  text-align: left;
+  vertical-align: unset;
+  font-size: 0.8rem;
 }
 
 .Attributes {
@@ -784,7 +793,7 @@ input::placeholder {
   padding-left: 5px;
 }
 .ui.secondary.pointing.menu .item {
-  padding: 0.5em 5.5em; // semantic: 0.85714286em 1.14285714em;
+  padding: 0.5rem 2.0rem; // semantic: 0.85714286em 1.14285714em;
   background-color: transparent;
   border: 0!important;
   border-radius: 0!important;

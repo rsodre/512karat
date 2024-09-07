@@ -11,11 +11,13 @@ export default function Navigation({
   pageIndex,
   onPageChange,
   disabled = false,
+  prefix = '',
 }: {
   pageCount: number
   pageIndex: number
   onPageChange: (page: number) => void
   disabled?: boolean
+  prefix?: string
 }) {
 
   const canGoPrev = useMemo(() => (!disabled && pageIndex > 0), [disabled, pageIndex])
@@ -35,7 +37,7 @@ export default function Navigation({
           <Button fluid disabled={!canGoPrev} onClick={() => _gotoPrevPage()}><Icon disabled={!canGoPrev} name='arrow left' /></Button>
         </Col>
         <Col verticalAlign="middle">
-          {pageIndex < 0 ? '...' : `${pageIndex + 1} of ${pageCount}`}
+          {pageIndex < 0 ? '...' : `${prefix} ${pageIndex + 1} of ${pageCount}`}
         </Col>
         <Col className={canGoNext ? '' : 'NoMouse'}>
           <Button fluid disabled={!canGoNext} onClick={() => _gotoNextPage()}><Icon disabled={!canGoNext} name='arrow right' /></Button>

@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { Divider, Grid, Icon, Image } from "semantic-ui-react";
+import { Grid, Icon, Image } from "semantic-ui-react";
+import { useTokenOwner, useTotalSupply } from "../hooks/useToken";
 import { useTokenId } from "../hooks/useTokenId";
 import { useTokenUri } from "../hooks/useTokenUri";
-import { useTokenOwner, useTotalSupply } from "../hooks/useToken";
 import { AddressShort } from "./ui/AddressShort";
 
 const Row = Grid.Row
@@ -12,7 +12,6 @@ export default function Token() {
   const { token_id } = useTokenId()
   const { tokenExists, name, image, attributes, isLoading } = useTokenUri(token_id);
   const { ownerAddress } = useTokenOwner(token_id);
-  const { total_supply } = useTotalSupply()
 
   const fakeAttributes = useMemo(() => ({
     'Class': '...',
@@ -42,15 +41,6 @@ export default function Token() {
           }
         </Col>
       </Row>
-
-      {/* <Row columns={'equal'} className="AttributeRow">
-        <Col textAlign="left">
-          <h5>{name}</h5>
-        </Col>
-        <Col textAlign="right">
-          {token_id.toString()} of {total_supply}
-        </Col>
-      </Row> */}
 
       <Row columns={'equal'} className="AttributeRow">
         <Col textAlign="center">
