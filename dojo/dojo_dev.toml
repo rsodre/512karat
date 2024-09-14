@@ -20,4 +20,4 @@ mappings = { "origami_token" = "origami_karat" }
 rpc_url = "http://localhost:5050"
 account_address = "0xb3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca"
 private_key = "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a"
-world_address = "0x4c0970c9f52045ef8eeedd1e11265ebb69ed90fce58c96ad103aecf7f91302a"
+world_address = "0x294e26b767cb4e3c1f6d03c7f88cbe32212dab01f61a10bdb37403da7108f62"

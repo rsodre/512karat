@@ -11,7 +11,7 @@ migrate = "./migrate"
 mint = "./scripts/mint.sh"
 
 [dependencies]
-dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.0-alpha.9" }
+dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.0-alpha.11" }
 origami_token = { git = "https://github.com/rsodre/origami", branch = "karat" }
 # origami_token = { git = "https://github.com/dojoengine/origami", tag = "v1.0.0-alpha.6" }
 

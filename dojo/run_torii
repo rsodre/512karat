@@ -1,10 +1,20 @@
 #!/bin/bash
 set -e
 
-torii --version
+export PROFILE="dev"
+
+get_profile_env () {
+  local ENV_NAME=$1
+  local DOJO_PROFILE_FILE="dojo_$PROFILE.toml"
+  local RESULT=$(toml get $DOJO_PROFILE_FILE --raw env.$ENV_NAME)
+  if [[ -z "$RESULT" ]]; then
+    >&2 echo "get_profile_env($ENV_NAME) not found! 👎"
+  fi
+  echo $RESULT
+}
 
 export PROFILE="dev"
-export WORLD_ADDRESS=$(toml get Scarb.toml --raw profile.$PROFILE.tool.dojo.env.world_address)
+export WORLD_ADDRESS=$(get_profile_env "world_address")
 echo "@WORLD: $WORLD_ADDRESS"
 
 if [[
@@ -14,9 +24,9 @@ if [[
   exit 1
 fi
 
+torii --version
 torii \
   --world $WORLD_ADDRESS $* \
   --allowed-origins "*" \
   --start-block 1 \
-  --index-pending \
 
