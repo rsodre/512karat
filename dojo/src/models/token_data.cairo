@@ -4,6 +4,14 @@ use karat::{
     models::class::{Class, ClassTrait},
 };
 
+mod CONSTANTS {
+    const TOKEN_NAME: felt252 = 'KARAT';
+    const TOKEN_SYMBOL: felt252 = 'KARAT';
+    const BASE_URI: felt252 = 'https://karat.collect-code.com/';
+    const METADATA_NAME: felt252 = 'Karat';
+    const METADATA_DESCRIPTION: felt252 = 'Purest form of composable lore';
+}
+
 #[derive(Copy, Drop, Serde)]
 // #[dojo::model]
 pub struct TokenData {
@@ -18,7 +26,7 @@ pub struct TokenData {
 impl TokenDataTraitImpl of TokenDataTrait {
     fn new(world: IWorldDispatcher, token_id: u128) -> TokenData {
         let seed: Seed = get!(world, (token_id), Seed);
-        let class: Class = seed.to_class();
+        let class: Class = seed.get_class();
         (TokenData{
             token_id,
             seed: seed.seed,
@@ -28,18 +36,15 @@ impl TokenDataTraitImpl of TokenDataTrait {
             ].span(),
             trait_values: array![
                 class.name(),
-                format!("{}", seed.realm_id()),
+                format!("{}", seed.get_realm_id()),
             ].span(),
             class,
         })
     }
     fn get_name(self: TokenData) -> ByteArray {
-        (format!("Karat #{}", self.token_id))
+        (format!("{} #{}", CONSTANTS::METADATA_NAME, self.token_id))
     }
     fn get_description(self: TokenData) -> ByteArray {
-        ("Fully on-chain Generative Art made with Dojo")
+        (format!("{}", CONSTANTS::METADATA_DESCRIPTION))
     }
 }
-
-
- 

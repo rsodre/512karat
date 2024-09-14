@@ -100,7 +100,7 @@ mod tests {
     //             break;
     //         }
     //         let seed: Seed = Seed{ token_id:1, seed:(0x57237+c) };
-    //         let class: Class = seed.to_class();
+    //         let class: Class = seed.get_class();
     //         assert(class.get_char_set().len() == CHAR_COUNT, 'not char len');
     //         c += 1;
     //     };

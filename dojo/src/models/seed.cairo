@@ -13,8 +13,8 @@ pub struct Seed {
 
 trait SeedTrait {
     fn new(token_id: u128) -> Seed;
-    fn to_class(self: Seed) -> Class;
-    fn realm_id(self: Seed) -> felt252;
+    fn get_class(self: Seed) -> Class;
+    fn get_realm_id(self: Seed) -> felt252;
 }
 
 impl SeedTraitImpl of SeedTrait {
@@ -22,7 +22,7 @@ impl SeedTraitImpl of SeedTrait {
         let seed = make_seed(token_id);
         (Seed { token_id, seed })
     }
-    fn to_class(self: Seed) -> Class {
+    fn get_class(self: Seed) -> Class {
         let s: u128 = (self.seed % CLASS_COUNT);
         if (s == 0) { Class::A }
         else if (s == 1) { Class::B }
@@ -32,7 +32,7 @@ impl SeedTraitImpl of SeedTrait {
         else if (s == 5) { Class::L }
         else  { Class::A }
     }
-    fn realm_id(self: Seed) -> felt252 {
+    fn get_realm_id(self: Seed) -> felt252 {
         ((self.seed % 8_000).into() + 1)
     }
 }

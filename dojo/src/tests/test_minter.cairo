@@ -13,6 +13,7 @@ mod tests {
         systems::{karat_token::{karat_token, IKaratTokenDispatcher, IKaratTokenDispatcherTrait}},
         models::seed::{Seed, SeedTrait},
     };
+    use karat::models::token_data::{CONSTANTS};
 
     use karat::tests::tester::{tester, tester::{ Systems }};
 
@@ -21,6 +22,8 @@ mod tests {
     fn test_is_initialized() {
         let sys: Systems = tester::spawn_systems();
         sys.karat.initialize("A", "B", "C");
+        assert(sys.karat.name() == format!("{}", CONSTANTS::TOKEN_NAME), 'name');
+        assert(sys.karat.symbol() == format!("{}", CONSTANTS::TOKEN_SYMBOL), 'symbol');
     }
 
     #[test]

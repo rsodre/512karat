@@ -34,7 +34,7 @@ mod minter {
     use karat::utils::misc::{WORLD};
     use karat::models::{
         config::{Config, ConfigTrait},
-        token_data::{TokenData, TokenDataTrait},
+        token_data::{TokenData, TokenDataTrait, CONSTANTS},
         seed::{Seed, SeedTrait},
     };
 
@@ -60,12 +60,6 @@ mod minter {
         available_supply: u128,
     ) {
         // 'dojo_init()...'.print();
-        
-        //*******************************
-        let TOKEN_NAME = "KARAT";
-        let TOKEN_SYMBOL = "KARAT";
-        let BASE_URI = "/";
-        //*******************************
 
         assert(token_address.is_non_zero(), Errors::INVALID_TOKEN_ADDRESS);
         assert(max_supply > 0, Errors::INVALID_SUPPLY);
@@ -84,7 +78,11 @@ mod minter {
         //
         // initialize token
         let karat = (IKaratTokenDispatcher{ contract_address: token_address });
-        karat.initialize(TOKEN_NAME, TOKEN_SYMBOL, BASE_URI);
+        karat.initialize(
+            format!("{}", CONSTANTS::TOKEN_NAME),
+            format!("{}", CONSTANTS::TOKEN_SYMBOL),
+            format!("{}", CONSTANTS::BASE_URI),
+        );
     }
 
     //---------------------------------------
