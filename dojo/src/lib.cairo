@@ -15,6 +15,7 @@ mod utils {
     mod hash;
     mod renderer;
     mod misc;
+    mod short_string;
 }
 
 #[cfg(test)]

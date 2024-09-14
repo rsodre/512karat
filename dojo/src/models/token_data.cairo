@@ -3,6 +3,7 @@ use karat::{
     models::seed::{Seed, SeedTrait},
     models::class::{Class, ClassTrait},
 };
+use karat::utils::short_string::{ShortStringTrait};
 
 mod CONSTANTS {
     const TOKEN_NAME: felt252 = 'KARAT';
@@ -42,7 +43,7 @@ impl TokenDataTraitImpl of TokenDataTrait {
         })
     }
     fn get_name(self: TokenData) -> ByteArray {
-        (format!("{} #{}", CONSTANTS::METADATA_NAME, self.token_id))
+        (format!("{} #{}", CONSTANTS::METADATA_NAME.string(), self.token_id))
     }
     fn get_description(self: TokenData) -> ByteArray {
         (format!("{}", CONSTANTS::METADATA_DESCRIPTION))
