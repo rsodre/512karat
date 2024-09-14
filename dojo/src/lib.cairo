@@ -13,7 +13,7 @@ mod models {
 mod utils {
     mod encoding;
     mod hash;
-    mod painter;
+    mod renderer;
     mod misc;
 }
 

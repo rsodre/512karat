@@ -98,7 +98,7 @@ mod karat_token {
     use starknet::{get_contract_address, get_caller_address};
 
     use karat::models::config::{Config, ConfigTrait};
-    use karat::systems::minter::{IPainter, IPainterDispatcher, IPainterDispatcherTrait};
+    use karat::systems::minter::{IRenderer, IRendererDispatcher, IRendererDispatcherTrait};
 
     use origami_token::components::security::initializable::initializable_component;
     use origami_token::components::introspection::src5::src5_component;
@@ -261,10 +261,10 @@ mod karat_token {
             let contract_address = get_contract_address();
             let selfie = IKaratTokenDispatcher{ contract_address };
             let world = selfie.world();
-            // call painter
+            // call renderer
             let config: Config = get!(world, (contract_address), Config);
-            let painter = IPainterDispatcher{ contract_address: config.painter_address };
-            return painter.paint(token_id.low);
+            let renderer = IRendererDispatcher{ contract_address: config.renderer_address };
+            return renderer.paint(token_id.low);
             ""
         }
     }

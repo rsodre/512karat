@@ -27,7 +27,7 @@ export const useTokenContract = () => {
 
 type useConfigResult = {
   minterAddress: bigint
-  painterAddress: bigint
+  rendererAddress: bigint
   maxSupply: number
   isCoolDown: boolean
   isClosed: boolean
@@ -39,7 +39,7 @@ export const useConfig = (): useConfigResult => {
   const data: any = useComponentValue(Config, contractEntityId);
   return {
     minterAddress: BigInt(data?.minter_address ?? 0),
-    painterAddress: BigInt(data?.painter_address ?? 0),
+    rendererAddress: BigInt(data?.renderer_address ?? 0),
     maxSupply: Number(data?.max_supply ?? 0),
     isCoolDown: Boolean(data?.cool_down ?? false),
     isClosed: !Boolean(data?.is_open ?? false),

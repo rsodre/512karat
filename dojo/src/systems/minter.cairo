@@ -17,7 +17,7 @@ trait IMinterInternal {
 }
 
 #[dojo::interface]
-trait IPainter {
+trait IRenderer {
     fn paint(world: @IWorldDispatcher, token_id: u128) -> ByteArray;
 }
 
@@ -28,7 +28,7 @@ mod minter {
     use zeroable::Zeroable;
     use starknet::{ContractAddress, get_contract_address, get_caller_address};
     use karat::systems::karat_token::{IKaratTokenDispatcher, IKaratTokenDispatcherTrait};
-    use karat::utils::painter::{painter};
+    use karat::utils::renderer::{renderer};
     use karat::utils::misc::{WORLD};
     use karat::models::{
         config::{Config, ConfigTrait},
@@ -73,7 +73,7 @@ mod minter {
         set!(world, (Config{
             token_address,
             minter_address: get_contract_address(),
-            painter_address: get_contract_address(),
+            renderer_address: get_contract_address(),
             max_supply,
             cool_down: true,
             is_open: (is_open != 0),
@@ -143,14 +143,14 @@ mod minter {
     }
 
     //---------------------------------------
-    // IPainter
+    // IRenderer
     //
     #[abi(embed_v0)]
-    impl PainterImpl of super::IPainter<ContractState> {
+    impl RendererImpl of super::IRenderer<ContractState> {
         fn paint(world: @IWorldDispatcher, token_id: u128) -> ByteArray {
             WORLD(world);
             let token_data = self.get_token_data(token_id);
-            return painter::build_uri(token_data);
+            return renderer::build_uri(token_data);
         }
     }
 }

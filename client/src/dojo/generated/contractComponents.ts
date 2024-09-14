@@ -9,7 +9,7 @@ export function defineContractComponents(world: World) {
     Config: (() => {
       return defineComponent(
         world,
-        { token_address: RecsType.BigInt, minter_address: RecsType.BigInt, painter_address: RecsType.BigInt, max_supply: RecsType.BigInt, cool_down: RecsType.Boolean, is_open: RecsType.Boolean },
+        { token_address: RecsType.BigInt, minter_address: RecsType.BigInt, renderer_address: RecsType.BigInt, max_supply: RecsType.BigInt, cool_down: RecsType.Boolean, is_open: RecsType.Boolean },
         {
           metadata: {
             namespace: "karat",

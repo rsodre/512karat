@@ -1,4 +1,4 @@
-mod painter {
+mod renderer {
     use debug::PrintTrait;
     use core::byte_array::ByteArrayTrait;
     use core::array::{Array, ArrayTrait};

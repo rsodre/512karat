@@ -89,7 +89,7 @@ fn setup_uninitialized() -> (IWorldDispatcher, IKaratTokenDispatcher) {
     let config = Config{
         token_address: token_dispatcher.contract_address,
         minter_address: OWNER(),
-        painter_address: token_dispatcher.contract_address,
+        renderer_address: token_dispatcher.contract_address,
         max_supply: 512,
         cool_down: false,
         is_open: true,
@@ -127,7 +127,7 @@ fn test_initializer() {
     assert(token_dispatcher.balance_of(OWNER()) == 2, 'Should eq 2');
     assert(token_dispatcher.name() == "NAME", 'Name should be NAME');
     assert(token_dispatcher.symbol() == "SYMBOL", 'Symbol should be SYMBOL');
-    // no painter here to build uri
+    // no renderer here to build uri
     // assert(token_dispatcher.token_uri(TOKEN_ID) == "URI21", 'Uri should be URI21');
     // assert(token_dispatcher.tokenURI(TOKEN_ID) == "URI21", 'Uri should be URI21 Camel');
     

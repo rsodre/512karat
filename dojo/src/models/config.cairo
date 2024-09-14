@@ -8,7 +8,7 @@ pub struct Config {
     pub token_address: ContractAddress,
     //------
     pub minter_address: ContractAddress,
-    pub painter_address: ContractAddress,
+    pub renderer_address: ContractAddress,
     pub max_supply: u128,
     pub cool_down: bool,
     pub is_open: bool,
