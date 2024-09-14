@@ -6,6 +6,7 @@ use karat::models::{
 #[dojo::interface]
 trait IMinter {
     fn mint(ref world: IWorldDispatcher, token_contract_address: ContractAddress) -> u128;
+    fn mint_to(ref world: IWorldDispatcher, token_contract_address: ContractAddress, recipient: ContractAddress) -> u128;
     fn set_available(ref world: IWorldDispatcher, token_contract_address: ContractAddress, available_supply: u128);
     fn get_token_data(world: @IWorldDispatcher, token_id: u128) -> TokenData;
     // fn get_token_svg(ref world: IWorldDispatcher, token_id: u128) -> ByteArray;
@@ -42,7 +43,7 @@ mod minter {
         const INVALID_SUPPLY: felt252 = 'KARAT: invalid supply';
         const MINTED_OUT: felt252 = 'KARAT: minted out';
         const UNAVAILABLE: felt252 = 'KARAT: unavailable';
-        const NOT_AGAIN: felt252 = 'KARAT: dont be greedy!';
+        const COOLING_DOWN: felt252 = 'KARAT: cool down!';
         const NOT_OWNER: felt252 = 'KARAT: not owner';
     }
 
@@ -92,29 +93,32 @@ mod minter {
     #[abi(embed_v0)]
     impl MinterImpl of IMinter<ContractState> {
         fn mint(ref world: IWorldDispatcher, token_contract_address: ContractAddress) -> u128 {
+            WORLD(world);
+            (self.mint_to(token_contract_address, get_caller_address()))
+        }
+        fn mint_to(ref world: IWorldDispatcher, token_contract_address: ContractAddress, recipient: ContractAddress) -> u128 {
             let karat = (IKaratTokenDispatcher{contract_address:token_contract_address});
             let total_supply: u256 = karat.total_supply();
 
             // check availability
+            let is_owner: bool = self.caller_is_owner();
             let config: Config = get!(world, (token_contract_address), Config);
             assert(total_supply.low < config.max_supply, Errors::MINTED_OUT);
-            assert(total_supply.low < config.available_supply || self.caller_is_owner(), Errors::UNAVAILABLE);
+            assert(total_supply.low < config.available_supply || is_owner, Errors::UNAVAILABLE);
             
             // get next token_id
             let token_id: u256 = (total_supply + 1);
 
             // very simple cool down rule
             // avoid wallets to make consecutive mints
-            if (config.cool_down && token_id > 1) {
-                let owner: ContractAddress = karat.owner_of(token_id - 1);
-                assert(
-                    owner != get_caller_address(),
-                    Errors::NOT_AGAIN,
-                )
+            if (config.cool_down && token_id > 1 && !is_owner) {
+                let last_owner: ContractAddress = karat.owner_of(token_id - 1);
+                assert(last_owner != recipient, Errors::COOLING_DOWN);
+                assert(last_owner != get_caller_address(), Errors::COOLING_DOWN);
             }
 
             // mint!
-            karat.mint(get_caller_address(), token_id);
+            karat.mint(recipient, token_id);
 
             // generate seed
             let seed = SeedTrait::new(token_id.low);
