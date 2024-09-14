@@ -9,12 +9,12 @@ import { useOrigamiERC721AllTokensOfOwner, useOrigamiERC721BalanceOf, useOrigami
 export const useTokenContract = () => {
   const { setup: { clientComponents } } = useDojo();
   const [contractAddress, setContractAddress] = useState<string>('')
-  
+
   const { setup: { manifest } } = useDojo()
   useEffect(() => {
     const contract = getContractByName(manifest, 'karat', 'karat_token');
     setContractAddress(contract?.address ?? '')
-  },[])
+  }, [])
 
   const contractEntityId = useMemo(() => bigintToEntity(contractAddress), [contractAddress])
 
@@ -29,8 +29,8 @@ type useConfigResult = {
   minterAddress: bigint
   rendererAddress: bigint
   maxSupply: number
+  availableSupply: number
   isCoolDown: boolean
-  isClosed: boolean
   isPending: boolean
 }
 export const useConfig = (): useConfigResult => {
@@ -41,8 +41,8 @@ export const useConfig = (): useConfigResult => {
     minterAddress: BigInt(data?.minter_address ?? 0),
     rendererAddress: BigInt(data?.renderer_address ?? 0),
     maxSupply: Number(data?.max_supply ?? 0),
+    availableSupply: Number(data?.available_supply ?? 0),
     isCoolDown: Boolean(data?.cool_down ?? false),
-    isClosed: !Boolean(data?.is_open ?? false),
     isPending: (data == null),
   }
 }
@@ -96,7 +96,7 @@ export const useTokenOfOwnerByIndex = (address: BigNumberish, index: BigNumberis
   return {
     tokenId,
     isPending,
-  } 
+  }
 }
 
 type useAllTokensOfOwnerResult = {

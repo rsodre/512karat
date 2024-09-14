@@ -17,7 +17,6 @@ mod tests {
     use karat::tests::tester::{tester, tester::{ Systems }};
 
     #[test]
-    #[available_gas(100_000_000)]
     #[should_panic(expected:('Initializable: is initialized','ENTRYPOINT_FAILED'))]
     fn test_is_initialized() {
         let sys: Systems = tester::spawn_systems();
@@ -25,7 +24,6 @@ mod tests {
     }
 
     #[test]
-    #[available_gas(100_000_000)]
     #[should_panic(expected:('ERC721: caller is not minter','ENTRYPOINT_FAILED'))]
     fn test_not_minter() {
         let sys: Systems = tester::spawn_systems();
@@ -34,7 +32,6 @@ mod tests {
     }
 
     #[test]
-    #[available_gas(10__000_000_000)]
     fn test_mint_ok() {
         let sys: Systems = tester::spawn_systems();
         assert(sys.karat.total_supply() == 0, 'supply = 0');
@@ -62,87 +59,120 @@ mod tests {
     }
 
     #[test]
-    #[available_gas(100_000_000)]
-    #[should_panic(expected:('KARAT: minting is closed','ENTRYPOINT_FAILED'))]
-    fn test_not_open() {
+    #[should_panic(expected:('KARAT: unavailable','ENTRYPOINT_FAILED'))]
+    fn test_not_available() {
         let sys: Systems = tester::spawn_systems();
-        sys.minter.set_open(sys.karat.contract_address, false);
-        // owner can mint
-        sys.minter.mint(sys.karat.contract_address);
+        sys.minter.set_available(sys.karat.contract_address, 0);
         // others cant
         tester::impersonate(RECIPIENT());
         sys.minter.mint(sys.karat.contract_address);
     }
 
     #[test]
-    #[available_gas(100_000_000)]
-    #[should_panic(expected:('KARAT: not owner','ENTRYPOINT_FAILED'))]
-    fn test_set_open_not_owner() {
+    fn test_not_available_owner_can_mint() {
         let sys: Systems = tester::spawn_systems();
-        tester::impersonate(RECIPIENT());
-        sys.minter.set_open(sys.karat.contract_address, false);
+        sys.minter.set_available(sys.karat.contract_address, 0);
+        // owner can mint
+        sys.minter.mint(sys.karat.contract_address);
     }
 
     #[test]
-    #[available_gas(100_000_000)]
+    #[should_panic(expected:('KARAT: not owner','ENTRYPOINT_FAILED'))]
+    fn test_set_available_not_owner() {
+        let sys: Systems = tester::spawn_systems();
+        tester::impersonate(RECIPIENT());
+        sys.minter.set_available(sys.karat.contract_address, 1000);
+    }
+
+    #[test]
     #[should_panic(expected:('KARAT: dont be greedy!','ENTRYPOINT_FAILED'))]
     fn test_greedy1() {
         let sys: Systems = tester::spawn_systems();
+        tester::impersonate(SPENDER());
         sys.minter.mint(sys.karat.contract_address);
         sys.minter.mint(sys.karat.contract_address);
     }
 
     #[test]
-    #[available_gas(100_000_000)]
     #[should_panic(expected:('KARAT: dont be greedy!','ENTRYPOINT_FAILED'))]
     fn test_greedy2() {
         let sys: Systems = tester::spawn_systems();
+        tester::impersonate(SPENDER());
         sys.minter.mint(sys.karat.contract_address);
         tester::impersonate(RECIPIENT());
         sys.minter.mint(sys.karat.contract_address);
         sys.minter.mint(sys.karat.contract_address);
     }
     #[test]
-    #[available_gas(100_000_000)]
     #[should_panic(expected:('KARAT: dont be greedy!','ENTRYPOINT_FAILED'))]
     fn test_greedy3() {
         let sys: Systems = tester::spawn_systems();
         sys.minter.mint(sys.karat.contract_address);
         tester::impersonate(RECIPIENT());
         sys.minter.mint(sys.karat.contract_address);
-        tester::impersonate(OWNER());
+        tester::impersonate(SPENDER());
         sys.minter.mint(sys.karat.contract_address);
         sys.minter.mint(sys.karat.contract_address);
     }
 
     #[test]
-    #[available_gas(100_000_000)]
-    fn test_max_supply() {
+    fn test_available_supply_baseline() {
         let sys: Systems = tester::spawn_systems();
+        let mut supply: u128 = 0;
+        loop {
+            if (supply == sys.available_supply) {
+                break;
+            }
+            tester::impersonate(if (supply % 2 == 0) {SPENDER()} else {RECIPIENT()});
+            sys.minter.mint(sys.karat.contract_address);
+            supply += 1;
+        };
+    }
+
+    #[test]
+    #[should_panic(expected:('KARAT: unavailable','ENTRYPOINT_FAILED'))]
+    fn test_available_supply_unavailable() {
+        let sys: Systems = tester::spawn_systems();
+        let mut supply: u128 = 0;
+        loop {
+            if (supply > sys.available_supply) {
+                break;
+            }
+            tester::impersonate(if (supply % 2 == 0) {SPENDER()} else {RECIPIENT()});
+            sys.minter.mint(sys.karat.contract_address);
+            supply += 1;
+        };
+    }
+
+    #[test]
+    fn test_max_supply_baseline() {
+        let sys: Systems = tester::spawn_systems();
+        sys.minter.set_available(sys.karat.contract_address, sys.max_supply);
         let mut supply: u128 = 0;
         loop {
             if (supply == sys.max_supply) {
                 break;
             }
-            tester::impersonate(if (supply % 2 == 0) {OWNER()} else {RECIPIENT()});
+            tester::impersonate(if (supply % 2 == 0) {SPENDER()} else {RECIPIENT()});
             sys.minter.mint(sys.karat.contract_address);
             supply += 1;
         };
     }
 
     #[test]
-    #[available_gas(100_000_000)]
     #[should_panic(expected:('KARAT: minted out','ENTRYPOINT_FAILED'))]
     fn test_mint_out() {
         let sys: Systems = tester::spawn_systems();
+        sys.minter.set_available(sys.karat.contract_address, sys.max_supply);
         let mut supply: u128 = 0;
         loop {
             if (supply > sys.max_supply) {
                 break;
             }
-            tester::impersonate(if (supply % 2 == 0) {OWNER()} else {RECIPIENT()});
+            tester::impersonate(if (supply % 2 == 0) {SPENDER()} else {RECIPIENT()});
             sys.minter.mint(sys.karat.contract_address);
             supply += 1;
         };
     }
+
 }

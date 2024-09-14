@@ -6,7 +6,7 @@ use karat::models::{
 #[dojo::interface]
 trait IMinter {
     fn mint(ref world: IWorldDispatcher, token_contract_address: ContractAddress) -> u128;
-    fn set_open(ref world: IWorldDispatcher, token_contract_address: ContractAddress, is_open: bool);
+    fn set_available(ref world: IWorldDispatcher, token_contract_address: ContractAddress, available_supply: u128);
     fn get_token_data(world: @IWorldDispatcher, token_id: u128) -> TokenData;
     // fn get_token_svg(ref world: IWorldDispatcher, token_id: u128) -> ByteArray;
 }
@@ -14,6 +14,7 @@ trait IMinter {
 #[dojo::interface]
 trait IMinterInternal {
     fn assert_caller_is_owner(world: @IWorldDispatcher);
+    fn caller_is_owner(world: @IWorldDispatcher) -> bool;
 }
 
 #[dojo::interface]
@@ -39,8 +40,8 @@ mod minter {
     mod Errors {
         const INVALID_TOKEN_ADDRESS: felt252 = 'KARAT: invalid token address';
         const INVALID_SUPPLY: felt252 = 'KARAT: invalid supply';
-        const MINT_CLOSED: felt252 = 'KARAT: minting is closed';
         const MINTED_OUT: felt252 = 'KARAT: minted out';
+        const UNAVAILABLE: felt252 = 'KARAT: unavailable';
         const NOT_AGAIN: felt252 = 'KARAT: dont be greedy!';
         const NOT_OWNER: felt252 = 'KARAT: not owner';
     }
@@ -55,7 +56,7 @@ mod minter {
         world: @IWorldDispatcher,
         token_address: ContractAddress,
         max_supply: u128,
-        is_open: u8,
+        available_supply: u128,
     ) {
         // 'dojo_init()...'.print();
         
@@ -75,8 +76,8 @@ mod minter {
             minter_address: get_contract_address(),
             renderer_address: get_contract_address(),
             max_supply,
+            available_supply,
             cool_down: true,
-            is_open: (is_open != 0),
         }));
 
         //
@@ -97,7 +98,7 @@ mod minter {
             // check availability
             let config: Config = get!(world, (token_contract_address), Config);
             assert(total_supply.low < config.max_supply, Errors::MINTED_OUT);
-            assert(config.is_open, Errors::MINT_CLOSED);
+            assert(total_supply.low < config.available_supply || self.caller_is_owner(), Errors::UNAVAILABLE);
             
             // get next token_id
             let token_id: u256 = (total_supply + 1);
@@ -123,10 +124,10 @@ mod minter {
             (token_id.low)
         }
 
-        fn set_open(ref world: IWorldDispatcher, token_contract_address: ContractAddress, is_open: bool) {
+        fn set_available(ref world: IWorldDispatcher, token_contract_address: ContractAddress, available_supply: u128) {
             self.assert_caller_is_owner();
             let mut config: Config = get!(world, (token_contract_address), Config);
-            config.is_open = is_open;
+            config.available_supply = available_supply;
             set!(world, (config));
         }
 
@@ -138,7 +139,12 @@ mod minter {
     impl InternalImpl of super::IMinterInternal<ContractState> {
         #[inline(always)]
         fn assert_caller_is_owner(world: @IWorldDispatcher) {
-            assert(world.is_owner(self.selector().into(), get_caller_address()), Errors::NOT_OWNER);
+            WORLD(world);
+            assert(self.caller_is_owner(), Errors::NOT_OWNER);
+        }
+        #[inline(always)]
+        fn caller_is_owner(world: @IWorldDispatcher) -> bool {
+            (world.is_owner(self.selector().into(), get_caller_address()))
         }
     }
 

@@ -15,7 +15,7 @@ export const useMint = () => {
   } = useDojo();
 
   const { contractAddress } = useTokenContract();
-  const { isCoolDown } = useConfig();
+  const { isCoolDown, maxSupply, availableSupply } = useConfig();
   const { isConnected } = useAccount();
   const { isCorrectChain } = useIsCorrectChain()
   const { total_supply } = useTotalSupply()
@@ -23,9 +23,12 @@ export const useMint = () => {
   const [isMinting, setIsMinting] = useState(false);
   const [mintingTokenId, setMintingTokenId] = useState(0);
 
+  const isAvailable = useMemo(() => (total_supply < availableSupply), [total_supply, availableSupply]);
+  const isMintedOut = useMemo(() => (total_supply >= maxSupply), [total_supply, maxSupply]);
+
   const canMint = useMemo(() => (
-    account && isConnected && isCorrectChain && contractAddress && !isMinting
-  ), [account, isConnected, isCorrectChain, contractAddress, isMinting]);
+    account && isConnected && isCorrectChain && contractAddress && isAvailable && !isMintedOut && !isMinting
+  ), [account, isConnected, isCorrectChain, contractAddress, isMintedOut, isAvailable, isMinting]);
 
   const _mint = useCallback(() => {
     if (account && canMint) {
@@ -56,6 +59,8 @@ export const useMint = () => {
   return {
     canMint,
     isMinting,
+    isAvailable,
+    isMintedOut,
     isCoolingDown: (isCoolingDown && isCoolDown),
     mint: (canMint ? _mint : undefined),
   }

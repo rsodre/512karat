@@ -91,8 +91,8 @@ fn setup_uninitialized() -> (IWorldDispatcher, IKaratTokenDispatcher) {
         minter_address: OWNER(),
         renderer_address: token_dispatcher.contract_address,
         max_supply: 512,
+        available_supply: 128,
         cool_down: false,
-        is_open: true,
     };
     config.set_test(world);
 

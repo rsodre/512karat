@@ -231,10 +231,6 @@ mod karat_token {
         ) {
             let config: Config = get!(self.world(), (get_contract_address()), Config);
             assert(
-                config.is_open,
-                Errors::MINTING_IS_CLOSED,
-            );
-            assert(
                 config.is_minter(get_caller_address()),
                 Errors::CALLER_IS_NOT_MINTER
             );

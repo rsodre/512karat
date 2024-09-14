@@ -10,8 +10,8 @@ pub struct Config {
     pub minter_address: ContractAddress,
     pub renderer_address: ContractAddress,
     pub max_supply: u128,
+    pub available_supply: u128,
     pub cool_down: bool,
-    pub is_open: bool,
 }
 
 #[generate_trait]

@@ -8,5 +8,5 @@ computed = []
 init_calldata = [
   "$contract_address:karat-karat_token",
   "512",
-  "1",
+  "0",
 ]

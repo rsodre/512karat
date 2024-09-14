@@ -33,12 +33,14 @@ mod tester {
         karat: IKaratTokenDispatcher,
         minter: IMinterDispatcher,
         max_supply: u128,
+        available_supply: u128,
     }
 
     fn spawn_systems() -> Systems {
         let world = spawn_test_world(["dojo", "origami_karat", "karat"].span(),  get_models_test_class_hashes!());
 
-        let max_supply: u128 = 4;
+        let max_supply: u128 = 6;
+        let available_supply: u128 = 4;
         
         let karat = IKaratTokenDispatcher {
             contract_address: world.deploy_contract('karat', karat_token::TEST_CLASS_HASH.try_into().unwrap())
@@ -48,7 +50,7 @@ mod tester {
         let minter_calldata: Span<felt252> = array![
             karat.contract_address.into(),
             max_supply.into(),
-            1,
+            available_supply.into(),
         ].span();
         let minter = IMinterDispatcher {
             contract_address:world.deploy_contract('minter', minter::TEST_CLASS_HASH.try_into().unwrap())
@@ -65,6 +67,7 @@ mod tester {
             karat,
             minter,
             max_supply,
+            available_supply,
         })
     }
 }
