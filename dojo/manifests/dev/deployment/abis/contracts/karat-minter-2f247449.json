@@ -148,8 +148,8 @@
             "type": "core::integer::u128"
           },
           {
-            "name": "is_open",
-            "type": "core::integer::u8"
+            "name": "available_supply",
+            "type": "core::integer::u128"
           }
         ],
         "outputs": [],
@@ -161,20 +161,6 @@
     "type": "impl",
     "name": "MinterImpl",
     "interface_name": "karat::systems::minter::IMinter"
-  },
-  {
-    "type": "enum",
-    "name": "core::bool",
-    "variants": [
-      {
-        "name": "False",
-        "type": "()"
-      },
-      {
-        "name": "True",
-        "type": "()"
-      }
-    ]
   },
   {
     "type": "struct",
@@ -264,15 +250,35 @@
       },
       {
         "type": "function",
-        "name": "set_open",
+        "name": "mint_to",
         "inputs": [
           {
             "name": "token_contract_address",
             "type": "core::starknet::contract_address::ContractAddress"
           },
           {
-            "name": "is_open",
-            "type": "core::bool"
+            "name": "recipient",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u128"
+          }
+        ],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "set_available",
+        "inputs": [
+          {
+            "name": "token_contract_address",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "available_supply",
+            "type": "core::integer::u128"
           }
         ],
         "outputs": [],
@@ -298,12 +304,12 @@
   },
   {
     "type": "impl",
-    "name": "PainterImpl",
-    "interface_name": "karat::systems::minter::IPainter"
+    "name": "RendererImpl",
+    "interface_name": "karat::systems::minter::IRenderer"
   },
   {
     "type": "interface",
-    "name": "karat::systems::minter::IPainter",
+    "name": "karat::systems::minter::IRenderer",
     "items": [
       {
         "type": "function",

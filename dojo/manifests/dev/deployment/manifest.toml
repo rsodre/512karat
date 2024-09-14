@@ -1,17 +1,17 @@
 [world]
 kind = "WorldContract"
-class_hash = "0xa349b743d361ce4567361475a89b84a386bb383448c6926954e5fe0b525597"
-original_class_hash = "0xa349b743d361ce4567361475a89b84a386bb383448c6926954e5fe0b525597"
+class_hash = "0x6f4515274ee23404789c3351a77107d0ec07508530119822046600ca6948d6e"
+original_class_hash = "0x6f4515274ee23404789c3351a77107d0ec07508530119822046600ca6948d6e"
 abi = "manifests/dev/deployment/abis/dojo-world.json"
-address = "0x4c0970c9f52045ef8eeedd1e11265ebb69ed90fce58c96ad103aecf7f91302a"
-transaction_hash = "0x4e3c7ede9bbce10c5011de2d13d14ecaa34e92219b06062e91f21ab2f460c16"
+address = "0x3fa8a26f275c4ec8ca5a34c9e33fa4c7ee568219421d3a9355ee086c1f8f620"
+transaction_hash = "0x2a929ba5aac5d78f364e8903c32c9c466c6bc7dfa4847eba3df7c0df8777976"
 block_number = 3
-seed = "512karat"
+seed = "karat"
 manifest_name = "dojo-world"
 
 [world.metadata]
 profile_name = "dev"
-rpc_url = "https://api.cartridge.gg/rpc/starknet-sepolia"
+rpc_url = "http://localhost:5050/"
 
 [base]
 kind = "Class"
@@ -23,9 +23,9 @@ manifest_name = "dojo-base"
 
 [[contracts]]
 kind = "DojoContract"
-address = "0x410af9215196e74822373a0ca51854a420005360f36e2893b9612676a0f49cb"
-class_hash = "0x54594a464d9ff3985eb3312f93e8b1220b13b71cc5b357d1f395b03c20c46f"
-original_class_hash = "0x54594a464d9ff3985eb3312f93e8b1220b13b71cc5b357d1f395b03c20c46f"
+address = "0x7d8ea58612a5de25f29281199a4fc1f2ce42f0f207f93c3a35280605f3b8e68"
+class_hash = "0xd93c85c689eb2a0d3cfe34ba1397c414056efe654da77d290378dae657a651"
+original_class_hash = "0xd93c85c689eb2a0d3cfe34ba1397c414056efe654da77d290378dae657a651"
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/dev/deployment/abis/contracts/karat-karat_token-6eea4d34.json"
 reads = []
@@ -54,9 +54,9 @@ manifest_name = "karat-karat_token-6eea4d34"
 
 [[contracts]]
 kind = "DojoContract"
-address = "0x2b1cb5c53db5f07974585b8788ec4f4b57f732c71c4a0e66b8b282fdca29889"
-class_hash = "0x6652aadafa3e073ac7829c8a423021d962fba14f1c736ccc9e6b632c15de64d"
-original_class_hash = "0x6652aadafa3e073ac7829c8a423021d962fba14f1c736ccc9e6b632c15de64d"
+address = "0x14262b9314cfdcc76883e040cf232f2a139510f9c84f229f20da0f07d3b8b9b"
+class_hash = "0x5e10afa9e700779b70886af8292b8f66c05ae095e98deaf5e8247ce7e91a895"
+original_class_hash = "0x5e10afa9e700779b70886af8292b8f66c05ae095e98deaf5e8247ce7e91a895"
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/dev/deployment/abis/contracts/karat-minter-2f247449.json"
 reads = []
@@ -71,15 +71,15 @@ init_calldata = [
 ]
 tag = "karat-minter"
 systems = [
-    "set_open",
+    "set_available",
     "assert_caller_is_owner",
 ]
 manifest_name = "karat-minter-2f247449"
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x68a476d1a6443fdf9be1883ab0169929af2871ac9257bd091201eb292b9653b"
-original_class_hash = "0x68a476d1a6443fdf9be1883ab0169929af2871ac9257bd091201eb292b9653b"
+class_hash = "0xe95c66e083e2544e59253769427187d7e3b046326261277454c67bcc7af4d0"
+original_class_hash = "0xe95c66e083e2544e59253769427187d7e3b046326261277454c67bcc7af4d0"
 abi = "manifests/dev/deployment/abis/models/karat-Config-4fe722d0.json"
 tag = "karat-Config"
 qualified_path = "karat::models::config::config"
@@ -96,7 +96,7 @@ type = "ContractAddress"
 key = false
 
 [[models.members]]
-name = "painter_address"
+name = "renderer_address"
 type = "ContractAddress"
 key = false
 
@@ -106,12 +106,12 @@ type = "u128"
 key = false
 
 [[models.members]]
-name = "cool_down"
-type = "bool"
+name = "available_supply"
+type = "u128"
 key = false
 
 [[models.members]]
-name = "is_open"
+name = "cool_down"
 type = "bool"
 key = false
 

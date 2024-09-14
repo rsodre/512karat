@@ -1,6 +1,6 @@
 kind = "DojoModel"
-class_hash = "0x68a476d1a6443fdf9be1883ab0169929af2871ac9257bd091201eb292b9653b"
-original_class_hash = "0x68a476d1a6443fdf9be1883ab0169929af2871ac9257bd091201eb292b9653b"
+class_hash = "0xe95c66e083e2544e59253769427187d7e3b046326261277454c67bcc7af4d0"
+original_class_hash = "0xe95c66e083e2544e59253769427187d7e3b046326261277454c67bcc7af4d0"
 abi = "manifests/dev/base/abis/models/karat-Config-4fe722d0.json"
 tag = "karat-Config"
 qualified_path = "karat::models::config::config"
@@ -17,7 +17,7 @@ type = "ContractAddress"
 key = false
 
 [[members]]
-name = "painter_address"
+name = "renderer_address"
 type = "ContractAddress"
 key = false
 
@@ -27,11 +27,11 @@ type = "u128"
 key = false
 
 [[members]]
-name = "cool_down"
-type = "bool"
+name = "available_supply"
+type = "u128"
 key = false
 
 [[members]]
-name = "is_open"
+name = "cool_down"
 type = "bool"
 key = false
