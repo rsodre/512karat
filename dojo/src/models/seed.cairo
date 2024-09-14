@@ -33,7 +33,7 @@ impl SeedTraitImpl of SeedTrait {
         else  { Class::A }
     }
     fn realm_id(self: Seed) -> felt252 {
-        ((self.seed % 10_000).into())
+        ((self.seed % 8_000).into() + 1)
     }
 }
 
