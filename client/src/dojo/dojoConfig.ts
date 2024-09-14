@@ -1,8 +1,9 @@
 import { DojoConfig, KATANA_ETH_CONTRACT_ADDRESS, LOCAL_KATANA, LOCAL_TORII, createDojoConfig } from "@dojoengine/core";
-import { Chain, NativeCurrency, sepolia as sn_sepolia } from "@starknet-react/chains";
+import { Chain, NativeCurrency, sepolia as sn_sepolia, mainnet as sn_mainnet } from "@starknet-react/chains";
 import manifest_dev from "./generated/dev/manifest.json";
 import manifest_slot from "./generated/slot/manifest.json";
 import manifest_sepolia from "./generated/sepolia/manifest.json";
+import manifest_mainnet from "./generated/mainnet/manifest.json";
 import { feltToString, stringToFelt } from "../utils/starknet";
 
 export const defaultChainId: ChainId = import.meta.env.VITE_PUBLIC_CHAIN_ID as ChainId;
@@ -32,8 +33,16 @@ export const dojoConfigSlot: DojoConfig = createDojoConfig({
 
 const dojoConfigSepolia: DojoConfig = createDojoConfig({
   manifest: manifest_sepolia,
-  rpcUrl: 'https://api.cartridge.gg/rpc/starknet-sepolia',
+  rpcUrl: 'https://api.cartridge.gg/x/starknet/sepolia',
   toriiUrl: 'https://api.cartridge.gg/x/512karat-sepolia/torii',
+  // masterAddress: '0x0',
+  // masterPrivateKey: '0x0',
+});
+
+const dojoConfigMainnet: DojoConfig = createDojoConfig({
+  manifest: manifest_mainnet,
+  rpcUrl: 'https://api.cartridge.gg/x/starknet/mainnet',
+  // toriiUrl: 'https://api.cartridge.gg/x/512karat-mainnet/torii',
   // masterAddress: '0x0',
   // masterPrivateKey: '0x0',
 });
@@ -89,6 +98,13 @@ export const sepolia: Chain = {
   },
 };
 
+export const mainnet: Chain = {
+  ...sn_mainnet,
+  rpcUrls: {
+    default: { http: [dojoConfigMainnet.rpcUrl] },
+    public: { http: [dojoConfigMainnet.rpcUrl] },
+  },
+};
 
 //--------------------------------
 // Chain mapping
@@ -112,8 +128,10 @@ export const dojoContextConfig: Record<ChainId, DojoChainConfig> = {
     chain: sepolia,
     dojoConfig: dojoConfigSepolia,
   },
-  //@ts-ignore
-  [ChainId.SN_MAINNET]: undefined,
+  [ChainId.SN_MAINNET]: {
+    chain: mainnet,
+    dojoConfig: dojoConfigMainnet,
+  },
 }
 
 

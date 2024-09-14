@@ -1,0 +1,12 @@
+tag = "karat-minter"
+reads = []
+writes = [
+  "karat-Config",
+  "karat-Seed",
+]
+computed = []
+init_calldata = [
+  "$contract_address:karat-karat_token",
+  "512",
+  "0",
+]

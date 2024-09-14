@@ -160,7 +160,7 @@ Deployment success 🚀
 
 Configuration:
   World: 0x4c0970c9f52045ef8eeedd1e11265ebb69ed90fce58c96ad103aecf7f91302a
-  RPC: https://api.cartridge.gg/rpc/starknet-sepolia
+  RPC: <RPC_PROVIDER_URL>
   Start Block: 155777
   Index Pending: false
 

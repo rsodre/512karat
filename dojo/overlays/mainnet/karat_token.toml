@@ -1,0 +1,16 @@
+tag = "karat-karat_token"
+writes = [
+  "origami_karat-SRC5Model",
+  "origami_karat-InitializableModel",
+  "origami_karat-ERC721OwnerModel",
+  "origami_karat-ERC721BalanceModel",
+  "origami_karat-ERC721MetaModel",
+  "origami_karat-ERC721EnumerableIndexModel",
+  "origami_karat-ERC721EnumerableOwnerIndexModel",
+  "origami_karat-ERC721EnumerableOwnerTokenModel",
+  "origami_karat-ERC721EnumerableTokenModel",
+  "origami_karat-ERC721EnumerableTotalModel",
+  "origami_karat-ERC721TokenApprovalModel",
+  "origami_karat-ERC721OperatorApprovalModel",
+]
+init_calldata = []
