@@ -1,10 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 pushd $(dirname "$0")/..
-
-export RPC_URL="http://localhost:5050";
-
-export WORLD_ADDRESS=$(cat ./manifests/dev/manifest.json | jq -r '.world.address')
+source scripts/setup.sh
 
 # sozo execute --world <WORLD_ADDRESS> <CONTRACT> <ENTRYPOINT>
-sozo execute --world $WORLD_ADDRESS karat::systems::minter::minter mint --wait
+echo "> minting..."
+sozo execute katat-minter mint --calldata $TOKEN_ADDRESS --world $WORLD_ADDRESS --wait

@@ -1,28 +1,6 @@
 #!/bin/bash
 set -e
-
-export PROFILE="dev"
-
-get_profile_env () {
-  local ENV_NAME=$1
-  local DOJO_PROFILE_FILE="dojo_$PROFILE.toml"
-  local RESULT=$(toml get $DOJO_PROFILE_FILE --raw env.$ENV_NAME)
-  if [[ -z "$RESULT" ]]; then
-    >&2 echo "get_profile_env($ENV_NAME) not found! 👎"
-  fi
-  echo $RESULT
-}
-
-export PROFILE="dev"
-export WORLD_ADDRESS=$(get_profile_env "world_address")
-echo "@WORLD: $WORLD_ADDRESS"
-
-if [[
-  "$WORLD_ADDRESS" != "0x"*
-]]; then
-  echo "! Missing data 👎"
-  exit 1
-fi
+source scripts/setup.sh
 
 torii --version
 torii \
