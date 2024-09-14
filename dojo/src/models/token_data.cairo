@@ -34,7 +34,7 @@ impl TokenDataTraitImpl of TokenDataTrait {
         })
     }
     fn get_name(self: TokenData) -> ByteArray {
-        (format!("512 Karat #{}", self.token_id))
+        (format!("Karat #{}", self.token_id))
     }
     fn get_description(self: TokenData) -> ByteArray {
         ("Fully on-chain Generative Art made with Dojo")

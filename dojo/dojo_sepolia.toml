@@ -1,10 +1,10 @@
 [world]
-name = "512 Karat"
+name = "Karat"
 description = "Generative Art made with Dojo."
 icon_uri = "https://raw.githubusercontent.com/rsodre/512karat/main/assets/logo.png"
 cover_uri = "https://raw.githubusercontent.com/rsodre/512karat/main/assets/splash.png"
 website = "https://github.com/rsodre/512karat"
-seed = "512karat_6"
+seed = "karat_6"
 
 [world.socials]
 x = "https://x.com/matalecode"

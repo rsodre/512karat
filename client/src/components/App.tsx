@@ -27,7 +27,7 @@ export default function App() {
           </Row>
           <Row>
             <Col textAlign="left" width={10}>
-              <h1>512 KARAT</h1>
+              <h1>KARAT</h1>
             </Col>
             <Col textAlign="right" width={6}>
               {!isConnected && <ConnectButton />}

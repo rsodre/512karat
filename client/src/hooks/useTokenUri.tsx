@@ -93,7 +93,7 @@ export const useUriToMetadata = (token_id: BigNumberish, uri: string) => {
     tokenExists: Boolean(name),
     token_id,
     uri,
-    name: name ?? `512 Karat #${token_id}`,
+    name: name ?? `Karat #${token_id}`,
     description,
     attributes,
     image,

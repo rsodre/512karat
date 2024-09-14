@@ -62,8 +62,8 @@ mod minter {
         // 'dojo_init()...'.print();
         
         //*******************************
-        let TOKEN_NAME = "512 KARAT";
-        let TOKEN_SYMBOL = "512KARAT";
+        let TOKEN_NAME = "KARAT";
+        let TOKEN_SYMBOL = "KARAT";
         let BASE_URI = "/";
         //*******************************
 

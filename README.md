@@ -1,4 +1,4 @@
-# 512karat
+# 512 KARAT
 
 ## Generative Art made with Dojo
 
@@ -9,7 +9,10 @@ code + art: **Roger Mataleone** ([@matalecode](https://x.com/matalecode))
 
 ## Mainnet Minting
 
-TBA
+* Phase 1 (128 Karats): TBD
+* Phase 2 (128 Karats): TBD
+* Phase 3 (128 Karats): TBD
+* Phase 4 (128 Karats): TBD
 
 
 ## Project structure
@@ -18,9 +21,6 @@ TBA
 * `/client`: Typescript Vite client
 * `/draft`: Token experiments (metadata, svg)
 * [p5js](https://editor.p5js.org/rsodre/sketches/Im7yQgmf5): Art playground
-
-
-
 
 
 ## Sepolia / Mainnet Deployment
@@ -198,4 +198,4 @@ VITE_PUBLIC_CHAIN_ID=SN_SEPOLIA
 
 This project sarted from scratch for [StarkHack 2024](https://ethglobal.com/events/starkhack), using a few open source boilerplates, mainly from [Dojo](https://www.dojoengine.org/), [Origami](https://book.dojoengine.org/toolchain/origami) and [Pistols at 10 Blocks](https://pistols.underware.gg/).
 
-The original submission, containing the full process of how it was built in June 2024 is on the [stark_hack](https://github.com/rsodre/512karat/tree/stark_hack) tag (**already outdated!**).
+The original submission, containing the full process of how it was built in June 2024 is on the [stark_hack](https://github.com/rsodre/512karat/tree/stark_hack) tag (**outdated!**).
