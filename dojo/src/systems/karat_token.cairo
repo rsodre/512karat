@@ -217,10 +217,7 @@ mod karat_token {
             token_id: u256,
         ) {
             let config: Config = get!(self.world(), (get_contract_address()), Config);
-            assert(
-                config.is_minter(get_caller_address()),
-                Errors::CALLER_IS_NOT_MINTER
-            );
+            assert(config.is_minter(get_caller_address()), Errors::CALLER_IS_NOT_MINTER);
             self.erc721_mintable.mint(to, token_id);
         }
         fn burn(
@@ -247,8 +244,7 @@ mod karat_token {
             // call renderer
             let config: Config = get!(world, (contract_address), Config);
             let renderer = IRendererDispatcher{ contract_address: config.renderer_address };
-            return renderer.paint(token_id.low);
-            ""
+            (renderer.render_uri(token_id.low))
         }
     }
 }

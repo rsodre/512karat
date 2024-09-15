@@ -46,10 +46,10 @@ mod tests {
         assert(sys.karat.total_supply() == 1, 'supply = 1');
         assert(token_id_1 == 1, 'token_id_1');
         assert(seed_1.seed > 0, 'seed_1');
-        assert(token_uri_1.len() > 3, 'token_uri_1');
+        assert(token_uri_1.len() > 100, 'token_uri_1');
         assert(sys.karat.owner_of(token_id_1.into()) == SPENDER(), 'owner_of_1');
-        // println!("seed_1:{}", seed_1.seed);
-        // println!("{}", token_uri_1);
+        println!("seed:{}", seed_1.seed);
+        // println!("token_uri:{}", token_uri_1);
         // #2
         tester::impersonate(RECIPIENT());
         let token_id_2: u128 = sys.minter.mint(sys.karat.contract_address);
@@ -59,7 +59,7 @@ mod tests {
         assert(token_id_2 == 2, 'token_id_2');
         assert(seed_2.seed > 0, 'seed_2');
         assert(seed_2.seed != seed_1.seed, 'seed_2_1');
-        assert(token_uri_2.len() > 3, 'token_uri_2');
+        assert(token_uri_2.len() > 100, 'token_uri_2');
         assert(token_uri_2 != token_uri_1, 'token_uri_2_1');
         assert(sys.karat.owner_of(token_id_2.into()) == RECIPIENT(), 'owner_of_2');
     }

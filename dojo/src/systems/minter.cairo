@@ -20,7 +20,7 @@ trait IMinterInternal {
 
 #[dojo::interface]
 trait IRenderer {
-    fn paint(world: @IWorldDispatcher, token_id: u128) -> ByteArray;
+    fn render_uri(world: @IWorldDispatcher, token_id: u128) -> ByteArray;
 }
 
 #[dojo::contract]
@@ -146,7 +146,7 @@ mod minter {
     //
     #[abi(embed_v0)]
     impl RendererImpl of super::IRenderer<ContractState> {
-        fn paint(world: @IWorldDispatcher, token_id: u128) -> ByteArray {
+        fn render_uri(world: @IWorldDispatcher, token_id: u128) -> ByteArray {
             WORLD(world);
             let token_data = self.get_token_data(token_id);
             return renderer::build_uri(token_data);
