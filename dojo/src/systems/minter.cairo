@@ -31,6 +31,7 @@ mod minter {
     use starknet::{ContractAddress, get_contract_address, get_caller_address};
     use karat::systems::karat_token::{IKaratTokenDispatcher, IKaratTokenDispatcherTrait};
     use karat::utils::renderer::{renderer};
+    use karat::utils::short_string::{ShortStringTrait};
     use karat::utils::misc::{WORLD};
     use karat::models::{
         config::{Config, ConfigTrait},
@@ -79,9 +80,9 @@ mod minter {
         // initialize token
         let karat = (IKaratTokenDispatcher{ contract_address: token_address });
         karat.initialize(
-            format!("{}", CONSTANTS::TOKEN_NAME),
-            format!("{}", CONSTANTS::TOKEN_SYMBOL),
-            format!("{}", CONSTANTS::BASE_URI),
+            CONSTANTS::TOKEN_NAME.string(),
+            CONSTANTS::TOKEN_SYMBOL.string(),
+            CONSTANTS::BASE_URI.string(),
         );
     }
 

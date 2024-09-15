@@ -46,6 +46,6 @@ impl TokenDataTraitImpl of TokenDataTrait {
         (format!("{} #{}", CONSTANTS::METADATA_NAME.string(), self.token_id))
     }
     fn get_description(self: TokenData) -> ByteArray {
-        (format!("{}", CONSTANTS::METADATA_DESCRIPTION))
+        (CONSTANTS::METADATA_DESCRIPTION.string())
     }
 }
