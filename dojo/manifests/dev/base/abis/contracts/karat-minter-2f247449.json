@@ -313,7 +313,7 @@
     "items": [
       {
         "type": "function",
-        "name": "paint",
+        "name": "render_uri",
         "inputs": [
           {
             "name": "token_id",
