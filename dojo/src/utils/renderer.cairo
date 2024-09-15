@@ -20,12 +20,12 @@ mod renderer {
         let desc_tag = _value_tag("description", token_data.get_description());
         let attributes_tag = _array_tag("attributes", _attributes_array(token_data));
         let image_tag = _value_tag("image", _encode_svg(_svg(token_data)));
-        (format!("{{{},{},{},{}}}",
+        (_encode_uri(format!("{{{},{},{},{}}}",
             name_tag,
             desc_tag,
             attributes_tag,
             image_tag,
-        ))
+        )))
     }
 
     fn _attributes_array(token_data: TokenData) -> ByteArray {
@@ -63,8 +63,13 @@ mod renderer {
     }
 
     #[inline(always)]
-    fn _encode_svg(svg: ByteArray) -> ByteArray {
-        (format!("data:image/svg+xml;base64,{}", bytes_base64_encode(svg)))
+    fn _encode_svg(data: ByteArray) -> ByteArray {
+        (format!("data:image/svg+xml;base64,{}", bytes_base64_encode(data)))
+    }
+
+    #[inline(always)]
+    fn _encode_uri(data: ByteArray) -> ByteArray {
+        (format!("data:application/json;base64,{}", bytes_base64_encode(data)))
     }
 
 
