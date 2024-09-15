@@ -128,30 +128,17 @@
   },
   {
     "type": "impl",
-    "name": "EnumInitImpl",
-    "interface_name": "karat::systems::karat_token::IERC721EnumInit"
+    "name": "IDojoInitImpl",
+    "interface_name": "karat::systems::karat_token::karat_token::IDojoInit"
   },
   {
     "type": "interface",
-    "name": "karat::systems::karat_token::IERC721EnumInit",
+    "name": "karat::systems::karat_token::karat_token::IDojoInit",
     "items": [
       {
         "type": "function",
-        "name": "initialize",
-        "inputs": [
-          {
-            "name": "name",
-            "type": "core::byte_array::ByteArray"
-          },
-          {
-            "name": "symbol",
-            "type": "core::byte_array::ByteArray"
-          },
-          {
-            "name": "base_uri",
-            "type": "core::byte_array::ByteArray"
-          }
-        ],
+        "name": "dojo_init",
+        "inputs": [],
         "outputs": [],
         "state_mutability": "external"
       }
@@ -207,24 +194,6 @@
         ],
         "outputs": [],
         "state_mutability": "external"
-      }
-    ]
-  },
-  {
-    "type": "impl",
-    "name": "IDojoInitImpl",
-    "interface_name": "karat::systems::karat_token::karat_token::IDojoInit"
-  },
-  {
-    "type": "interface",
-    "name": "karat::systems::karat_token::karat_token::IDojoInit",
-    "items": [
-      {
-        "type": "function",
-        "name": "dojo_init",
-        "inputs": [],
-        "outputs": [],
-        "state_mutability": "view"
       }
     ]
   },

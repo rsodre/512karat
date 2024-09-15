@@ -24,8 +24,8 @@ manifest_name = "dojo-base"
 [[contracts]]
 kind = "DojoContract"
 address = "0x7d8ea58612a5de25f29281199a4fc1f2ce42f0f207f93c3a35280605f3b8e68"
-class_hash = "0xd93c85c689eb2a0d3cfe34ba1397c414056efe654da77d290378dae657a651"
-original_class_hash = "0xd93c85c689eb2a0d3cfe34ba1397c414056efe654da77d290378dae657a651"
+class_hash = "0x64e7316877d02b768682b76a88b95a2005bd9577e715d58f7fd070ec27142da"
+original_class_hash = "0x64e7316877d02b768682b76a88b95a2005bd9577e715d58f7fd070ec27142da"
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/dev/deployment/abis/contracts/karat-karat_token-6eea4d34.json"
 reads = []
@@ -46,7 +46,6 @@ writes = [
 init_calldata = []
 tag = "karat-karat_token"
 systems = [
-    "initialize",
     "mint",
     "burn",
 ]
@@ -55,8 +54,8 @@ manifest_name = "karat-karat_token-6eea4d34"
 [[contracts]]
 kind = "DojoContract"
 address = "0x14262b9314cfdcc76883e040cf232f2a139510f9c84f229f20da0f07d3b8b9b"
-class_hash = "0x5e10afa9e700779b70886af8292b8f66c05ae095e98deaf5e8247ce7e91a895"
-original_class_hash = "0x5e10afa9e700779b70886af8292b8f66c05ae095e98deaf5e8247ce7e91a895"
+class_hash = "0x49495dd3badb42523ece291f30d3d0a295677db6ed98e1f354843620132a88b"
+original_class_hash = "0x49495dd3badb42523ece291f30d3d0a295677db6ed98e1f354843620132a88b"
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/dev/deployment/abis/contracts/karat-minter-2f247449.json"
 reads = []
