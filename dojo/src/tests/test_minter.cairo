@@ -12,7 +12,7 @@ mod tests {
         systems::{minter::{minter, IMinterDispatcher, IMinterDispatcherTrait}},
         systems::{karat_token::{karat_token, IKaratTokenDispatcher, IKaratTokenDispatcherTrait}},
         models::seed::{Seed, SeedTrait},
-        models::token_data::{CONST},
+        models::constants::{CONST},
     };
 
     use karat::tests::tester::{tester, tester::{ Systems }};

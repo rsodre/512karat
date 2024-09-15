@@ -89,7 +89,7 @@ mod karat_token {
 
     use karat::systems::minter::{IRenderer, IRendererDispatcher, IRendererDispatcherTrait};
     use karat::models::config::{Config, ConfigTrait};
-    use karat::models::token_data::{CONST};
+    use karat::models::constants::{CONST};
 
     use origami_token::components::security::initializable::initializable_component;
     use origami_token::components::introspection::src5::src5_component;

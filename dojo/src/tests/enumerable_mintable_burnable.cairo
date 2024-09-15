@@ -33,7 +33,7 @@ use karat::systems::karat_token::{
 use karat::models::{
     config::{Config, ConfigTrait},
     seed::{Seed, SeedTrait},
-    token_data::{CONST},
+    constants::{CONST},
 };
 
 //

@@ -6,6 +6,7 @@ mod systems {
 mod models {
     mod class;
     mod config;
+    mod constants;
     mod seed;
     mod token_data;
 }

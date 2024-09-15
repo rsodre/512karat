@@ -1,21 +1,9 @@
 use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
-use karat::{
-    models::seed::{Seed, SeedTrait},
-    models::class::{Class, ClassTrait},
+use karat::models::{
+    seed::{Seed, SeedTrait},
+    class::{Class, ClassTrait},
+    constants::{CONST},
 };
-
-mod CONST {
-    const TOKEN_NAME: felt252 = 'Karat';
-    const TOKEN_SYMBOL: felt252 = 'KARAT';
-    const BASE_URI: felt252 = 'https://karat.collect-code.com/';
-    const METADATA_DESCRIPTION: felt252 = 'Purest form of composable lore';
-
-    // use the getter to avoid using the felt numerical value instead
-    use karat::utils::short_string::{ShortStringTrait};
-    fn const_string(const_name: felt252) -> ByteArray {
-        (const_name.string())
-    }
-}
 
 #[derive(Copy, Drop, Serde)]
 // #[dojo::model]
