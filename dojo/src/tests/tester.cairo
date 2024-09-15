@@ -46,6 +46,7 @@ mod tester {
             contract_address: world.deploy_contract('karat', karat_token::TEST_CLASS_HASH.try_into().unwrap())
         };
         world.grant_owner(dojo::utils::bytearray_hash(@"origami_karat"), karat.contract_address);
+        world.init_contract(selector_from_tag!("karat-karat_token"), [].span());
 
         let minter_calldata: Span<felt252> = array![
             karat.contract_address.into(),

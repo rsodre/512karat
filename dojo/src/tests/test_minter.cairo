@@ -12,18 +12,18 @@ mod tests {
         systems::{minter::{minter, IMinterDispatcher, IMinterDispatcherTrait}},
         systems::{karat_token::{karat_token, IKaratTokenDispatcher, IKaratTokenDispatcherTrait}},
         models::seed::{Seed, SeedTrait},
+        models::token_data::{CONST},
     };
-    use karat::models::token_data::{CONSTANTS};
 
     use karat::tests::tester::{tester, tester::{ Systems }};
 
     #[test]
-    #[should_panic(expected:('Initializable: is initialized','ENTRYPOINT_FAILED'))]
     fn test_is_initialized() {
         let sys: Systems = tester::spawn_systems();
-        sys.karat.initialize("A", "B", "C");
-        assert(sys.karat.name() == format!("{}", CONSTANTS::TOKEN_NAME), 'name');
-        assert(sys.karat.symbol() == format!("{}", CONSTANTS::TOKEN_SYMBOL), 'symbol');
+        println!("NAME: {}", sys.karat.name());
+        println!("SYMBOL: {}", sys.karat.symbol());
+        assert(sys.karat.name() == CONST::const_string(CONST::TOKEN_NAME), 'name');
+        assert(sys.karat.symbol() == CONST::const_string(CONST::TOKEN_SYMBOL), 'symbol');
     }
 
     #[test]

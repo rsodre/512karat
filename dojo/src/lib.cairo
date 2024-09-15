@@ -1,6 +1,6 @@
 mod systems {
-    mod karat_token;
     mod minter;
+    mod karat_token;
 }
 
 mod models {

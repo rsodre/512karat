@@ -81,24 +81,15 @@ trait IERC721EnumMintBurn<TState> {
     fn burn(ref self: TState, token_id: u256);
 }
 
-#[starknet::interface]
-trait IERC721EnumInit<TState> {
-    fn initialize(
-        ref self: TState,
-        name: ByteArray,
-        symbol: ByteArray,
-        base_uri: ByteArray,
-    );
-}
-
 #[dojo::contract]
 mod karat_token {
     use debug::PrintTrait;
     use starknet::ContractAddress;
     use starknet::{get_contract_address, get_caller_address};
 
-    use karat::models::config::{Config, ConfigTrait};
     use karat::systems::minter::{IRenderer, IRendererDispatcher, IRendererDispatcherTrait};
+    use karat::models::config::{Config, ConfigTrait};
+    use karat::models::token_data::{CONST};
 
     use origami_token::components::security::initializable::initializable_component;
     use origami_token::components::introspection::src5::src5_component;
@@ -208,18 +199,14 @@ mod karat_token {
         const MINTING_IS_CLOSED: felt252 = 'ERC721: minting closed';
     }
 
-    #[abi(embed_v0)]
-    impl EnumInitImpl of super::IERC721EnumInit<ContractState> {
-        fn initialize(
-            ref self: ContractState,
-            name: ByteArray,
-            symbol: ByteArray,
-            base_uri: ByteArray,
-        ) {
-            self.erc721_metadata.initialize(name, symbol, base_uri);
-            self.erc721_enumerable.initialize();
-            self.initializable.initialize();
-        }
+    fn dojo_init(ref self: ContractState) {
+        self.erc721_metadata.initialize(
+            CONST::const_string(CONST::TOKEN_NAME),
+            CONST::const_string(CONST::TOKEN_SYMBOL),
+            CONST::const_string(CONST::BASE_URI),
+        );
+        self.erc721_enumerable.initialize();
+        self.initializable.initialize();
     }
 
     #[abi(embed_v0)]

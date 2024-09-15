@@ -33,6 +33,7 @@ use karat::systems::karat_token::{
 use karat::models::{
     config::{Config, ConfigTrait},
     seed::{Seed, SeedTrait},
+    token_data::{CONST},
 };
 
 //
@@ -84,6 +85,7 @@ fn setup_uninitialized() -> (IWorldDispatcher, IKaratTokenDispatcher) {
         contract_address: world.deploy_contract('salt', karat_token::TEST_CLASS_HASH.try_into().unwrap())
     };
     world.grant_owner(dojo::utils::bytearray_hash(@"origami_karat"), token_dispatcher.contract_address);
+    world.init_contract(selector_from_tag!("karat-karat_token"), [].span());
 
     // config minter
     let config = Config{
@@ -105,7 +107,6 @@ fn setup() -> (IWorldDispatcher, IKaratTokenDispatcher) {
     let (world, mut token_dispatcher) = setup_uninitialized();
 
     // initialize contracts
-    token_dispatcher.initialize("NAME", "SYMBOL", "URI");
     token_dispatcher.mint(OWNER(), TOKEN_ID);
     token_dispatcher.mint(OWNER(), TOKEN_ID_2);
 
@@ -121,13 +122,13 @@ fn setup() -> (IWorldDispatcher, IKaratTokenDispatcher) {
 //
 
 #[test]
-fn test_initializer() {
+fn test_initialized() {
     let (_world, mut token_dispatcher) = setup();
 
     assert(token_dispatcher.balance_of(OWNER()) == 2, 'Should eq 2');
-    assert(token_dispatcher.name() == "NAME", 'Name should be NAME');
-    assert(token_dispatcher.symbol() == "SYMBOL", 'Symbol should be SYMBOL');
-    // no renderer here to build uri
+    assert(token_dispatcher.name() == CONST::const_string(CONST::TOKEN_NAME), 'bad NAME');
+    assert(token_dispatcher.symbol() == CONST::const_string(CONST::TOKEN_SYMBOL), 'bad SYMBOL');
+    // no renderer yet here to build uri
     // assert(token_dispatcher.token_uri(TOKEN_ID) == "URI21", 'Uri should be URI21');
     // assert(token_dispatcher.tokenURI(TOKEN_ID) == "URI21", 'Uri should be URI21 Camel');
     
@@ -135,25 +136,6 @@ fn test_initializer() {
     assert(token_dispatcher.supports_interface(IERC721_METADATA_ID) == true, 'should support METADATA');
     assert(token_dispatcher.supports_interface(IERC721_ENUMERABLE_ID) == true, 'should support ENUMERABLE');
     assert(token_dispatcher.supportsInterface(IERC721_ID) == true, 'should support IERC721_ID Camel');
-}
-
-// #[test]
-// #[should_panic(expected: ('ERC721: caller is not owner', 'ENTRYPOINT_FAILED'))]
-// fn test_initialize_not_world_owner() {
-//     let (_world, mut token_dispatcher) = setup_uninitialized();
-
-//     utils::impersonate(OWNER());
-
-//     // initialize contracts
-//     token_dispatcher.initialize("NAME", "SYMBOL", "URI");
-// }
-
-#[test]
-#[should_panic(expected: ('Initializable: is initialized', 'ENTRYPOINT_FAILED'))]
-fn test_initialize_multiple() {
-    let (_world, mut token_dispatcher) = setup();
-
-    token_dispatcher.initialize("NAME", "SYMBOL", "URI");
 }
 
 //

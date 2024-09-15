@@ -3,14 +3,18 @@ use karat::{
     models::seed::{Seed, SeedTrait},
     models::class::{Class, ClassTrait},
 };
-use karat::utils::short_string::{ShortStringTrait};
 
-mod CONSTANTS {
-    const TOKEN_NAME: felt252 = 'KARAT';
+mod CONST {
+    const TOKEN_NAME: felt252 = 'Karat';
     const TOKEN_SYMBOL: felt252 = 'KARAT';
     const BASE_URI: felt252 = 'https://karat.collect-code.com/';
-    const METADATA_NAME: felt252 = 'Karat';
     const METADATA_DESCRIPTION: felt252 = 'Purest form of composable lore';
+
+    // use the getter to avoid using the felt numerical value instead
+    use karat::utils::short_string::{ShortStringTrait};
+    fn const_string(const_name: felt252) -> ByteArray {
+        (const_name.string())
+    }
 }
 
 #[derive(Copy, Drop, Serde)]
@@ -43,9 +47,9 @@ impl TokenDataTraitImpl of TokenDataTrait {
         })
     }
     fn get_name(self: TokenData) -> ByteArray {
-        (format!("{} #{}", CONSTANTS::METADATA_NAME.string(), self.token_id))
+        (format!("{} #{}", CONST::const_string(CONST::TOKEN_NAME), self.token_id))
     }
     fn get_description(self: TokenData) -> ByteArray {
-        (CONSTANTS::METADATA_DESCRIPTION.string())
+        (CONST::const_string(CONST::METADATA_DESCRIPTION))
     }
 }
