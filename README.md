@@ -31,7 +31,7 @@ The steps for Mainnet are exactly the same, just replace the chain name and ID w
 
 ### Setup
 
-* You need a [Starknet RPC Provider](https://www.starknet.io/fullnodes-rpc-services/) to deploy contracts on-chain. After you get yours, check if it works and is on the chain you want to deploy (`SN_SEPOLIA` or `SN_MAINNET`)
+* You need a [Starknet RPC Provider](https://www.starknet.io/fullnodes-rpc-services/) to deploy contracts on-chain. After you get yours, check if it works and is on the chain you want to deploy (`SN_SEPOLIA` or `SN_MAIN`)
 
 ```sh
 # run this...
@@ -45,7 +45,7 @@ curl --location '<RPC_PROVIDER_URL>' \
 # now paste the hex result part on this command... 
 echo 0x534e5f5345504f4c4941 | xxd -r -p
 
-# which !must! output SN_SEPOLIA or SN_MAINNET
+# which !must! output SN_SEPOLIA or SN_MAIN
 SN_SEPOLIA
 ```
 

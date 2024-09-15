@@ -56,7 +56,7 @@ export enum ChainId {
   KATANA_LOCAL = 'KATANA_LOCAL',
   KARAT_SLOT = 'WP_KARAT_SLOT',
   SN_SEPOLIA = 'SN_SEPOLIA',
-  SN_MAINNET = 'SN_MAINNET',
+  SN_MAIN = 'SN_MAIN',
 }
 
 const ETH_KATANA: NativeCurrency = {
@@ -128,7 +128,7 @@ export const dojoContextConfig: Record<ChainId, DojoChainConfig> = {
     chain: sepolia,
     dojoConfig: dojoConfigSepolia,
   },
-  [ChainId.SN_MAINNET]: {
+  [ChainId.SN_MAIN]: {
     chain: mainnet,
     dojoConfig: dojoConfigMainnet,
   },
