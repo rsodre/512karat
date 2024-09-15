@@ -14,9 +14,12 @@ mod renderer {
     // 40 x 40
     // const SIZE: usize = 40;
     // const SCALED_SIZE: usize = 24;
-    // 36 x 26
-    const SIZE: usize = 36;
-    const SCALED_SIZE: usize = 21;
+    // 36 x 36
+    // const SIZE: usize = 36;
+    // const SCALED_SIZE: usize = 21;
+    // 32 x 32
+    const SIZE: usize = 32;
+    const SCALED_SIZE: usize = 19;
 
     fn build_uri(token_data: TokenData) -> ByteArray {
         let name_tag = _value_tag("name", token_data.get_name());
