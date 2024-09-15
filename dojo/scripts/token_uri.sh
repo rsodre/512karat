@@ -3,10 +3,10 @@ set -euo pipefail
 source scripts/setup.sh
 
 if [ $# -ge 2 ]; then
-  export RECIPIENT_ADDRESS=$2
+  export TOKEN_ID=$2
 else
   # export PROFILE="dev"
-  echo "usage: $0 <PROFILE> <RECIPIENT_ADDRESS>"
+  echo "usage: $0 <PROFILE> <TOKEN_ID>"
   exit 1
 fi
 
@@ -14,5 +14,5 @@ fi
 pushd $(dirname "$0")/..
 
 # sozo execute --world <WORLD_ADDRESS> <CONTRACT> <ENTRYPOINT>
-echo "> minting to: $RECIPIENT_ADDRESS"
-sozo execute katat-minter mint_to --calldata $TOKEN_ADDRESS,$RECIPIENT_ADDRESS --world $WORLD_ADDRESS --wait
+echo "> token_uri($TOKEN_ID)..."
+sozo call katat-karat_token token_uri -v --calldata u256:$TOKEN_ID --world $WORLD_ADDRESS
