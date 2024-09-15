@@ -2,14 +2,14 @@
 set -e
 source scripts/setup.sh
 
-export WORLD_ADDRESS=0x2a618f376d08ac90ae9b55b754dd3fd43c3395e988b3ee0fad8a007fb58a284
 export RPC_URL="https://api.cartridge.gg/x/starknet/mainnet"
-export START_BLOCK=720113
+export WORLD_ADDRESS=0x3fa8a26f275c4ec8ca5a34c9e33fa4c7ee568219421d3a9355ee086c1f8f620
+export START_BLOCK=722385
 
 torii --version
 torii \
   --rpc $RPC_URL \
   --world $WORLD_ADDRESS $* \
-  --allowed-origins "*" \
   --start-block $START_BLOCK \
+  --allowed-origins "*" \
 

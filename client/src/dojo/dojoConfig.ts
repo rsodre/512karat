@@ -42,7 +42,7 @@ const dojoConfigSepolia: DojoConfig = createDojoConfig({
 const dojoConfigMainnet: DojoConfig = createDojoConfig({
   manifest: manifest_mainnet,
   rpcUrl: 'https://api.cartridge.gg/x/starknet/mainnet',
-  // toriiUrl: 'https://api.cartridge.gg/x/512karat-mainnet/torii',
+  toriiUrl: 'https://api.cartridge.gg/x/karat-mainnet/torii',
   // masterAddress: '0x0',
   // masterPrivateKey: '0x0',
 });
