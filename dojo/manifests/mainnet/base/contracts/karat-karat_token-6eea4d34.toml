@@ -1,0 +1,14 @@
+kind = "DojoContract"
+class_hash = "0x890c0eeb11aeb41f237343c3e88b199a2e7e0c159debd1e9c232652afe5dc2"
+original_class_hash = "0x890c0eeb11aeb41f237343c3e88b199a2e7e0c159debd1e9c232652afe5dc2"
+base_class_hash = "0x0"
+abi = "manifests/mainnet/base/abis/contracts/karat-karat_token-6eea4d34.json"
+reads = []
+writes = []
+init_calldata = []
+tag = "karat-karat_token"
+systems = [
+    "mint",
+    "burn",
+]
+manifest_name = "karat-karat_token-6eea4d34"

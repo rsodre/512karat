@@ -1,0 +1,14 @@
+kind = "DojoContract"
+class_hash = "0x251ca1d95ef8d3d138e2d80fbb30cc3beaf267a8b256d4e49919f2bac08f12b"
+original_class_hash = "0x251ca1d95ef8d3d138e2d80fbb30cc3beaf267a8b256d4e49919f2bac08f12b"
+base_class_hash = "0x0"
+abi = "manifests/mainnet/base/abis/contracts/karat-minter-2f247449.json"
+reads = []
+writes = []
+init_calldata = []
+tag = "karat-minter"
+systems = [
+    "set_available",
+    "assert_caller_is_owner",
+]
+manifest_name = "karat-minter-2f247449"
