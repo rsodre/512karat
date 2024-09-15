@@ -1,6 +1,6 @@
 kind = "DojoContract"
-class_hash = "0xdec91d322af256032e9ab4a8f70447332d4f45da75c377cbcaa6adf71a7973"
-original_class_hash = "0xdec91d322af256032e9ab4a8f70447332d4f45da75c377cbcaa6adf71a7973"
+class_hash = "0x48d6a42d7ebc733e8f0d4c17a720e7b9a9e3ccf4555796a25808d8097d3101"
+original_class_hash = "0x48d6a42d7ebc733e8f0d4c17a720e7b9a9e3ccf4555796a25808d8097d3101"
 base_class_hash = "0x0"
 abi = "manifests/mainnet/base/abis/contracts/karat-minter-2f247449.json"
 reads = []
