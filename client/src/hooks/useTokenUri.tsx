@@ -3,6 +3,7 @@ import { useDojo } from "../dojo/useDojo"
 import { useTokenContract } from "./useToken";
 import { useEffect, useMemo, useState } from "react";
 import { useMetadataContext, useTokenUriContext } from "./MetadataContext";
+import { decodeMetadata } from "../utils/decoder";
 
 type MetadataType = {
   name: string
@@ -69,12 +70,17 @@ export const useUriToMetadata = (token_id: BigNumberish, uri: string) => {
   const metadata = useMemo<MetadataType>(() => {
     if (uri) {
       try {
-        return JSON.parse(uri)
+        const { json, image } = decodeMetadata(uri)
+        console.log(`METADATA:::`, json, image)
+        return {
+          ...json,
+          image, // original encoded data
+        } as unknown as MetadataType
       } catch (e) {
         console.error(`METADATA ERROR:`, e, uri)
       }
     }
-    return {}
+    return {} as MetadataType
   }, [uri])
   // console.log(`META:::`,metadata)
 
