@@ -23,9 +23,9 @@ mod renderer {
     // // 28 x 28
     // const SIZE: usize = 28;
     // const SCALED_SIZE: usize = 17;
-    // 24 x 24
-    const SIZE: usize = 24;
-    const SCALED_SIZE: usize = 14;
+    // // 24 x 24
+    // const SIZE: usize = 24;
+    // const SCALED_SIZE: usize = 14;
 
     fn build_uri(token_data: TokenData) -> ByteArray {
         let name_tag = _value_tag("name", token_data.get_name());
@@ -81,7 +81,8 @@ mod renderer {
 
     #[inline(always)]
     fn _encode_uri(data: ByteArray) -> ByteArray {
-        (format!("data:application/json;base64,{}", bytes_base64_encode(data)))
+        // (format!("data:application/json;base64,{}", bytes_base64_encode(data)))
+        (data)
     }
 
 
@@ -101,17 +102,18 @@ mod renderer {
                 _WIDTH,
         ));
         result.append(@"<style>.BG{fill:#00000b;}.NORMAL{letter-spacing:0;}.SCALED{transform:scaleX(1.667);}text{fill:#c2e0fd;font-size:1px;font-family:'Courier New',monospace;dominant-baseline:hanging;shape-rendering:crispEdges;white-space:pre;cursor:default;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>");
+        let class_name: ByteArray = if (token_data.class.is_scaled()) {"SCALED"} else {"NORMAL"};
         result.append(@format!(
-            "<g><rect class=\"BG\" x=\"-{}\" y=\"-{}\" width=\"{}\" height=\"{}\" />",
+            "<g><rect class=\"BG\" x=\"-{}\" y=\"-{}\" width=\"{}\" height=\"{}\" /><g class=\"{}\">",
                 GAP,
                 GAP,
                 _WIDTH,
                 _WIDTH,
+                class_name,
         ));
         //---------------------------
         // Build text tags
         //
-        let class_name: ByteArray = if (token_data.class.is_scaled()) {"SCALED"} else {"NORMAL"};
         let text_length: usize = if (token_data.class.is_scaled()) {SCALED_SIZE} else {SIZE};
         let char_set: Span<felt252> = token_data.class.get_char_set();
         let char_count: usize = char_set.len();
@@ -121,8 +123,7 @@ mod renderer {
             if (y == SIZE) { break; }
             // open <text>
             result.append(@format!(
-                "<text class=\"{}\" x=\"0\" y=\"{}\" textLength=\"{}\">",
-                    class_name,
+                "<text y=\"{}\" textLength=\"{}\">",
                     y,
                     text_length,
             ));
@@ -140,7 +141,7 @@ mod renderer {
         //----------------
         // close it!
         //
-        result.append(@"</g></svg>");
+        result.append(@"</g></g></svg>");
         (result)
     }
 

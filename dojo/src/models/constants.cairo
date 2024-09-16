@@ -2,7 +2,7 @@ mod CONST {
     const TOKEN_NAME: felt252 = 'Karat';
     const TOKEN_SYMBOL: felt252 = 'KARAT';
     const BASE_URI: felt252 = 'https://karat.collect-code.com/';
-    const METADATA_DESCRIPTION: felt252 = 'Art jewels for composable lore';
+    const METADATA_DESCRIPTION: felt252 = 'Gemstones for composable lore';
 
     // use the getter to avoid using the felt numerical value instead
     use karat::utils::short_string::{ShortStringTrait};

@@ -49,7 +49,6 @@ mod tests {
         assert(token_uri_1.len() > 100, 'token_uri_1');
         assert(sys.karat.owner_of(token_id_1.into()) == SPENDER(), 'owner_of_1');
         println!("seed:{}", seed_1.seed);
-        // println!("token_uri:{}", token_uri_1);
         // #2
         tester::impersonate(RECIPIENT());
         let token_id_2: u128 = sys.minter.mint(sys.karat.contract_address);
@@ -62,6 +61,15 @@ mod tests {
         assert(token_uri_2.len() > 100, 'token_uri_2');
         assert(token_uri_2 != token_uri_1, 'token_uri_2_1');
         assert(sys.karat.owner_of(token_id_2.into()) == RECIPIENT(), 'owner_of_2');
+    }
+
+    #[test]
+    fn test_token_uri() {
+        let sys: Systems = tester::spawn_systems();
+        sys.minter.mint(sys.karat.contract_address);
+        let token_uri_1: ByteArray = sys.karat.token_uri(1);
+        // println!("{}", token_uri_1);
+        println!("token_uri_len:{}", token_uri_1.len());
     }
 
     #[test]
