@@ -7,7 +7,7 @@ export START_BLOCK=1
 torii --version
 torii \
   --rpc $RPC_URL \
-  --world $WORLD_ADDRESS $* \
+  --world $WORLD_ADDRESS \
   --start-block $START_BLOCK \
   --allowed-origins "*" \
 

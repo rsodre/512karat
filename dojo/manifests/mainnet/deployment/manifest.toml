@@ -53,8 +53,8 @@ manifest_name = "karat-karat_token-6eea4d34"
 [[contracts]]
 kind = "DojoContract"
 address = "0x14262b9314cfdcc76883e040cf232f2a139510f9c84f229f20da0f07d3b8b9b"
-class_hash = "0x48d6a42d7ebc733e8f0d4c17a720e7b9a9e3ccf4555796a25808d8097d3101"
-original_class_hash = "0x48d6a42d7ebc733e8f0d4c17a720e7b9a9e3ccf4555796a25808d8097d3101"
+class_hash = "0x78ebf6db54bea768b61b7a71d6f730948ce2a8194e4918f2418085e1339f19e"
+original_class_hash = "0x78ebf6db54bea768b61b7a71d6f730948ce2a8194e4918f2418085e1339f19e"
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/mainnet/deployment/abis/contracts/karat-minter-2f247449.json"
 reads = []
