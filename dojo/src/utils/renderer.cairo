@@ -77,12 +77,13 @@ mod renderer {
     #[inline(always)]
     fn _encode_svg(data: ByteArray) -> ByteArray {
         (format!("data:image/svg+xml;base64,{}", bytes_base64_encode(data)))
+        // (format!("data:image/svg+xml,{}", data)) // not encoded
     }
 
     #[inline(always)]
     fn _encode_uri(data: ByteArray) -> ByteArray {
         // (format!("data:application/json;base64,{}", bytes_base64_encode(data)))
-        (data)
+        (format!("data:application/json,{}", data)) // not encoded
     }
 
 
