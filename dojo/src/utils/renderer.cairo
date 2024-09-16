@@ -8,12 +8,12 @@ mod renderer {
 
     const RESOLUTION: usize = 1000;
     const GAP: usize = 4;
-    // 48 x 48
+    // // 48 x 48
     // const SIZE: usize = 48;
     // const SCALED_SIZE: usize = 29;
     // 40 x 40
-    // const SIZE: usize = 40;
-    // const SCALED_SIZE: usize = 24;
+    const SIZE: usize = 40;
+    const SCALED_SIZE: usize = 24;
     // 36 x 36
     // const SIZE: usize = 36;
     // const SCALED_SIZE: usize = 21;
