@@ -71,7 +71,7 @@ export const useUriToMetadata = (token_id: BigNumberish, uri: string) => {
     if (uri) {
       try {
         const { json, image } = decodeMetadata(uri)
-        console.log(`METADATA:::`, json, image)
+        // console.log(`METADATA:::`, json, image)
         return {
           ...json,
           image, // original encoded data

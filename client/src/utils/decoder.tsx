@@ -37,23 +37,31 @@ export function decodeMetadata(encodedMetadata: string) {
   };
 }
 
+// examples:
+// data:application/json,
+// data:application/json;base64,
+// data:image/svg+xml,
+// data:image/svg+xml;base64,
 export function decodeMimeData(data: string): string {
-  let mimeType = null;
-  let mimeData = data;
+  let result = data;
   if (typeof (data) == 'string' && data.startsWith('data:')) {
-    const dataParts = data.slice(5).split(';');
-    mimeType = dataParts[0];
-    mimeData = dataParts[1];
-    if (mimeData.startsWith('base64,')) {
+    // extract data
+    const terminatorIndex = data.indexOf(',');
+    result = data.slice(terminatorIndex + 1);
+    // split [data]:[mime]
+    const [_, mime] = data.slice(0, terminatorIndex).split(':')
+    // split [applicatio/json];[base64]
+    const [mimeType, base64] = mime.slice(5).split(';');
+    if (base64) {
       if (mimeType == 'application/octet-stream') {
-        // mimeData = [...decodeBase64Buffer(mimeData.slice(7))];
+        // mimeData = [...decodeBase64Buffer(result)];
       } else {
-        // mimeData = atob(mimeData.slice(7)); // deprecated
-        mimeData = decodeBase64(mimeData.slice(7));
+        // mimeData = atob(result); // deprecated
+        result = decodeBase64(result);
       }
     }
   }
-  return mimeData;
+  return result;
 }
 
 export function decodeMediaUrl(url: string) {
