@@ -116,6 +116,7 @@ mod renderer {
         //
         let text_length: usize = if (token_data.class.is_scaled()) {SCALED_SIZE} else {SIZE};
         let char_set: Span<felt252> = token_data.class.get_char_set();
+        let char_set_sizes: Span<usize> = token_data.class.get_char_set_sizes();
         let char_count: usize = char_set.len();
         let cells: Span<usize> = _make_cells(token_data.seed, char_count);
         let mut y: usize = 0;
@@ -131,7 +132,7 @@ mod renderer {
             loop {
                 if (x == SIZE) { break; }
                 let value: @usize = cells.at(y * SIZE + x);
-                result.append_word(*char_set.at(*value), 8);
+                result.append_word(*char_set.at(*value), *char_set_sizes.at(*value));
                 x += 1;
             };
             // close <text>
