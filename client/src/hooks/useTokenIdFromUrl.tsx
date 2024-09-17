@@ -8,8 +8,10 @@ export const useTokenIdFromUrl = () => {
 
   const { dispatchSetTokenId } = useStateContext()
   useEffect(() => {
-    console.log('>>> HASH TOKEN ID:', hash_token_id)
-    dispatchSetTokenId(hash_token_id)
+    console.log('>>> #ID:', hash_token_id)
+    if (hash_token_id) {
+      dispatchSetTokenId(hash_token_id)
+    }
   }, [hash_token_id])
 
   return {

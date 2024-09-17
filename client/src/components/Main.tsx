@@ -2,10 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { Grid, TabPane, Tab, TabProps } from "semantic-ui-react";
 import { BigNumberish } from "starknet";
 import { MetadataProvider } from "../hooks/MetadataContext";
-import { useStateContext } from "../hooks/StateContext";
+import { TokenSet, useStateContext } from "../hooks/StateContext";
 import { useAccount } from "@starknet-react/core";
 import { useTokenIdFromUrl } from "../hooks/useTokenIdFromUrl";
-import { useAllTokensOfOwner, useTotalSupply } from "../hooks/useToken";
 import { goToTokenPage } from "../utils/karat";
 import Token from "./Token";
 import Navigation from "./Navigation";
@@ -19,47 +18,38 @@ export default function Main() {
   useTokenIdFromUrl()
 
   const { isConnected, address } = useAccount();
-  const { tokenId, gridMode, gridSize } = useStateContext();
-
-  // All tokens
-  const { total_supply } = useTotalSupply();
-  const allTokens = useMemo(() => {
-    return Array.from({ length: total_supply }, (_, i) => i + 1)
-  }, [total_supply])
-
-  // tokens of owner
-  const { tokenIds: tokensOfOwner } = useAllTokensOfOwner(address ?? 0n)
+  const { gridMode, allTokenIds, tokenIdsOfOwner, dispatchSetTokenSet } = useStateContext();
 
   const _changedTab = (data: TabProps) => {
-    // const pageIndex = tokenId ? Math.floor(tokenId / gridSize) : 0;
+    dispatchSetTokenSet(data.activeIndex == 0 ? TokenSet.All : TokenSet.Collected)
     goToTokenPage(0);
   }
 
   const panes = useMemo(() => {
     let result = [
       {
-        menuItem: `Collection (${allTokens.length})`,
+        menuItem: `Collection (${allTokenIds.length})`,
         render: () => (
           <TabPane attached={false}>
-            {gridMode && <MultiTokenTab tokens={allTokens} />}
-            {!gridMode && <SingleTokenTab tokens={allTokens} />}
+            {gridMode && <MultiTokenTab />}
+            {!gridMode && <SingleTokenTab />}
           </TabPane>
         )
       },
     ]
     if (isConnected) {
       result.push({
-        menuItem: `Collected (${tokensOfOwner.length})`,
+        menuItem: `Collected (${tokenIdsOfOwner.length})`,
         render: () => (
           <TabPane attached={false}>
-            {gridMode && <MultiTokenTab tokens={tokensOfOwner} />}
-            {!gridMode && <SingleTokenTab tokens={tokensOfOwner} />}
+            {gridMode && <MultiTokenTab />}
+            {!gridMode && <SingleTokenTab />}
           </TabPane>
         )
       })
     }
     return result
-  }, [isConnected, gridMode, allTokens, tokensOfOwner])
+  }, [isConnected, gridMode, allTokenIds, tokenIdsOfOwner])
 
   return (
     <MetadataProvider>
@@ -69,19 +59,16 @@ export default function Main() {
 }
 
 function SingleTokenTab({
-  tokens,
-  switchOnMint = false,
 }: {
-  tokens: BigNumberish[]
-  switchOnMint?: boolean
 }) {
   const { tokenId } = useStateContext();
+  const { tokenSetIds } = useStateContext();
 
-  const tokenCount = useMemo(() => tokens.length, [tokens])
-  const pageIndex = useMemo(() => tokens.findIndex(token => tokenId == Number(token)), [tokens, tokenId])
+  const tokenCount = useMemo(() => tokenSetIds.length, [tokenSetIds])
+  const pageIndex = useMemo(() => tokenSetIds.findIndex(token => tokenId == Number(token)), [tokenSetIds, tokenId])
 
   const _changePage = (newPageIndex: number) => {
-    let tokenId = tokens[newPageIndex] ?? 1
+    let tokenId = tokenSetIds[newPageIndex] ?? 1
     goToTokenPage(Number(tokenId));
   }
 
@@ -99,24 +86,22 @@ function SingleTokenTab({
 
 
 function MultiTokenTab({
-  tokens,
 }: {
-  tokens: BigNumberish[]
 }) {
   const { gridSize } = useStateContext();
+  const { tokenSetIds, pageIndex, dispatchSetPageIndex } = useStateContext();
 
-  const pageCount = useMemo(() => Math.ceil(tokens.length / gridSize), [tokens, gridSize])
-  const [pageIndex, setPageIndex] = useState(0)
+  const pageCount = useMemo(() => Math.ceil(tokenSetIds.length / gridSize), [tokenSetIds, gridSize])
   const firstTokenIndex = useMemo(() => (pageIndex * gridSize), [pageIndex, gridSize])
 
   const _changePage = (newPageIndex: number) => {
-    setPageIndex(newPageIndex);
+    dispatchSetPageIndex(newPageIndex);
   }
 
   return (
     <>
       <TokenGrid
-        tokens={tokens}
+        tokens={tokenSetIds}
         gridSize={gridSize}
         firstTokenIndex={firstTokenIndex}
       />

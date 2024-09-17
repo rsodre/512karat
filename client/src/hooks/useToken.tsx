@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react"
 import { getContractByName } from "@dojoengine/core"
 import { useComponentValue } from "@dojoengine/react"
 import { useDojo } from "../dojo/useDojo"
-import { bigintToEntity, keysToEntity } from "../utils/types"
+import { bigintToEntity } from "../utils/types"
 import { BigNumberish } from "starknet"
 import { useOrigamiERC721AllTokensOfOwner, useOrigamiERC721BalanceOf, useOrigamiERC721OwnerOf, useOrigamiERC721TokenOfOwnerByIndex, useOrigamiERC721TotalSupply } from "./useOrigamiERC721"
 
@@ -48,14 +48,20 @@ export const useConfig = (): useConfigResult => {
 }
 
 type useTotalSupplyResult = {
-  total_supply: number
+  totalSupply: number
+  allTokenIds: number[]
   isPending: boolean
 }
 export const useTotalSupply = (): useTotalSupplyResult => {
   const { contractAddress, components } = useTokenContract()
   const { totalSupply, isPending } = useOrigamiERC721TotalSupply(contractAddress, components)
+  const allTokenIds = useMemo(() => {
+    return Array.from({ length: totalSupply ?? 0 }, (_, i) => i + 1)
+  }, [totalSupply])
+
   return {
-    total_supply: totalSupply ?? 0,
+    totalSupply: totalSupply ?? 0,
+    allTokenIds,
     isPending,
   }
 }
@@ -100,14 +106,17 @@ export const useTokenOfOwnerByIndex = (address: BigNumberish, index: BigNumberis
 }
 
 type useAllTokensOfOwnerResult = {
-  tokenIds: bigint[]
+  tokenIdsOfOwner: number[]
   isPending: boolean
 }
 export const useAllTokensOfOwner = (address: BigNumberish): useAllTokensOfOwnerResult => {
   const { contractAddress, components } = useTokenContract()
   const { tokenIds, isPending } = useOrigamiERC721AllTokensOfOwner(contractAddress, address, components)
+  const tokenIdsOfOwner = useMemo(() => {
+    return tokenIds?.map((id) => Number(id)) ?? []
+  }, [tokenIds])
   return {
-    tokenIds,
+    tokenIdsOfOwner,
     isPending,
   }
 }

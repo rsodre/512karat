@@ -18,13 +18,13 @@ export const useMint = () => {
   const { isCoolDown, maxSupply, availableSupply } = useConfig();
   const { isConnected } = useAccount();
   const { isCorrectChain } = useIsCorrectChain()
-  const { total_supply } = useTotalSupply()
+  const { totalSupply } = useTotalSupply()
 
   const [isMinting, setIsMinting] = useState(false);
   const [mintingTokenId, setMintingTokenId] = useState(0);
 
-  const isAvailable = useMemo(() => (total_supply < availableSupply), [total_supply, availableSupply]);
-  const isMintedOut = useMemo(() => (total_supply >= maxSupply), [total_supply, maxSupply]);
+  const isAvailable = useMemo(() => (totalSupply < availableSupply), [totalSupply, availableSupply]);
+  const isMintedOut = useMemo(() => (totalSupply >= maxSupply), [totalSupply, maxSupply]);
 
   const canMint = useMemo(() => (
     account && isConnected && isCorrectChain && contractAddress && isAvailable && !isMintedOut && !isMinting
@@ -33,7 +33,7 @@ export const useMint = () => {
   const _mint = useCallback(() => {
     if (account && canMint) {
       setIsMinting(true);
-      setMintingTokenId(total_supply + 1);
+      setMintingTokenId(totalSupply + 1);
       mint(account, contractAddress).then((v) => {
         // wait supply to change...
       }).catch((e) => {
@@ -42,18 +42,18 @@ export const useMint = () => {
         setIsMinting(false);
       });
     }
-  }, [account, canMint, contractAddress, total_supply]);
+  }, [account, canMint, contractAddress, totalSupply]);
 
   useEffect(() => {
-    if (isMinting && total_supply >= mintingTokenId) {
+    if (isMinting && totalSupply >= mintingTokenId) {
       // ...supply changed, to to token!
       setIsMinting(false);
       goToTokenPage(mintingTokenId);
     }
-  }, [mintingTokenId, total_supply]);
+  }, [mintingTokenId, totalSupply]);
 
-  const { ownerAddress: lastOwnerAddress } = useTokenOwner(total_supply);
-  const isCoolingDown = useMemo(() => (account ? bigintEquals(lastOwnerAddress, account.address) : undefined), [account, lastOwnerAddress, total_supply])
+  const { ownerAddress: lastOwnerAddress } = useTokenOwner(totalSupply);
+  const isCoolingDown = useMemo(() => (account ? bigintEquals(lastOwnerAddress, account.address) : undefined), [account, lastOwnerAddress, totalSupply])
   // const isCoolingDown = false;
 
   return {
