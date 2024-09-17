@@ -9,15 +9,37 @@ code + art: **Roger Mataleone** ([@matalecode](https://x.com/matalecode))
 
 ## Mainnet Minting
 
-* Phase 1 (128 Karats): TBD
-* Phase 2 (128 Karats): TBD
-* Phase 3 (128 Karats): TBD
-* Phase 4 (128 Karats): TBD
+* Phase 1 (25%, 128 Karats): Sep 16 2024
+* Phase 2 (25%, 128 Karats): TBD
+* Phase 3 (25%, 128 Karats): TBD
+* Phase 4 (25%, 128 Karats): Sep 26 2024
+
+
+## Features
+
+* free mint
+* cool down
+* mint(), mint_to()
+
+
+## Collection management
+
+After deployment, we can use some sozo commands to manage the contracts.
+
+```sh
+# mint one token to the deployer account
+scripts/mint_to.sh mainnet
+# mint to a specific wallet
+scripts/mint_to.sh mainnet 0x04042b3F651F6d6Ff03b929437AdC30257333723970071b05cb0E2270C9dc385
+# change the currently amount of available to mint
+scripts/set_available.sh mainnet 128
+```
 
 
 ## Project structure
 
 * `/dojo`: Dojo contracts
+* `/dojo/scripts`: Scripts to interact with the contracts
 * `/client`: Typescript Vite client
 * `/draft`: Token experiments (metadata, svg)
 * [p5js](https://editor.p5js.org/rsodre/sketches/Im7yQgmf5): Art playground
@@ -143,7 +165,7 @@ slot auth login
 
 * Create Torii service with this command, replacing...
   * `SERVICE_NAME` can be the name of the game/dapp. Once you create it, you own that name.
-  * `DOJO_VERSION`: your Dojo version (ex: `v1.0.0-alpha.9`)
+  * `DOJO_VERSION`: your Dojo version (ex: `v1.0.0-alpha.11`)
   * `WORLD_ADDRESS`: from your Dojo config file [`dojo_sepolia.toml`](https://github.com/rsodre/512karat/blob/main/dojo/dojo_sepolia.toml)
   * `RPC_URL`: your RPC provider url
   * `STARTING_BLOCK`: the deployment transaction block we just found before
@@ -171,13 +193,11 @@ Endpoints:
 Stream logs with `slot deployments logs 512karat-sepolia torii -f`
 ```
 
-
 * If for any reasons we need to recreate Torii, we can just delete it and run the create command again. This is safe, all your data is on-chain.
 
 ```sh
 slot deployments delete <SERVICE_NAME> torii
 ```
-
 
 ### Some notes on the client side
 
@@ -187,8 +207,15 @@ slot deployments delete <SERVICE_NAME> torii
 
 * The client needs the env variable `VITE_PUBLIC_CHAIN_ID` to be set to your chain id. Configure on your sever and add it to your `.env` to access your deployment localy:
 
+
 ```
 VITE_PUBLIC_CHAIN_ID=SN_SEPOLIA
+```
+
+or...
+
+```
+VITE_PUBLIC_CHAIN_ID=SN_MAIN
 ```
 
 
