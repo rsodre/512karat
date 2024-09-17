@@ -25,7 +25,7 @@ export default function TokenGrid({
     for (let i = 0; i < gridCount; i++) {
       const tokenId = tokens[firstTokenIndex + i]
       result.push(
-        <Col key={`${tokenId}`}>
+        <Col key={`${tokenId}`} className="NoPadding">
           <TokenImage tokenId={tokenId} />
         </Col>
       )
@@ -35,7 +35,7 @@ export default function TokenGrid({
 
   return (
     <Grid>
-      <Row columns={columnsCount}>
+      <Row columns={columnsCount} className="NoPadding">
         {columns}
       </Row>
     </Grid>
@@ -49,7 +49,7 @@ function TokenImage({
 }) {
   const { image, isLoading } = useTokenUri(tokenId);
   const classNames = useMemo(() => {
-    const classes = ['Padded']
+    const classes = ['NoPadding']
     if (!isLoading) classes.push('Anchor')
     return classes.join(' ')
   }, [isLoading])
@@ -67,9 +67,6 @@ function TokenImage({
           <Icon name='spinner' loading size='large' />
         </div>
       }
-      <div className="PlaceholderOverlayId">
-        {`#${tokenId}`}
-      </div>
     </div>
   );
 }
