@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Grid, TabPane, Tab, TabProps } from "semantic-ui-react";
 import { BigNumberish } from "starknet";
-import { useAccount } from "@starknet-react/core";
-import { useTokenId } from "../hooks/useTokenId";
-import { useAllTokensOfOwner, useTotalSupply } from "../hooks/useToken";
 import { MetadataProvider } from "../hooks/MetadataContext";
+import { useStateContext } from "../hooks/StateContext";
+import { useAccount } from "@starknet-react/core";
+import { useTokenIdFromUrl } from "../hooks/useTokenIdFromUrl";
+import { useAllTokensOfOwner, useTotalSupply } from "../hooks/useToken";
 import { goToTokenPage } from "../utils/karat";
 import Token from "./Token";
 import Navigation from "./Navigation";
@@ -14,9 +15,11 @@ const Row = Grid.Row
 const Col = Grid.Column
 
 export default function Main() {
+  // this hook will keep StateContext in sync with the URL
+  useTokenIdFromUrl()
+
   const { isConnected, address } = useAccount();
-  const { token_id, hash_token_id } = useTokenId()
-  let gridMode = !Boolean(hash_token_id);
+  const { tokenId, gridMode, gridSize } = useStateContext();
 
   // All tokens
   const { total_supply } = useTotalSupply();
@@ -26,13 +29,9 @@ export default function Main() {
 
   // tokens of owner
   const { tokenIds: tokensOfOwner } = useAllTokensOfOwner(address ?? 0n)
-  // useEffect(() => {
-  //   if (token_id && hash_token_id && tokensOfOwner.length > 0) {
-  //     goToTokenPage(token_id);
-  //   }
-  // }, [token_id, hash_token_id, tokensOfOwner.length])
 
   const _changedTab = (data: TabProps) => {
+    // const pageIndex = tokenId ? Math.floor(tokenId / gridSize) : 0;
     goToTokenPage(0);
   }
 
@@ -76,10 +75,10 @@ function SingleTokenTab({
   tokens: BigNumberish[]
   switchOnMint?: boolean
 }) {
-  const { token_id, hash_token_id } = useTokenId()
+  const { tokenId } = useStateContext();
 
   const tokenCount = useMemo(() => tokens.length, [tokens])
-  const pageIndex = useMemo(() => tokens.findIndex(token => token_id == Number(token)), [tokens, token_id])
+  const pageIndex = useMemo(() => tokens.findIndex(token => tokenId == Number(token)), [tokens, tokenId])
 
   const _changePage = (newPageIndex: number) => {
     let tokenId = tokens[newPageIndex] ?? 1
@@ -104,7 +103,8 @@ function MultiTokenTab({
 }: {
   tokens: BigNumberish[]
 }) {
-  const gridSize = 9;
+  const { gridSize } = useStateContext();
+
   const pageCount = useMemo(() => Math.ceil(tokens.length / gridSize), [tokens, gridSize])
   const [pageIndex, setPageIndex] = useState(0)
   const firstTokenIndex = useMemo(() => (pageIndex * gridSize), [pageIndex, gridSize])

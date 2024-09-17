@@ -14,6 +14,7 @@ import { defaultChainId, getDojoChainConfig } from './dojo/dojoConfig.ts';
 import { makeController } from './hooks/useController.tsx';
 import { isPositiveBigint } from './utils/types.tsx';
 import App from "./components/App.tsx";
+import { StateProvider } from './hooks/StateContext.tsx';
 
 
 const router = createBrowserRouter([
@@ -98,7 +99,9 @@ async function init() {
         connectors={connectors}
         autoConnect={true}
       >
-        <RouterProvider router={router} />
+        <StateProvider>
+          <RouterProvider router={router} />
+        </StateProvider>
       </StarknetConfig>
     </React.StrictMode>
   );

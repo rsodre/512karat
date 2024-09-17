@@ -1,17 +1,17 @@
 import { useMemo } from "react";
 import { Grid, Icon, Image } from "semantic-ui-react";
-import { useTokenOwner, useTotalSupply } from "../hooks/useToken";
-import { useTokenId } from "../hooks/useTokenId";
+import { useTokenOwner } from "../hooks/useToken";
 import { useTokenUri } from "../hooks/useTokenUri";
 import { AddressShort } from "./ui/AddressShort";
+import { useStateContext } from "../hooks/StateContext";
 
 const Row = Grid.Row
 const Col = Grid.Column
 
 export default function Token() {
-  const { token_id } = useTokenId()
-  const { tokenExists, name, image, attributes, isLoading } = useTokenUri(token_id);
-  const { ownerAddress } = useTokenOwner(token_id);
+  const { tokenId } = useStateContext()
+  const { name, image, attributes, isLoading } = useTokenUri(tokenId);
+  const { ownerAddress } = useTokenOwner(tokenId);
 
   const fakeAttributes = useMemo(() => ({
     'Class': '...',
