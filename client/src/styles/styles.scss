@@ -737,8 +737,7 @@ input::placeholder {
 .ui.button.toggle.active:hover {
   background-color: $color-dark!important; // default is green
 }
-.ui.secondary.button:not(.ui.button.toggle.active)
- {
+.ui.secondary.button:not(.ui.button.toggle.active) {
   border: 0!important;
 }
 //

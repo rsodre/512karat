@@ -8,6 +8,7 @@ import { goToTokenPage } from "../utils/karat";
 import Token from "./Token";
 import Navigation from "./Navigation";
 import TokenGrid from "./TokenGrid";
+import InfoPanel from "./InfoPanel";
 
 const Row = Grid.Row
 const Col = Grid.Column
@@ -38,11 +39,21 @@ export default function Main() {
               {`Collected (${tokenIdsOfOwner.length})`}
             </Button>
           </Col>
+          <Col>
+            <Button fluid secondary toggle active={tokenSet == TokenSet.Info} disabled={!isConnected} onClick={() => _changedTab(TokenSet.Info)}>
+              {`Info`}
+            </Button>
+          </Col>
         </Row>
         <Row columns={'equal'}>
           <Col>
-            {gridMode && <MultiTokenTab />}
-            {!gridMode && <SingleTokenTab />}
+            {tokenSet == TokenSet.Info ?
+              <InfoPanel />
+              : <>
+                {gridMode && <MultiTokenTab />}
+                {!gridMode && <SingleTokenTab />}
+              </>
+            }
           </Col>
         </Row>
       </Grid>

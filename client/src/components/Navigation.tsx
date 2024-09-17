@@ -37,22 +37,22 @@ export default function Navigation({
 
   return (
     <Grid>
-      <Row>
-        <Col width={4} className={canGoPrev ? '' : 'NoMouse'}>
+      <Row columns={'equal'}>
+        <Col width={5} className={canGoPrev ? '' : 'NoMouse'}>
           <Button fluid disabled={!canGoPrev} onClick={() => _gotoPrevPage()}><Icon disabled={!canGoPrev} name='angle left' className='NoMargin' /></Button>
         </Col>
         <Col width={2} className={canGoPrev ? '' : 'NoMouse'}>
           <Button fluid disabled={!canGoPrev} onClick={() => _gotoFirstPage()}><Icon disabled={!canGoPrev} name='angle double left' className='NoMargin' /></Button>
         </Col>
         
-        <Col width={4} verticalAlign="middle">
-          {pageIndex < 0 ? '...' : `${prefix} ${pageIndex + 1} of ${pageCount}`}
+        <Col width={2} verticalAlign="middle">
+          {pageIndex < 0 ? '...' : `${pageIndex + 1} / ${pageCount}`}
         </Col>
 
         <Col width={2} className={canGoNext ? '' : 'NoMouse'}>
           <Button fluid disabled={!canGoNext} onClick={() => _gotoLastPage()}><Icon disabled={!canGoNext} name='angle double right' className='NoMargin' /></Button>
         </Col>
-        <Col width={4} className={canGoNext ? '' : 'NoMouse'}>
+        <Col width={5} className={canGoNext ? '' : 'NoMouse'}>
           <Button fluid disabled={!canGoNext} onClick={() => _gotoNextPage()}><Icon disabled={!canGoNext} name='angle right' className='NoMargin' /></Button>
         </Col>
       </Row>

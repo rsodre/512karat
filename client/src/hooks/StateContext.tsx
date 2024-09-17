@@ -9,11 +9,12 @@ import { useAllTokensOfOwner, useTotalSupply } from './useToken'
 export enum TokenSet {
   All = 'All',
   Collected = 'Collected',
+  Info = 'Info',
 }
 
 export const initialState = {
   gridSize: 9,
-  tokenSet: TokenSet.All,
+  tokenSet: TokenSet.Info,
   pageIndex: 0,
   tokenId: 0,
   gridMode: true,
@@ -132,7 +133,7 @@ export { StateProvider, StateContext, StateContextActions as StateActions }
 // Hooks
 //
 
-const _tokenSetIds = (state: StateContextStateType) => (state.tokenSet === TokenSet.All ? state.allTokenIds : state.tokenIdsOfOwner)
+const _tokenSetIds = (state: StateContextStateType) => (state.tokenSet === TokenSet.Collected ? state.tokenIdsOfOwner : state.allTokenIds)
 
 export const useStateContext = () => {
   const { state, dispatch } = useContext(StateContext)
