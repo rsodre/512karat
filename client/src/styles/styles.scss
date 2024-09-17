@@ -732,10 +732,14 @@ input::placeholder {
 .ui.button.toggle.active,
 .ui.buttons .button.toggle.active,
 .ui.toggle.buttons .active.button {
-  background-color: $color-important!important;
+  background-color: $color-dark!important;
 }
 .ui.button.toggle.active:hover {
-  background-color: $color-important!important; // default is green
+  background-color: $color-dark!important; // default is green
+}
+.ui.secondary.button:not(.ui.button.toggle.active)
+ {
+  border: 0!important;
 }
 //
 // <Menu> buttons

@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
-import { Grid, TabPane, Tab, TabProps } from "semantic-ui-react";
-import { BigNumberish } from "starknet";
+import { useMemo } from "react";
+import { Grid, Button } from "semantic-ui-react";
 import { MetadataProvider } from "../hooks/MetadataContext";
-import { TokenSet, useStateContext } from "../hooks/StateContext";
 import { useAccount } from "@starknet-react/core";
 import { useTokenIdFromUrl } from "../hooks/useTokenIdFromUrl";
+import { TokenSet, useStateContext } from "../hooks/StateContext";
 import { goToTokenPage } from "../utils/karat";
 import Token from "./Token";
 import Navigation from "./Navigation";
@@ -18,49 +17,42 @@ export default function Main() {
   useTokenIdFromUrl()
 
   const { isConnected, address } = useAccount();
-  const { gridMode, allTokenIds, tokenIdsOfOwner, dispatchSetTokenSet } = useStateContext();
+  const { gridMode, tokenSet, allTokenIds, tokenIdsOfOwner, dispatchSetTokenSet } = useStateContext();
 
-  const _changedTab = (data: TabProps) => {
-    dispatchSetTokenSet(data.activeIndex == 0 ? TokenSet.All : TokenSet.Collected)
+  const _changedTab = (tokenSet: TokenSet) => {
+    dispatchSetTokenSet(tokenSet)
     goToTokenPage(0);
   }
 
-  const panes = useMemo(() => {
-    let result = [
-      {
-        menuItem: `Collection (${allTokenIds.length})`,
-        render: () => (
-          <TabPane attached={false}>
-            {gridMode && <MultiTokenTab />}
-            {!gridMode && <SingleTokenTab />}
-          </TabPane>
-        )
-      },
-    ]
-    if (isConnected) {
-      result.push({
-        menuItem: `Collected (${tokenIdsOfOwner.length})`,
-        render: () => (
-          <TabPane attached={false}>
-            {gridMode && <MultiTokenTab />}
-            {!gridMode && <SingleTokenTab />}
-          </TabPane>
-        )
-      })
-    }
-    return result
-  }, [isConnected, gridMode, allTokenIds, tokenIdsOfOwner])
-
   return (
     <MetadataProvider>
-      <Tab menu={{ secondary: true, pointing: true, attached: true }} panes={panes} onTabChange={(e, data) => _changedTab(data)} />
+      <Grid>
+        <Row columns={'equal'}>
+          <Col>
+            <Button fluid secondary toggle active={tokenSet == TokenSet.All} onClick={() => _changedTab(TokenSet.All)}>
+              {`Collection (${allTokenIds.length})`}
+            </Button>
+          </Col>
+          <Col>
+            <Button fluid secondary toggle active={tokenSet == TokenSet.Collected} disabled={!isConnected} onClick={() => _changedTab(TokenSet.Collected)}>
+              {`Collected (${tokenIdsOfOwner.length})`}
+            </Button>
+          </Col>
+        </Row>
+        <Row columns={'equal'}>
+          <Col>
+            {gridMode && <MultiTokenTab />}
+            {!gridMode && <SingleTokenTab />}
+          </Col>
+        </Row>
+      </Grid>
     </MetadataProvider>
   );
 }
 
 function SingleTokenTab({
 }: {
-}) {
+  }) {
   const { tokenId } = useStateContext();
   const { tokenSetIds } = useStateContext();
 
@@ -87,7 +79,7 @@ function SingleTokenTab({
 
 function MultiTokenTab({
 }: {
-}) {
+  }) {
   const { gridSize } = useStateContext();
   const { tokenSetIds, pageIndex, dispatchSetPageIndex } = useStateContext();
 
@@ -114,5 +106,4 @@ function MultiTokenTab({
     </>
   );
 }
-
 
