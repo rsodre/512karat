@@ -10,9 +10,9 @@ code + art: **Roger Mataleone** ([@matalecode](https://x.com/matalecode))
 ## Mainnet Minting
 
 * Phase 1 (25%, 128 Karats): Sep 16 2024
-* Phase 2 (25%, 128 Karats): TBD
-* Phase 3 (25%, 128 Karats): TBD
-* Phase 4 (25%, 128 Karats): Sep 26 2024
+* Phase 2 (25%, 128 Karats): Sep 26 2024
+* Phase 3 (25%, 128 Karats): allowlist
+* Remaining 25% is reserved
 
 
 ## Features
@@ -22,21 +22,11 @@ code + art: **Roger Mataleone** ([@matalecode](https://x.com/matalecode))
 * mint(), mint_to()
 
 
-## Collection management
-
-After deployment, we can use some sozo commands to manage the contracts.
-
-```sh
-# mint one token to the deployer account
-scripts/mint_to.sh mainnet
-# mint to a specific wallet
-scripts/mint_to.sh mainnet 0x04042b3F651F6d6Ff03b929437AdC30257333723970071b05cb0E2270C9dc385
-# change the currently amount of available to mint
-scripts/set_available.sh mainnet 128
-```
-
 
 ## Project structure
+
+* **NOTICE**: This project was deployed using Dojo v1.0.0-alpha.11 and Origami tokens, which are deprecated and not supported anymore.
+I plan to launch another token soon, with Dojo 1.0 and OpenZeppelin components.
 
 * `/dojo`: Dojo contracts
 * `/dojo/scripts`: Scripts to interact with the contracts
@@ -199,6 +189,7 @@ Stream logs with `slot deployments logs 512karat-sepolia torii -f`
 slot deployments delete <SERVICE_NAME> torii
 ```
 
+
 ### Some notes on the client side
 
 * The `migrate` script is copying manifests to `/client/src/dojo/generated/<PROFILE>`, each chain needs to use their own manifest!
@@ -219,6 +210,18 @@ VITE_PUBLIC_CHAIN_ID=SN_MAIN
 ```
 
 
+## Collection management
+
+After deployment, we can use some sozo commands to manage the contracts.
+
+```sh
+# mint one token to the deployer account
+scripts/mint_to.sh mainnet
+# mint to a specific wallet
+scripts/mint_to.sh mainnet 0x04042b3F651F6d6Ff03b929437AdC30257333723970071b05cb0E2270C9dc385
+# change the currently amount of available to mint
+scripts/set_available.sh mainnet 128
+```
 
 
 ## Resources and Process

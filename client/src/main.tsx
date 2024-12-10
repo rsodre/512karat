@@ -1,7 +1,7 @@
 import 'semantic-ui-css/semantic.min.css'
 import './styles/fonts.scss'
 import './styles/styles.scss'
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { StarknetConfig, argent, braavos, injected, jsonRpcProvider } from "@starknet-react/core";
@@ -89,6 +89,8 @@ async function init() {
     }
   } catch { }
 
+  // REDIRECT to realms marketplace
+  location.href = 'https://market.realms.world/collection/0x07d8ea58612a5de25f29281199a4fc1f2ce42f0f207f93c3a35280605f3b8e68'
 
   root.render(
     <React.StrictMode>
