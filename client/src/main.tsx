@@ -90,7 +90,10 @@ async function init() {
   } catch { }
 
   // REDIRECT to realms marketplace
-  location.href = 'https://market.realms.world/collection/0x07d8ea58612a5de25f29281199a4fc1f2ce42f0f207f93c3a35280605f3b8e68'
+  // location.href = 'https://market.realms.world/collection/0x07d8ea58612a5de25f29281199a4fc1f2ce42f0f207f93c3a35280605f3b8e68'
+
+  // REDIRECT to collect-code
+  location.href = 'https://collect-code.com'
 
   root.render(
     <React.StrictMode>
