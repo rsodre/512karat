@@ -90,7 +90,7 @@ mod tests {
         let sys: Systems = tester::spawn_systems();
         let uri: ByteArray = sys.karat.contract_uri();
         let uri_camel = sys.karat.contractURI();
-        println!("___contract_uri_none(1):[{}]", uri);
+        // println!("___contract_uri_none(1):[{}]", uri);
         assert_ne!(uri, "", "contract_uri() should not be empty");
         assert_eq!(uri, uri_camel, "contractURI() == contract_uri()");
         assert!(tester::starts_with(uri, "data:"), "contract_uri() should be a json string");

@@ -128,7 +128,9 @@ mod karat_token {
 
     use karat::systems::minter::{IRenderer, IRendererDispatcher, IRendererDispatcherTrait};
     use karat::models::config::{Config, ConfigTrait};
+    use karat::models::token_data::{ContractData};
     use karat::models::constants::{CONST};
+    use karat::utils::renderer::{renderer};
 
     use origami_token::components::security::initializable::initializable_component;
     use origami_token::components::introspection::src5::src5_component;
@@ -334,8 +336,14 @@ mod karat_token {
         // IERC7572ContractMetadata
         //
         fn contract_uri(self: @ContractState) -> ByteArray {
-// TODO...
-            ("")
+            let contract_data = ContractData{
+                name: CONST::const_string(CONST::TOKEN_NAME),
+                symbol: CONST::const_string(CONST::TOKEN_SYMBOL),
+                description: CONST::const_string(CONST::METADATA_DESCRIPTION),
+                external_link: CONST::const_string(CONST::EXTERNAL_LINK),
+                image: CONST::CONTRACT_IMAGE(),
+            };
+            (renderer::build_contract_uri(contract_data))
         }
         // (CamelOnly)
         fn contractURI(self: @ContractState) -> ByteArray {

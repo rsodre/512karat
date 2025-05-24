@@ -2,7 +2,7 @@ mod renderer {
     use debug::PrintTrait;
     use core::byte_array::ByteArrayTrait;
     use core::array::{Array, ArrayTrait};
-    use karat::models::token_data::{TokenData, TokenDataTrait};
+    use karat::models::token_data::{TokenData, TokenDataTrait, ContractData};
     use karat::models::class::{Class, ClassTrait};
     use karat::utils::encoding::bytes_base64_encode;
 
@@ -36,6 +36,21 @@ mod renderer {
             name_tag,
             desc_tag,
             attributes_tag,
+            image_tag,
+        )))
+    }
+
+    fn build_contract_uri(contract_data: ContractData) -> ByteArray {
+        let name_tag = _value_tag("name", contract_data.name);
+        let symbol_tag = _value_tag("symbol", contract_data.symbol);
+        let desc_tag = _value_tag("description", contract_data.description);
+        let link_tag = _value_tag("external_link", contract_data.external_link);
+        let image_tag = _value_tag("image", contract_data.image);
+        (_encode_uri(format!("{{{},{},{},{},{}}}",
+            name_tag,
+            symbol_tag,
+            desc_tag,
+            link_tag,
             image_tag,
         )))
     }

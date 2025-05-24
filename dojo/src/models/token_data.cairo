@@ -15,6 +15,20 @@ pub struct TokenData {
     pub class: Class,
 }
 
+#[derive(Drop, Serde)]
+// #[dojo::model]
+pub struct ContractData {
+    pub name: ByteArray,
+    pub symbol: ByteArray,
+    pub description: ByteArray,
+    // optionals
+    pub image: ByteArray,
+    // pub banner_image: Option<ByteArray>,
+    // pub featured_image: Option<ByteArray>,
+    pub external_link: ByteArray,
+    // pub collaborators: Option<Span<ContractAddress>>,
+}
+
 #[generate_trait]
 impl TokenDataTraitImpl of TokenDataTrait {
     fn new(world: IWorldDispatcher, token_id: u128) -> TokenData {
