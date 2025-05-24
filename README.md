@@ -4,7 +4,7 @@
 
 Finalist [project](https://ethglobal.com/showcase/512-karat-3sq17) of the [ETHGlobal StarkHack](https://ethglobal.com/events/starkhack), built from June 13th-23rd 2024. The original submission is on the [stark_hack](https://github.com/rsodre/512karat/tree/stark_hack) tag.
 
-code + art: **Roger Mataleone** ([@matalecode](https://x.com/matalecode))
+code + art: **Roger S.** aka **Mataleone** ([@matalecode](https://x.com/matalecode))
 
 
 ## Mainnet Minting
@@ -15,24 +15,20 @@ code + art: **Roger Mataleone** ([@matalecode](https://x.com/matalecode))
 * Remaining 25% is reserved
 
 
-## Features
-
-* free mint
-* cool down
-* mint(), mint_to()
-
-
 
 ## Project structure
 
-* **NOTICE**: This project was deployed using Dojo v1.0.0-alpha.11 and Origami tokens, which are deprecated and not supported anymore.
-I plan to launch another token soon, with Dojo 1.0 and OpenZeppelin components.
+> **NOTICE**: This project was deployed using Dojo v1.0.0-alpha.11 and Origami tokens, which are deprecated and not supported anymore.
 
-* `/dojo`: Dojo contracts
+> Please refer to *UPCOMING* project for a modern example using Dojo 1.5 and OpenZeppelin components.
+
+* `/dojo`: Dojo contracts (deprecated with Origami)
 * `/dojo/scripts`: Scripts to interact with the contracts
-* `/client`: Typescript Vite client
+* `/client`: Typescript Vite client (deprecated)
 * `/draft`: Token experiments (metadata, svg)
-* [p5js](https://editor.p5js.org/rsodre/sketches/Im7yQgmf5): Art playground
+* `/scripts`: Scripts for fetching Karat data on-chain
+* `/tokens`: Cached KARAT metadata and art
+* [p5js](https://editor.p5js.org/rsodre/sketches/Im7yQgmf5): Art development playground
 
 
 ## Sepolia / Mainnet Deployment
@@ -40,10 +36,21 @@ I plan to launch another token soon, with Dojo 1.0 and OpenZeppelin components.
 This is a **generic guide** to deploy a Dojo world to Sepolia.
 The steps for Mainnet are exactly the same, just replace the chain name and ID when necessary.
 
+> **NOTICE**: Deployed with Dojo v1.0.0-alpha.11 and Origami tokens (deprecated), please consult the [Dojo Book](https://book.dojoengine.org/tutorials/deploy-to-mainnet/main) for current deployment instructions.
+
 
 ### Setup
 
 * You need a [Starknet RPC Provider](https://www.starknet.io/fullnodes-rpc-services/) to deploy contracts on-chain. After you get yours, check if it works and is on the chain you want to deploy (`SN_SEPOLIA` or `SN_MAIN`)
+
+
+```sh
+# get dojoup
+curl -L https://install.dojoengine.org | bash
+# install the correct dojo version
+dojoup install v1.0.0-alpha.11
+```
+
 
 ```sh
 # run this...
