@@ -73,6 +73,45 @@ trait IKaratToken<TState> {
     );
     fn mint(ref self: TState, to: ContractAddress, token_id: u256);
     fn burn(ref self: TState, token_id: u256);
+
+    //-----------------------------------
+    // karat_v1.1
+    fn karat_init(ref self: TState);
+    // IERC7572ContractMetadata
+    fn contract_uri(self: @TState) -> ByteArray;
+    // (CamelOnly)
+    fn contractURI(self: @TState) -> ByteArray;
+    // IERC4906MetadataUpdate
+    fn emit_metadata_update(ref self: TState, token_id: u256);
+    fn emit_batch_metadata_update(ref self: TState, from_token_id: u256, to_token_id: u256);
+    // IERC2981RoyaltyInfo
+    fn royalty_info(self: @TState, token_id: u256, sale_price: u256) -> (ContractAddress, u256);
+    fn default_royalty(self: @TState) -> (ContractAddress, u128, u128);
+    fn token_royalty(self: @TState, token_id: u256) -> (ContractAddress, u128, u128);
+    // (CamelOnly)
+    fn royaltyInfo(self: @TState, token_id: u256, sale_price: u256) -> (ContractAddress, u256);
+    fn defaultRoyalty(self: @TState) -> (ContractAddress, u128, u128);
+    fn tokenRoyalty(self: @TState, token_id: u256) -> (ContractAddress, u128, u128);
+}
+
+#[starknet::interface]
+trait IKaratTokenNew<TState> {
+    fn karat_init(ref self: TState);
+    // IERC7572ContractMetadata
+    fn contract_uri(self: @TState) -> ByteArray;
+    // (CamelOnly)
+    fn contractURI(self: @TState) -> ByteArray;
+    // IERC4906MetadataUpdate
+    fn emit_metadata_update(ref self: TState, token_id: u256);
+    fn emit_batch_metadata_update(ref self: TState, from_token_id: u256, to_token_id: u256);
+    // IERC2981RoyaltyInfo
+    fn default_royalty(self: @TState) -> (ContractAddress, u128, u128);
+    fn token_royalty(self: @TState, token_id: u256) -> (ContractAddress, u128, u128);
+    fn royalty_info(self: @TState, token_id: u256, sale_price: u256) -> (ContractAddress, u256);
+    // (CamelOnly)
+    fn defaultRoyalty(self: @TState) -> (ContractAddress, u128, u128);
+    fn tokenRoyalty(self: @TState, token_id: u256) -> (ContractAddress, u128, u128);
+    fn royaltyInfo(self: @TState, token_id: u256, sale_price: u256) -> (ContractAddress, u256);
 }
 
 #[starknet::interface]
@@ -114,6 +153,7 @@ mod karat_token {
     impl InitializableImpl = initializable_component::InitializableImpl<ContractState>;
     #[abi(embed_v0)]
     impl SRC5Impl = src5_component::SRC5Impl<ContractState>;
+    impl SRC5InternalImpl = src5_component::InternalImpl<ContractState>;
     #[abi(embed_v0)]
     impl SRC5CamelImpl = src5_component::SRC5CamelImpl<ContractState>;
     #[abi(embed_v0)]
@@ -192,11 +232,40 @@ mod karat_token {
         ERC721MintableEvent: erc721_mintable_component::Event,
         #[flat]
         ERC721OwnerEvent: erc721_owner_component::Event,
+        // karat_v1.1
+        ContractURIUpdated: ContractURIUpdated,
+        MetadataUpdate: MetadataUpdate,
+        BatchMetadataUpdate: BatchMetadataUpdate,
     }
 
+    // karat_v1.1
+    #[derive(Drop, PartialEq, starknet::Event)]
+    pub struct ContractURIUpdated {}
+    #[derive(Drop, PartialEq, starknet::Event)]
+    pub struct MetadataUpdate {
+        #[key]
+        pub token_id: u256,
+    }
+    #[derive(Drop, PartialEq, starknet::Event)]
+    pub struct BatchMetadataUpdate {
+        #[key]
+        pub from_token_id: u256,
+        #[key]
+        pub to_token_id: u256,
+    }
+    pub const ROYALTY_FEE_DENOMINATOR: u128 = 10_000;
+    // definitive IDs (OZ)
+    pub const IERC2981_ID: felt252 = 0x2d3414e45a8700c29f119a54b9f11dca0e29e06ddcb214018fc37340e165ed6;
+    // TODO: compute the correct ids
+    // https://docs.openzeppelin.com/contracts-cairo/1.0.0/introspection#computing_the_interface_id
+    pub const IERC7572_ID: felt252 = selector!("IERC7572_ID");
+    pub const IERC4906_ID: felt252 = selector!("IERC4906_ID");
+
+
+
     mod Errors {
-        const CALLER_IS_NOT_MINTER: felt252 = 'ERC721: caller is not minter';
-        const MINTING_IS_CLOSED: felt252 = 'ERC721: minting closed';
+        const CALLER_IS_NOT_OWNER: felt252      = 'KARAT: caller is not owner';
+        const CALLER_IS_NOT_MINTER: felt252     = 'KARAT: caller is not minter';
     }
 
     fn dojo_init(ref self: ContractState) {
@@ -207,6 +276,8 @@ mod karat_token {
         );
         self.erc721_enumerable.initialize();
         self.initializable.initialize();
+        // karat_v1.1
+        self._init();
     }
 
     #[abi(embed_v0)]
@@ -245,6 +316,95 @@ mod karat_token {
             let config: Config = get!(world, (contract_address), Config);
             let renderer = IRendererDispatcher{ contract_address: config.renderer_address };
             (renderer.render_uri(token_id.low))
+        }
+    }
+
+    //---------------------------------------
+    // karat_v1.1
+    //
+    #[abi(embed_v0)]
+    impl KaratTokenNewImpl of super::IKaratTokenNew<ContractState> {
+
+        fn karat_init(ref self: ContractState) {
+            self._assert_caller_is_owner();
+            self._init();
+        }
+
+        //---------------------------------------
+        // IERC7572ContractMetadata
+        //
+        fn contract_uri(self: @ContractState) -> ByteArray {
+// TODO...
+            ("")
+        }
+        // (CamelOnly)
+        fn contractURI(self: @ContractState) -> ByteArray {
+            (self.contract_uri())
+        }
+
+        //---------------------------------------
+        // IERC4906MetadataUpdate
+        //
+        fn emit_metadata_update(ref self: ContractState, token_id: u256) {
+            self.emit(MetadataUpdate {
+                token_id,
+            });
+        }
+        fn emit_batch_metadata_update(ref self: ContractState, from_token_id: u256, to_token_id: u256) {
+            self.emit(BatchMetadataUpdate {
+                from_token_id,
+                to_token_id,
+            });
+        }
+
+        //---------------------------------------
+        // IERC2981RoyaltyInfo
+        //
+        fn default_royalty(self: @ContractState) -> (ContractAddress, u128, u128) {
+            let config: Config = get!(self.world(), (get_contract_address()), Config);
+            (config.royalty_receiver, config.royalty_fraction, ROYALTY_FEE_DENOMINATOR)
+        }
+        fn token_royalty(self: @ContractState, token_id: u256) -> (ContractAddress, u128, u128) {
+            let config: Config = get!(self.world(), (get_contract_address()), Config);
+            (config.royalty_receiver, config.royalty_fraction, ROYALTY_FEE_DENOMINATOR)
+        }
+        fn royalty_info(self: @ContractState, token_id: u256, sale_price: u256) -> (ContractAddress, u256) {
+            let config: Config = get!(self.world(), (get_contract_address()), Config);
+            let royalty_amount: u256 = sale_price
+                * config.royalty_fraction.into()
+                / ROYALTY_FEE_DENOMINATOR.into();
+            (config.royalty_receiver, royalty_amount)
+        }
+        // (CamelOnly)
+        fn defaultRoyalty(self: @ContractState) -> (ContractAddress, u128, u128) {
+            (self.default_royalty())
+        }
+        fn tokenRoyalty(self: @ContractState, token_id: u256) -> (ContractAddress, u128, u128) {
+            (self.token_royalty(token_id))
+        }
+        fn royaltyInfo(self: @ContractState, token_id: u256, sale_price: u256) -> (ContractAddress, u256) {
+            (self.royalty_info(token_id, sale_price))
+        }
+    }
+
+    //
+    // Internal Impls
+    //
+    #[generate_trait]
+    impl InternalImpl of InternalTrait {
+        #[inline(always)]
+        fn _assert_caller_is_owner(self: @ContractState) {
+            assert(self._caller_is_owner(), Errors::CALLER_IS_NOT_OWNER);
+        }
+        #[inline(always)]
+        fn _caller_is_owner(self: @ContractState) -> bool {
+            (self.world().is_owner(self.selector().into(), get_caller_address()))
+        }
+        fn _init(ref self: ContractState) {
+            self.src5.register_interface(IERC7572_ID);
+            self.src5.register_interface(IERC4906_ID);
+            self.src5.register_interface(IERC2981_ID);
+            self.emit(ContractURIUpdated {});
         }
     }
 }
