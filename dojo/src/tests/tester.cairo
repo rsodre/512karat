@@ -58,6 +58,7 @@ mod tester {
         };
         world.grant_owner(dojo::utils::bytearray_hash(@"origami_karat"), minter.contract_address);
         world.grant_owner(dojo::utils::bytearray_hash(@"karat"), minter.contract_address);
+        world.grant_owner(selector_from_tag!("karat-karat_token"), OWNER());
         world.grant_owner(selector_from_tag!("karat-minter"), OWNER());
         world.init_contract(selector_from_tag!("karat-minter"), minter_calldata);
 

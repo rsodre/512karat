@@ -23,6 +23,7 @@ mod utils {
 mod tests {
     mod tester;
     mod test_minter;
+    mod test_token;
     mod test_profile;
     mod enumerable_mintable_burnable;
 }

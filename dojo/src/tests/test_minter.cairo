@@ -5,34 +5,21 @@ mod tests {
     use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
 
     // token
-    use origami_token::tests::constants::{ZERO, OWNER, SPENDER, RECIPIENT, VALUE, TOKEN_ID, TOKEN_ID_2};
+    use origami_token::tests::constants::{
+        ZERO, OWNER, OTHER, SPENDER, RECIPIENT,
+        TOKEN_ID, TOKEN_ID_2, VALUE,
+    };
 
     // karat
     use karat::{
         systems::{minter::{minter, IMinterDispatcher, IMinterDispatcherTrait}},
         systems::{karat_token::{karat_token, IKaratTokenDispatcher, IKaratTokenDispatcherTrait}},
+        models::config::{Config, ConfigTrait},
         models::seed::{Seed, SeedTrait},
         models::constants::{CONST},
     };
 
     use karat::tests::tester::{tester, tester::{ Systems }};
-
-    #[test]
-    fn test_is_initialized() {
-        let sys: Systems = tester::spawn_systems();
-        println!("NAME: {}", sys.karat.name());
-        println!("SYMBOL: {}", sys.karat.symbol());
-        assert(sys.karat.name() == CONST::const_string(CONST::TOKEN_NAME), 'name');
-        assert(sys.karat.symbol() == CONST::const_string(CONST::TOKEN_SYMBOL), 'symbol');
-    }
-
-    #[test]
-    #[should_panic(expected:('ERC721: caller is not minter','ENTRYPOINT_FAILED'))]
-    fn test_not_minter() {
-        let sys: Systems = tester::spawn_systems();
-        // direct karat minting is not possible
-        sys.karat.mint(RECIPIENT(), 1);
-    }
 
     #[test]
     fn test_mint_ok() {
@@ -64,15 +51,6 @@ mod tests {
     }
 
     #[test]
-    fn test_token_uri() {
-        let sys: Systems = tester::spawn_systems();
-        sys.minter.mint(sys.karat.contract_address);
-        let token_uri_1: ByteArray = sys.karat.token_uri(1);
-        // println!("{}", token_uri_1);
-        println!("token_uri_len:{}", token_uri_1.len());
-    }
-
-    #[test]
     fn test_mint_to() {
         let sys: Systems = tester::spawn_systems();
         assert(sys.karat.total_supply() == 0, 'supply = 0');
@@ -83,7 +61,15 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected:('KARAT: unavailable','ENTRYPOINT_FAILED'))]
+    #[should_panic(expected:('KARAT: caller is not minter','ENTRYPOINT_FAILED'))]
+    fn test_not_minter() {
+        let sys: Systems = tester::spawn_systems();
+        // direct karat minting is not possible
+        sys.karat.mint(RECIPIENT(), 1);
+    }
+
+    #[test]
+    #[should_panic(expected:('MINTER: unavailable','ENTRYPOINT_FAILED'))]
     fn test_not_available() {
         let sys: Systems = tester::spawn_systems();
         sys.minter.set_available(sys.karat.contract_address, 0);
@@ -101,54 +87,11 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected:('KARAT: not owner','ENTRYPOINT_FAILED'))]
-    fn test_set_available_not_owner() {
+    #[should_panic(expected:('MINTER: caller is not owner','ENTRYPOINT_FAILED'))]
+    fn test_admin_set_available_not_owner() {
         let sys: Systems = tester::spawn_systems();
         tester::impersonate(RECIPIENT());
         sys.minter.set_available(sys.karat.contract_address, 1000);
-    }
-
-    #[test]
-    #[should_panic(expected:('KARAT: cool down!','ENTRYPOINT_FAILED'))]
-    fn test_cool_down_1() {
-        let sys: Systems = tester::spawn_systems();
-        tester::impersonate(SPENDER());
-        sys.minter.mint(sys.karat.contract_address);
-        sys.minter.mint(sys.karat.contract_address);
-    }
-    #[test]
-    #[should_panic(expected:('KARAT: cool down!','ENTRYPOINT_FAILED'))]
-    fn test_cool_down_2() {
-        let sys: Systems = tester::spawn_systems();
-        tester::impersonate(SPENDER());
-        sys.minter.mint(sys.karat.contract_address);
-        tester::impersonate(RECIPIENT());
-        sys.minter.mint(sys.karat.contract_address);
-        sys.minter.mint(sys.karat.contract_address);
-    }
-    #[test]
-    #[should_panic(expected:('KARAT: cool down!','ENTRYPOINT_FAILED'))]
-    fn test_cool_down_3() {
-        let sys: Systems = tester::spawn_systems();
-        tester::impersonate(SPENDER());
-        sys.minter.mint(sys.karat.contract_address);
-        sys.minter.mint_to(sys.karat.contract_address, RECIPIENT());
-    }
-    #[test]
-    #[should_panic(expected:('KARAT: cool down!','ENTRYPOINT_FAILED'))]
-    fn test_cool_down_4() {
-        let sys: Systems = tester::spawn_systems();
-        tester::impersonate(SPENDER());
-        sys.minter.mint(sys.karat.contract_address);
-        tester::impersonate(RECIPIENT());
-        sys.minter.mint_to(sys.karat.contract_address, SPENDER());
-    }
-
-    #[test]
-    fn test_cool_down_owner_can_mint() {
-        let sys: Systems = tester::spawn_systems();
-        sys.minter.mint(sys.karat.contract_address);
-        sys.minter.mint(sys.karat.contract_address);
     }
 
     #[test]
@@ -166,7 +109,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected:('KARAT: unavailable','ENTRYPOINT_FAILED'))]
+    #[should_panic(expected:('MINTER: unavailable','ENTRYPOINT_FAILED'))]
     fn test_available_supply_unavailable() {
         let sys: Systems = tester::spawn_systems();
         let mut supply: u128 = 0;
@@ -196,7 +139,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected:('KARAT: minted out','ENTRYPOINT_FAILED'))]
+    #[should_panic(expected:('MINTER: minted out','ENTRYPOINT_FAILED'))]
     fn test_mint_out() {
         let sys: Systems = tester::spawn_systems();
         sys.minter.set_available(sys.karat.contract_address, sys.max_supply);
@@ -212,7 +155,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected:('KARAT: minted out','ENTRYPOINT_FAILED'))]
+    #[should_panic(expected:('MINTER: minted out','ENTRYPOINT_FAILED'))]
     fn test_available_supply_owner_mint_out() {
         let sys: Systems = tester::spawn_systems();
         let mut supply: u128 = 0;
@@ -223,6 +166,119 @@ mod tests {
             sys.minter.mint(sys.karat.contract_address);
             supply += 1;
         };
+    }
+
+
+    //---------------------------------------
+    // cool down
+    //
+
+    #[test]
+    #[should_panic(expected:('MINTER: cool down!','ENTRYPOINT_FAILED'))]
+    fn test_cool_down_1() {
+        let sys: Systems = tester::spawn_systems();
+        tester::impersonate(SPENDER());
+        sys.minter.mint(sys.karat.contract_address);
+        sys.minter.mint(sys.karat.contract_address);
+    }
+    #[test]
+    #[should_panic(expected:('MINTER: cool down!','ENTRYPOINT_FAILED'))]
+    fn test_cool_down_2() {
+        let sys: Systems = tester::spawn_systems();
+        tester::impersonate(SPENDER());
+        sys.minter.mint(sys.karat.contract_address);
+        tester::impersonate(RECIPIENT());
+        sys.minter.mint(sys.karat.contract_address);
+        sys.minter.mint(sys.karat.contract_address);
+    }
+    #[test]
+    #[should_panic(expected:('MINTER: cool down!','ENTRYPOINT_FAILED'))]
+    fn test_cool_down_3() {
+        let sys: Systems = tester::spawn_systems();
+        tester::impersonate(SPENDER());
+        sys.minter.mint(sys.karat.contract_address);
+        sys.minter.mint_to(sys.karat.contract_address, RECIPIENT());
+    }
+    #[test]
+    #[should_panic(expected:('MINTER: cool down!','ENTRYPOINT_FAILED'))]
+    fn test_cool_down_4() {
+        let sys: Systems = tester::spawn_systems();
+        tester::impersonate(SPENDER());
+        sys.minter.mint(sys.karat.contract_address);
+        tester::impersonate(RECIPIENT());
+        sys.minter.mint_to(sys.karat.contract_address, SPENDER());
+    }
+
+    #[test]
+    fn test_cool_down_owner_can_mint() {
+        let sys: Systems = tester::spawn_systems();
+        sys.minter.mint(sys.karat.contract_address);
+        sys.minter.mint(sys.karat.contract_address);
+    }
+
+
+    //---------------------------------------
+    // admin
+    //
+
+    #[test]
+    fn test_admin_set_purchase_price_ok() {
+        let sys: Systems = tester::spawn_systems();
+        tester::impersonate(OWNER());
+        // initial state
+        let config: Config = get!(sys.world, (sys.karat.contract_address), Config);
+        assert(config.purchase_token_address == ZERO(), 'purchase_token_address_INIT');
+        assert(config.purchase_price_eth == 0, 'purchase_price_eth_INIT');
+        // config...
+        sys.minter.set_purchase_price(sys.karat.contract_address, OTHER(), 222);
+        let config: Config = get!(sys.world, (sys.karat.contract_address), Config);
+        assert(config.purchase_token_address == OTHER(), 'purchase_token_address_AFTER');
+        assert(config.purchase_price_eth == 222, 'purchase_price_eth_AFTER');
+    }
+
+    #[test]
+    #[should_panic(expected:('MINTER: invalid token address','ENTRYPOINT_FAILED'))]
+    fn test_admin_set_purchase_price_invalid_token() {
+        let sys: Systems = tester::spawn_systems();
+        sys.minter.set_purchase_price(sys.minter.contract_address, OTHER(), 9999);
+    }
+
+    #[test]
+    #[should_panic(expected:('MINTER: caller is not owner','ENTRYPOINT_FAILED'))]
+    fn test_admin_set_purchase_price_not_owner() {
+        let sys: Systems = tester::spawn_systems();
+        tester::impersonate(OTHER());
+        sys.minter.set_purchase_price(sys.karat.contract_address, OTHER(), 9999);
+    }
+
+    #[test]
+    fn test_admin_set_royalty_ok() {
+        let sys: Systems = tester::spawn_systems();
+        tester::impersonate(OWNER());
+        // initial state
+        let config: Config = get!(sys.world, (sys.karat.contract_address), Config);
+        assert(config.royalty_receiver == ZERO(), 'royalty_receiver_INIT');
+        assert(config.royalty_fraction == 0, 'royalty_fraction_INIT');
+        // config...
+        sys.minter.set_royalty(sys.karat.contract_address, RECIPIENT(), 111);
+        let config: Config = get!(sys.world, (sys.karat.contract_address), Config);
+        assert(config.royalty_receiver == RECIPIENT(), 'royalty_receiver_AFTER');
+        assert(config.royalty_fraction == 111, 'royalty_fraction_AFTER');
+    }
+
+    #[test]
+    #[should_panic(expected:('MINTER: invalid token address','ENTRYPOINT_FAILED'))]
+    fn test_admin_set_royalty_invalid_token() {
+        let sys: Systems = tester::spawn_systems();
+        sys.minter.set_royalty(sys.minter.contract_address, OTHER(), 9999);
+    }
+
+    #[test]
+    #[should_panic(expected:('MINTER: caller is not owner','ENTRYPOINT_FAILED'))]
+    fn test_admin_set_royalty_not_owner() {
+        let sys: Systems = tester::spawn_systems();
+        tester::impersonate(OTHER());
+        sys.minter.set_royalty(sys.karat.contract_address, OTHER(), 9999);
     }
 
 }

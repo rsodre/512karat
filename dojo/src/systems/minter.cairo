@@ -10,12 +10,24 @@ trait IMinter {
     fn set_available(ref world: IWorldDispatcher, token_contract_address: ContractAddress, available_supply: u128);
     fn get_token_data(world: @IWorldDispatcher, token_id: u128) -> TokenData;
     // fn get_token_svg(ref world: IWorldDispatcher, token_id: u128) -> ByteArray;
+
+    // karat_v1.1
+    fn set_purchase_price(ref world: IWorldDispatcher,
+        token_contract_address: ContractAddress,
+        purchase_token_address: ContractAddress,
+        purchase_price_eth: u128,
+    );
+    fn set_royalty(ref world: IWorldDispatcher,
+        token_contract_address: ContractAddress,
+        royalty_receiver: ContractAddress,
+        royalty_fraction: u128,
+    );
 }
 
 #[dojo::interface]
 trait IMinterInternal {
-    fn assert_caller_is_owner(world: @IWorldDispatcher);
-    fn caller_is_owner(world: @IWorldDispatcher) -> bool;
+    fn _assert_caller_is_owner(world: @IWorldDispatcher);
+    fn _caller_is_owner(world: @IWorldDispatcher) -> bool;
 }
 
 #[dojo::interface]
@@ -31,7 +43,7 @@ mod minter {
     use starknet::{ContractAddress, get_contract_address, get_caller_address};
     use karat::systems::karat_token::{IKaratTokenDispatcher, IKaratTokenDispatcherTrait};
     use karat::utils::renderer::{renderer};
-    use karat::utils::misc::{WORLD};
+    use karat::utils::misc::{WORLD, ZERO};
     use karat::models::{
         config::{Config, ConfigTrait},
         token_data::{TokenData, TokenDataTrait},
@@ -39,12 +51,12 @@ mod minter {
     };
 
     mod Errors {
-        const INVALID_TOKEN_ADDRESS: felt252 = 'KARAT: invalid token address';
-        const INVALID_SUPPLY: felt252 = 'KARAT: invalid supply';
-        const MINTED_OUT: felt252 = 'KARAT: minted out';
-        const UNAVAILABLE: felt252 = 'KARAT: unavailable';
-        const COOLING_DOWN: felt252 = 'KARAT: cool down!';
-        const NOT_OWNER: felt252 = 'KARAT: not owner';
+        const CALLER_IS_NOT_OWNER: felt252      = 'MINTER: caller is not owner';
+        const INVALID_TOKEN_ADDRESS: felt252    = 'MINTER: invalid token address';
+        const INVALID_SUPPLY: felt252           = 'MINTER: invalid supply';
+        const MINTED_OUT: felt252               = 'MINTER: minted out';
+        const UNAVAILABLE: felt252              = 'MINTER: unavailable';
+        const COOLING_DOWN: felt252             = 'MINTER: cool down!';
     }
 
     //---------------------------------------
@@ -73,6 +85,11 @@ mod minter {
             max_supply,
             available_supply,
             cool_down: true,
+            // karat_v1.1
+            purchase_token_address: ZERO(),
+            purchase_price_eth: 0,
+            royalty_receiver: ZERO(),
+            royalty_fraction: 0,
         }));
     }
 
@@ -90,7 +107,7 @@ mod minter {
             let total_supply: u256 = karat.total_supply();
 
             // check availability
-            let is_owner: bool = self.caller_is_owner();
+            let is_owner: bool = self._caller_is_owner();
             let config: Config = get!(world, (token_contract_address), Config);
             assert(total_supply.low < config.max_supply, Errors::MINTED_OUT);
             assert(total_supply.low < config.available_supply || is_owner, Errors::UNAVAILABLE);
@@ -118,7 +135,7 @@ mod minter {
         }
 
         fn set_available(ref world: IWorldDispatcher, token_contract_address: ContractAddress, available_supply: u128) {
-            self.assert_caller_is_owner();
+            self._assert_caller_is_owner();
             let mut config: Config = get!(world, (token_contract_address), Config);
             config.available_supply = available_supply;
             set!(world, (config));
@@ -127,16 +144,49 @@ mod minter {
         fn get_token_data(world: @IWorldDispatcher, token_id: u128) -> TokenData {
             (TokenDataTrait::new(world, token_id))
         }
+
+
+        //---------------------------------------
+        // karat_v1.1
+        //
+        fn set_purchase_price(ref world: IWorldDispatcher,
+            token_contract_address: ContractAddress,
+            purchase_token_address: ContractAddress,
+            purchase_price_eth: u128,
+        ) {
+            self._assert_caller_is_owner();
+            let mut config: Config = get!(world, (token_contract_address), Config);
+            assert(config.minter_address == get_contract_address(), Errors::INVALID_TOKEN_ADDRESS);
+            config.purchase_token_address = purchase_token_address;
+            config.purchase_price_eth = purchase_price_eth;
+            set!(world, (config));
+        }
+
+        fn set_royalty(ref world: IWorldDispatcher,
+            token_contract_address: ContractAddress,
+            royalty_receiver: ContractAddress,
+            royalty_fraction: u128,
+        ) {
+            self._assert_caller_is_owner();
+            let mut config: Config = get!(world, (token_contract_address), Config);
+            assert(config.minter_address == get_contract_address(), Errors::INVALID_TOKEN_ADDRESS);
+            config.royalty_receiver = royalty_receiver;
+            config.royalty_fraction = royalty_fraction;
+            set!(world, (config));
+        }
     }
 
+    //---------------------------------------
+    // Internal
+    //
     impl InternalImpl of super::IMinterInternal<ContractState> {
         #[inline(always)]
-        fn assert_caller_is_owner(world: @IWorldDispatcher) {
+        fn _assert_caller_is_owner(world: @IWorldDispatcher) {
             WORLD(world);
-            assert(self.caller_is_owner(), Errors::NOT_OWNER);
+            assert(self._caller_is_owner(), Errors::CALLER_IS_NOT_OWNER);
         }
         #[inline(always)]
-        fn caller_is_owner(world: @IWorldDispatcher) -> bool {
+        fn _caller_is_owner(world: @IWorldDispatcher) -> bool {
             (world.is_owner(self.selector().into(), get_caller_address()))
         }
     }

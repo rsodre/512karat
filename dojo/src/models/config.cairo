@@ -12,6 +12,11 @@ pub struct Config {
     pub max_supply: u128,
     pub available_supply: u128,
     pub cool_down: bool,
+    // karat_v1.1
+    pub purchase_token_address: ContractAddress,
+    pub purchase_price_eth: u128,
+    pub royalty_receiver: ContractAddress,
+    pub royalty_fraction: u128,
 }
 
 #[generate_trait]

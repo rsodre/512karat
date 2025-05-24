@@ -95,6 +95,11 @@ fn setup_uninitialized() -> (IWorldDispatcher, IKaratTokenDispatcher) {
         max_supply: 512,
         available_supply: 128,
         cool_down: false,
+        // karat_v1.1
+        purchase_token_address: ZERO(),
+        purchase_price_eth: 0,
+        royalty_receiver: ZERO(),
+        royalty_fraction: 0,
     };
     config.set_test(world);
 
