@@ -199,6 +199,168 @@
   },
   {
     "type": "impl",
+    "name": "KaratTokenNewImpl",
+    "interface_name": "karat::systems::karat_token::IKaratTokenNew"
+  },
+  {
+    "type": "interface",
+    "name": "karat::systems::karat_token::IKaratTokenNew",
+    "items": [
+      {
+        "type": "function",
+        "name": "karat_init",
+        "inputs": [],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "contract_uri",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::byte_array::ByteArray"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "contractURI",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::byte_array::ByteArray"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "emit_metadata_update",
+        "inputs": [
+          {
+            "name": "token_id",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "emit_batch_metadata_update",
+        "inputs": [
+          {
+            "name": "from_token_id",
+            "type": "core::integer::u256"
+          },
+          {
+            "name": "to_token_id",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "default_royalty",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "(core::starknet::contract_address::ContractAddress, core::integer::u128, core::integer::u128)"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "token_royalty",
+        "inputs": [
+          {
+            "name": "token_id",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "(core::starknet::contract_address::ContractAddress, core::integer::u128, core::integer::u128)"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "royalty_info",
+        "inputs": [
+          {
+            "name": "token_id",
+            "type": "core::integer::u256"
+          },
+          {
+            "name": "sale_price",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "(core::starknet::contract_address::ContractAddress, core::integer::u256)"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "defaultRoyalty",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "(core::starknet::contract_address::ContractAddress, core::integer::u128, core::integer::u128)"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "tokenRoyalty",
+        "inputs": [
+          {
+            "name": "token_id",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "(core::starknet::contract_address::ContractAddress, core::integer::u128, core::integer::u128)"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "royaltyInfo",
+        "inputs": [
+          {
+            "name": "token_id",
+            "type": "core::integer::u256"
+          },
+          {
+            "name": "sale_price",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "(core::starknet::contract_address::ContractAddress, core::integer::u256)"
+          }
+        ],
+        "state_mutability": "view"
+      }
+    ]
+  },
+  {
+    "type": "impl",
     "name": "UpgradableImpl",
     "interface_name": "dojo::contract::upgradeable::IUpgradeable"
   },
@@ -991,6 +1153,41 @@
   },
   {
     "type": "event",
+    "name": "karat::systems::karat_token::karat_token::ContractURIUpdated",
+    "kind": "struct",
+    "members": []
+  },
+  {
+    "type": "event",
+    "name": "karat::systems::karat_token::karat_token::MetadataUpdate",
+    "kind": "struct",
+    "members": [
+      {
+        "name": "token_id",
+        "type": "core::integer::u256",
+        "kind": "key"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "karat::systems::karat_token::karat_token::BatchMetadataUpdate",
+    "kind": "struct",
+    "members": [
+      {
+        "name": "from_token_id",
+        "type": "core::integer::u256",
+        "kind": "key"
+      },
+      {
+        "name": "to_token_id",
+        "type": "core::integer::u256",
+        "kind": "key"
+      }
+    ]
+  },
+  {
+    "type": "event",
     "name": "karat::systems::karat_token::karat_token::Event",
     "kind": "enum",
     "variants": [
@@ -1043,6 +1240,21 @@
         "name": "ERC721OwnerEvent",
         "type": "origami_token::components::token::erc721::erc721_owner::erc721_owner_component::Event",
         "kind": "flat"
+      },
+      {
+        "name": "ContractURIUpdated",
+        "type": "karat::systems::karat_token::karat_token::ContractURIUpdated",
+        "kind": "nested"
+      },
+      {
+        "name": "MetadataUpdate",
+        "type": "karat::systems::karat_token::karat_token::MetadataUpdate",
+        "kind": "nested"
+      },
+      {
+        "name": "BatchMetadataUpdate",
+        "type": "karat::systems::karat_token::karat_token::BatchMetadataUpdate",
+        "kind": "nested"
       }
     ]
   }
