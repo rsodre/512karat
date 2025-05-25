@@ -35,7 +35,7 @@ mod tests {
 
     #[test]
     fn test_is_initialized() {
-        let sys: Systems = tester::spawn_systems();
+        let sys: Systems = tester::spawn_systems(false);
         println!("NAME: {}", sys.karat.name());
         println!("SYMBOL: {}", sys.karat.symbol());
         assert(sys.karat.name() == CONST::const_string(CONST::TOKEN_NAME), 'name');
@@ -50,7 +50,7 @@ mod tests {
 
     #[test]
     fn test_token_uri() {
-        let sys: Systems = tester::spawn_systems();
+        let sys: Systems = tester::spawn_systems(false);
         sys.minter.mint(sys.karat.contract_address);
         let uri: ByteArray = sys.karat.token_uri(1);
         let uri_camel = sys.karat.tokenURI(1);
@@ -62,7 +62,7 @@ mod tests {
 
     #[test]
     fn test_admin_karat_init_ok() {
-        let sys: Systems = tester::spawn_systems();
+        let sys: Systems = tester::spawn_systems(false);
         tester::impersonate(OWNER());
         sys.karat.karat_init();
         assert!(sys.karat.supports_interface(karat_token::IERC7572_ID), "should support IERC7572_ID");
@@ -75,7 +75,7 @@ mod tests {
     #[test]
     #[should_panic(expected:('KARAT: caller is not owner','ENTRYPOINT_FAILED'))]
     fn test_admin_karat_init_not_owner() {
-        let sys: Systems = tester::spawn_systems();
+        let sys: Systems = tester::spawn_systems(false);
         tester::impersonate(OTHER());
         sys.karat.karat_init();
     }
@@ -87,7 +87,7 @@ mod tests {
 
     #[test]
     fn test_contract_uri() {
-        let sys: Systems = tester::spawn_systems();
+        let sys: Systems = tester::spawn_systems(false);
         let uri: ByteArray = sys.karat.contract_uri();
         let uri_camel = sys.karat.contractURI();
         // println!("___contract_uri_none(1):[{}]", uri);
@@ -103,7 +103,7 @@ mod tests {
 
     #[test]
     fn test_metadata_update() {
-        let sys: Systems = tester::spawn_systems();
+        let sys: Systems = tester::spawn_systems(false);
         tester::drop_all_events(sys.karat.contract_address);
         sys.karat.emit_metadata_update(TOKEN_ID_3);
         let event = tester::pop_log::<karat_token::MetadataUpdate>(sys.karat.contract_address, selector!("MetadataUpdate")).unwrap();
@@ -112,7 +112,7 @@ mod tests {
 
     #[test]
     fn test_batch_metadata_update() {
-        let sys: Systems = tester::spawn_systems();
+        let sys: Systems = tester::spawn_systems(false);
         tester::drop_all_events(sys.karat.contract_address);
         sys.karat.emit_batch_metadata_update(TOKEN_ID_2, TOKEN_ID_3);
         let event = tester::pop_log::<karat_token::BatchMetadataUpdate>(sys.karat.contract_address, selector!("BatchMetadataUpdate")).unwrap();
@@ -127,7 +127,7 @@ mod tests {
 
     #[test]
     fn test_default_royalty() {
-        let sys: Systems = tester::spawn_systems();
+        let sys: Systems = tester::spawn_systems(false);
         // default is zero
         let (receiver, numerator, denominator) = sys.karat.default_royalty();
         assert_eq!(receiver, ZERO(), "default: receiver");
@@ -143,7 +143,7 @@ mod tests {
 
     #[test]
     fn test_token_royalty() {
-        let sys: Systems = tester::spawn_systems();
+        let sys: Systems = tester::spawn_systems(false);
         // default is zero
         let (receiver, numerator, denominator) = sys.karat.token_royalty(1);
         assert_eq!(receiver, ZERO(), "default: receiver");
@@ -159,7 +159,7 @@ mod tests {
 
     #[test]
     fn test_royalty_info() {
-        let sys: Systems = tester::spawn_systems();
+        let sys: Systems = tester::spawn_systems(false);
         // default is zero
         let PRICE: u256 = WEI(100); // 100 ETH
         let (receiver, fees) = sys.karat.royalty_info(1, PRICE);

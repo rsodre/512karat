@@ -19,14 +19,14 @@ mod tests {
     #[test]
     #[available_gas(10__000_000_000)]
     fn test_profile_mint() {
-        let sys: Systems = tester::spawn_systems();
+        let sys: Systems = tester::spawn_systems(false);
         sys.minter.mint(sys.karat.contract_address);
     }
 
     #[test]
     #[available_gas(10__000_000_000)]
     fn test_profile_token_uri() {
-        let sys: Systems = tester::spawn_systems();
+        let sys: Systems = tester::spawn_systems(false);
         sys.minter.mint(sys.karat.contract_address);
         sys.karat.token_uri(1);
     }

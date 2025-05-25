@@ -12,6 +12,7 @@ mod tester {
         systems::{minter::{minter, IMinterDispatcher, IMinterDispatcherTrait}},
         systems::{karat_token::{karat_token, IKaratTokenDispatcher, IKaratTokenDispatcherTrait}},
     };
+    use karat::tests::coin_mock::{coin_mock, ICoinMockDispatcher, ICoinMockDispatcherTrait};
 
     // token
     use origami_token::components::token::erc721::erc721_enumerable::erc721_enumerable_component::{
@@ -32,11 +33,12 @@ mod tester {
         world: IWorldDispatcher,
         karat: IKaratTokenDispatcher,
         minter: IMinterDispatcher,
+        coin: ICoinMockDispatcher,
         max_supply: u128,
         available_supply: u128,
     }
 
-    fn spawn_systems() -> Systems {
+    fn spawn_systems(include_mocks: bool) -> Systems {
         let world = spawn_test_world(["dojo", "origami_karat", "karat"].span(),  get_models_test_class_hashes!());
 
         let max_supply: u128 = 6;
@@ -62,6 +64,17 @@ mod tester {
         world.grant_owner(selector_from_tag!("karat-minter"), OWNER());
         world.init_contract(selector_from_tag!("karat-minter"), minter_calldata);
 
+        let coin = ICoinMockDispatcher {
+            contract_address: if (include_mocks) {
+                let contract_address = world.deploy_contract('coin', coin_mock::TEST_CLASS_HASH.try_into().unwrap());
+                world.grant_owner(dojo::utils::bytearray_hash(@"origami_karat"), contract_address);
+                world.init_contract(selector_from_tag!("karat-coin_mock"), [].span());
+                (contract_address)
+            } else {
+                (ZERO())
+            }
+        };
+
         impersonate(OWNER());
 
         utils::drop_all_events(karat.contract_address);
@@ -71,6 +84,7 @@ mod tester {
             world,
             karat,
             minter,
+            coin,
             max_supply,
             available_supply,
         })

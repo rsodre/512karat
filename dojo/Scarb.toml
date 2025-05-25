@@ -22,8 +22,9 @@ origami_token = { git = "https://github.com/rsodre/origami", branch = "karat" }
 # sozo build
 # ls -l target/dev | grep model
 build-external-contracts = [
-  "origami_token::components::security::initializable::initializable_model",
-  "origami_token::components::introspection::src5::src_5_model",
+  "origami_token::components::security::initializable::InitializableModel",
+  "origami_token::components::introspection::src5::SRC5Model",
+  # erc721
   "origami_token::components::token::erc721::erc721_owner::ERC721OwnerModel",
   "origami_token::components::token::erc721::erc721_balance::ERC721BalanceModel",
   "origami_token::components::token::erc721::erc721_metadata::ERC721MetaModel",
@@ -34,6 +35,11 @@ build-external-contracts = [
   "origami_token::components::token::erc721::erc721_enumerable::ERC721EnumerableTotalModel",
   "origami_token::components::token::erc721::erc721_approval::ERC721TokenApprovalModel",
   "origami_token::components::token::erc721::erc721_approval::ERC721OperatorApprovalModel",
+  # erc20 (mock)
+  "origami_token::components::token::erc20::erc20_balance::ERC20BalanceModel",
+  "origami_token::components::token::erc20::erc20_metadata::ERC20MetadataModel",
+  "origami_token::components::token::erc20::erc20_allowance::ERC20AllowanceModel",
+  "origami_token::components::token::erc20::erc20_bridgeable::ERC20BridgeableModel",
 ]
 
 

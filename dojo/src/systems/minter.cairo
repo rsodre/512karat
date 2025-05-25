@@ -14,8 +14,8 @@ trait IMinter {
     // karat_v1.1
     fn set_purchase_price(ref world: IWorldDispatcher,
         token_contract_address: ContractAddress,
-        purchase_token_address: ContractAddress,
-        purchase_price_eth: u128,
+        purchase_coin_address: ContractAddress,
+        purchase_price_eth: u8,
     );
     fn set_royalty(ref world: IWorldDispatcher,
         token_contract_address: ContractAddress,
@@ -42,8 +42,9 @@ mod minter {
     use zeroable::Zeroable;
     use starknet::{ContractAddress, get_contract_address, get_caller_address};
     use karat::systems::karat_token::{IKaratTokenDispatcher, IKaratTokenDispatcherTrait};
+    use karat::interfaces::erc20::{IERC20Dispatcher, IERC20DispatcherTrait};
     use karat::utils::renderer::{renderer};
-    use karat::utils::misc::{WORLD, ZERO};
+    use karat::utils::misc::{WORLD, ZERO, WEI};
     use karat::models::{
         config::{Config, ConfigTrait},
         token_data::{TokenData, TokenDataTrait},
@@ -57,6 +58,10 @@ mod minter {
         const MINTED_OUT: felt252               = 'MINTER: minted out';
         const UNAVAILABLE: felt252              = 'MINTER: unavailable';
         const COOLING_DOWN: felt252             = 'MINTER: cool down!';
+        const INVALID_COIN_ADDRESS: felt252     = 'MINTER: invalid coin address';
+        const INVALID_RECEIVER: felt252         = 'MINTER: invalid receiver';
+        const INSUFFICIENT_ALLOWANCE: felt252   = 'MINTER: insufficient allowance';
+        const INSUFFICIENT_BALANCE: felt252     = 'MINTER: insufficient balance';
     }
 
     //---------------------------------------
@@ -86,7 +91,7 @@ mod minter {
             available_supply,
             cool_down: true,
             // karat_v1.1
-            purchase_token_address: ZERO(),
+            purchase_coin_address: ZERO(),
             purchase_price_eth: 0,
             royalty_receiver: ZERO(),
             royalty_fraction: 0,
@@ -107,20 +112,39 @@ mod minter {
             let total_supply: u256 = karat.total_supply();
 
             // check availability
-            let is_owner: bool = self._caller_is_owner();
+            let caller_is_owner: bool = self._caller_is_owner();
             let config: Config = get!(world, (token_contract_address), Config);
             assert(total_supply.low < config.max_supply, Errors::MINTED_OUT);
-            assert(total_supply.low < config.available_supply || is_owner, Errors::UNAVAILABLE);
+            assert(total_supply.low < config.available_supply || caller_is_owner, Errors::UNAVAILABLE);
             
             // get next token_id
             let token_id: u256 = (total_supply + 1);
 
-            // very simple cool down rule
-            // avoid wallets to make consecutive mints
-            if (config.cool_down && token_id > 1 && !is_owner) {
-                let last_owner: ContractAddress = karat.owner_of(token_id - 1);
-                assert(last_owner != recipient, Errors::COOLING_DOWN);
-                assert(last_owner != get_caller_address(), Errors::COOLING_DOWN);
+            // check current minting rules...
+            // (contract owner is always allowed to mint)
+            if (!caller_is_owner) {
+                let caller: ContractAddress = get_caller_address();
+                if (config.purchase_price_eth != 0) {
+                    // can purchase for a price
+                    assert(config.purchase_coin_address.is_non_zero(), Errors::INVALID_COIN_ADDRESS);
+                    let coin_dispatcher: IERC20Dispatcher = IERC20Dispatcher{contract_address:config.purchase_coin_address};
+                    // must have allowance
+                    let amount: u256 = WEI(config.purchase_price_eth.into());
+                    let allowance: u256 = coin_dispatcher.allowance(caller, starknet::get_contract_address());
+                    assert(allowance >= amount, Errors::INSUFFICIENT_ALLOWANCE);
+                    // must have balance
+                    let balance: u256 = coin_dispatcher.balance_of(caller);
+                    assert(balance >= amount, Errors::INSUFFICIENT_BALANCE);
+                    // transfer...
+                    assert(config.royalty_receiver.is_non_zero(), Errors::INVALID_RECEIVER);
+                    coin_dispatcher.transfer_from(caller, config.royalty_receiver, amount);
+                } else if (config.cool_down && token_id > 1) {
+                    // very simple cool down rule
+                    // (avoid wallets to make consecutive mints)
+                    let last_owner: ContractAddress = karat.owner_of(token_id - 1);
+                    assert(last_owner != recipient, Errors::COOLING_DOWN);
+                    assert(last_owner != caller, Errors::COOLING_DOWN);
+                }
             }
 
             // mint!
@@ -151,13 +175,13 @@ mod minter {
         //
         fn set_purchase_price(ref world: IWorldDispatcher,
             token_contract_address: ContractAddress,
-            purchase_token_address: ContractAddress,
-            purchase_price_eth: u128,
+            purchase_coin_address: ContractAddress,
+            purchase_price_eth: u8,
         ) {
             self._assert_caller_is_owner();
             let mut config: Config = get!(world, (token_contract_address), Config);
             assert(config.minter_address == get_contract_address(), Errors::INVALID_TOKEN_ADDRESS);
-            config.purchase_token_address = purchase_token_address;
+            config.purchase_coin_address = purchase_coin_address;
             config.purchase_price_eth = purchase_price_eth;
             set!(world, (config));
         }

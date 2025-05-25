@@ -96,7 +96,7 @@ fn setup_uninitialized() -> (IWorldDispatcher, IKaratTokenDispatcher) {
         available_supply: 128,
         cool_down: false,
         // karat_v1.1
-        purchase_token_address: ZERO(),
+        purchase_coin_address: ZERO(),
         purchase_price_eth: 0,
         royalty_receiver: ZERO(),
         royalty_fraction: 0,

@@ -3,6 +3,10 @@ mod systems {
     mod karat_token;
 }
 
+mod interfaces {
+    mod erc20;
+}
+
 mod models {
     mod class;
     mod config;
@@ -26,4 +30,5 @@ mod tests {
     mod test_token;
     mod test_profile;
     mod enumerable_mintable_burnable;
+    mod coin_mock;
 }
