@@ -12,6 +12,7 @@ trait IMinter {
     // fn get_token_svg(ref world: IWorldDispatcher, token_id: u128) -> ByteArray;
 
     // karat_v1.1
+    fn get_price(world: @IWorldDispatcher, token_contract_address: ContractAddress) -> (ContractAddress, u128);
     fn set_purchase_price(ref world: IWorldDispatcher,
         token_contract_address: ContractAddress,
         purchase_coin_address: ContractAddress,
@@ -173,6 +174,11 @@ mod minter {
         //---------------------------------------
         // karat_v1.1
         //
+        fn get_price(world: @IWorldDispatcher, token_contract_address: ContractAddress) -> (ContractAddress, u128) {
+            let config: Config = get!(world, (token_contract_address), Config);
+            (config.purchase_coin_address, WEI(config.purchase_price_eth.into()).low)
+        }
+
         fn set_purchase_price(ref world: IWorldDispatcher,
             token_contract_address: ContractAddress,
             purchase_coin_address: ContractAddress,

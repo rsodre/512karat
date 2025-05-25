@@ -281,6 +281,37 @@ mod tests {
     }
 
     #[test]
+    fn test_purchase_get_price() {
+        let sys: Systems = tester::spawn_systems(true);
+        _karat_init_purchase(sys);
+        // get price...
+        let (purchase_coin_address, purchase_price) = sys.minter.get_price(sys.karat.contract_address);
+        assert(purchase_coin_address == sys.coin.contract_address, 'purchase_coin_address');
+        assert(purchase_price == WEI(PRICE.into()).low, 'purchase_price');
+        // approve
+        tester::impersonate(SPENDER());
+        sys.coin.faucet();
+        sys.coin.approve(sys.minter.contract_address, purchase_price.into());
+        // mint...
+        sys.minter.mint(sys.karat.contract_address);
+    }
+
+    #[test]
+    #[should_panic(expected:('MINTER: insufficient allowance','ENTRYPOINT_FAILED'))]
+    fn test_purchase_get_price_no_allowance() {
+        let sys: Systems = tester::spawn_systems(true);
+        _karat_init_purchase(sys);
+        // get price...
+        let (_purchase_coin_address, purchase_price) = sys.minter.get_price(sys.karat.contract_address);
+        // approve -1
+        tester::impersonate(SPENDER());
+        sys.coin.faucet();
+        sys.coin.approve(sys.minter.contract_address, purchase_price.into()-1);
+        // mint...
+        sys.minter.mint(sys.karat.contract_address);
+    }
+
+    #[test]
     #[should_panic(expected:('MINTER: insufficient allowance','ENTRYPOINT_FAILED'))]
     fn test_purchase_insufficient_allowance() {
         let sys: Systems = tester::spawn_systems(true);
@@ -329,6 +360,10 @@ mod tests {
         let config: Config = get!(sys.world, (sys.karat.contract_address), Config);
         assert(config.purchase_coin_address == OTHER(), 'purchase_coin_address_AFTER');
         assert(config.purchase_price_eth == 222, 'purchase_price_eth_AFTER');
+        // get price...
+        let (purchase_coin_address, purchase_price) = sys.minter.get_price(sys.karat.contract_address);
+        assert(purchase_coin_address == config.purchase_coin_address, 'purchase_coin_address_GET');
+        assert(purchase_price == WEI(config.purchase_price_eth.into()).low, 'purchase_price_GET');
     }
 
     #[test]
