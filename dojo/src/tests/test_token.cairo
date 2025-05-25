@@ -43,9 +43,9 @@ mod tests {
         assert!(sys.karat.supports_interface(ISRC5_ID), "should support ISRC5_ID");
         assert!(sys.karat.supports_interface(IERC721_ID), "should support IERC721_ID");
         assert!(sys.karat.supports_interface(IERC721_METADATA_ID), "should support METADATA");
-        assert!(sys.karat.supports_interface(karat_token::IERC7572_ID), "should support IERC7572_ID");
-        assert!(sys.karat.supports_interface(karat_token::IERC4906_ID), "should support IERC4906_ID");
-        assert!(sys.karat.supports_interface(karat_token::IERC2981_ID), "should support IERC2981_ID");
+        assert!(sys.karat.supports_interface(karat::interfaces::erc721::IERC7572_ID), "should support IERC7572_ID");
+        assert!(sys.karat.supports_interface(karat::interfaces::erc721::IERC4906_ID), "should support IERC4906_ID");
+        assert!(sys.karat.supports_interface(karat::interfaces::erc721::IERC2981_ID), "should support IERC2981_ID");
     }
 
     #[test]
@@ -65,9 +65,9 @@ mod tests {
         let sys: Systems = tester::spawn_systems(false);
         tester::impersonate(OWNER());
         sys.karat.karat_init();
-        assert!(sys.karat.supports_interface(karat_token::IERC7572_ID), "should support IERC7572_ID");
-        assert!(sys.karat.supports_interface(karat_token::IERC4906_ID), "should support IERC4906_ID");
-        assert!(sys.karat.supports_interface(karat_token::IERC2981_ID), "should support IERC2981_ID");
+        assert!(sys.karat.supports_interface(karat::interfaces::erc721::IERC7572_ID), "should support IERC7572_ID");
+        assert!(sys.karat.supports_interface(karat::interfaces::erc721::IERC4906_ID), "should support IERC4906_ID");
+        assert!(sys.karat.supports_interface(karat::interfaces::erc721::IERC2981_ID), "should support IERC2981_ID");
         // must emit contract metadata event
         let _event = tester::pop_log::<karat_token::ContractURIUpdated>(sys.karat.contract_address, selector!("ContractURIUpdated")).unwrap();
     }

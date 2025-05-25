@@ -256,14 +256,6 @@ mod karat_token {
         pub to_token_id: u256,
     }
     pub const ROYALTY_FEE_DENOMINATOR: u128 = 10_000;
-    // definitive IDs (OZ)
-    pub const IERC2981_ID: felt252 = 0x2d3414e45a8700c29f119a54b9f11dca0e29e06ddcb214018fc37340e165ed6;
-    // TODO: compute the correct ids
-    // https://docs.openzeppelin.com/contracts-cairo/1.0.0/introspection#computing_the_interface_id
-    pub const IERC7572_ID: felt252 = selector!("IERC7572_ID");
-    pub const IERC4906_ID: felt252 = selector!("IERC4906_ID");
-
-
 
     mod Errors {
         const CALLER_IS_NOT_OWNER: felt252      = 'KARAT: caller is not owner';
@@ -409,9 +401,9 @@ mod karat_token {
             (self.world().is_owner(self.selector().into(), get_caller_address()))
         }
         fn _init(ref self: ContractState) {
-            self.src5.register_interface(IERC7572_ID);
-            self.src5.register_interface(IERC4906_ID);
-            self.src5.register_interface(IERC2981_ID);
+            self.src5.register_interface(karat::interfaces::erc721::IERC7572_ID);
+            self.src5.register_interface(karat::interfaces::erc721::IERC4906_ID);
+            self.src5.register_interface(karat::interfaces::erc721::IERC2981_ID);
             self.emit(ContractURIUpdated {});
         }
     }
