@@ -1,0 +1,22 @@
+kind = "DojoModel"
+class_hash = "0x63c13636f27db77008be1318900ec3c4e08f6cb1b3167d7dbd147f89ff2d4fb"
+original_class_hash = "0x63c13636f27db77008be1318900ec3c4e08f6cb1b3167d7dbd147f89ff2d4fb"
+abi = "manifests/dev/base/abis/models/origami_karat-ERC20BalanceModel-434aacb2.json"
+tag = "origami_karat-ERC20BalanceModel"
+qualified_path = "origami_token::components::token::erc20::erc20_balance::erc_20_balance_model"
+manifest_name = "origami_karat-ERC20BalanceModel-434aacb2"
+
+[[members]]
+name = "token"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "account"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "amount"
+type = "u256"
+key = false

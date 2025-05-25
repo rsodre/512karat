@@ -1,6 +1,6 @@
 kind = "DojoContract"
-class_hash = "0x890c0eeb11aeb41f237343c3e88b199a2e7e0c159debd1e9c232652afe5dc2"
-original_class_hash = "0x890c0eeb11aeb41f237343c3e88b199a2e7e0c159debd1e9c232652afe5dc2"
+class_hash = "0x7fcc518a71ac318b166d697ede3454335af09c2f8475b15fc237f48ad66a4b0"
+original_class_hash = "0x7fcc518a71ac318b166d697ede3454335af09c2f8475b15fc237f48ad66a4b0"
 base_class_hash = "0x0"
 abi = "manifests/dev/base/abis/contracts/karat-karat_token-6eea4d34.json"
 reads = []
@@ -10,5 +10,8 @@ tag = "karat-karat_token"
 systems = [
     "mint",
     "burn",
+    "karat_init",
+    "emit_metadata_update",
+    "emit_batch_metadata_update",
 ]
 manifest_name = "karat-karat_token-6eea4d34"

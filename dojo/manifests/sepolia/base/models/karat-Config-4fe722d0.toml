@@ -1,6 +1,6 @@
 kind = "DojoModel"
-class_hash = "0x68a476d1a6443fdf9be1883ab0169929af2871ac9257bd091201eb292b9653b"
-original_class_hash = "0x68a476d1a6443fdf9be1883ab0169929af2871ac9257bd091201eb292b9653b"
+class_hash = "0x208ffca74448e858688c0a40d040dc4255edb9952ea7185711f3763c9b413b4"
+original_class_hash = "0x208ffca74448e858688c0a40d040dc4255edb9952ea7185711f3763c9b413b4"
 abi = "manifests/sepolia/base/abis/models/karat-Config-4fe722d0.json"
 tag = "karat-Config"
 qualified_path = "karat::models::config::config"
@@ -17,7 +17,7 @@ type = "ContractAddress"
 key = false
 
 [[members]]
-name = "painter_address"
+name = "renderer_address"
 type = "ContractAddress"
 key = false
 
@@ -27,11 +27,31 @@ type = "u128"
 key = false
 
 [[members]]
+name = "available_supply"
+type = "u128"
+key = false
+
+[[members]]
 name = "cool_down"
 type = "bool"
 key = false
 
 [[members]]
-name = "is_open"
-type = "bool"
+name = "royalty_receiver"
+type = "ContractAddress"
+key = false
+
+[[members]]
+name = "royalty_fraction"
+type = "u128"
+key = false
+
+[[members]]
+name = "purchase_coin_address"
+type = "ContractAddress"
+key = false
+
+[[members]]
+name = "purchase_price_eth"
+type = "u8"
 key = false

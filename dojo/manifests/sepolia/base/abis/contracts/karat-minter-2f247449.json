@@ -148,8 +148,8 @@
             "type": "core::integer::u128"
           },
           {
-            "name": "is_open",
-            "type": "core::integer::u8"
+            "name": "available_supply",
+            "type": "core::integer::u128"
           }
         ],
         "outputs": [],
@@ -161,20 +161,6 @@
     "type": "impl",
     "name": "MinterImpl",
     "interface_name": "karat::systems::minter::IMinter"
-  },
-  {
-    "type": "enum",
-    "name": "core::bool",
-    "variants": [
-      {
-        "name": "False",
-        "type": "()"
-      },
-      {
-        "name": "True",
-        "type": "()"
-      }
-    ]
   },
   {
     "type": "struct",
@@ -264,15 +250,35 @@
       },
       {
         "type": "function",
-        "name": "set_open",
+        "name": "mint_to",
         "inputs": [
           {
             "name": "token_contract_address",
             "type": "core::starknet::contract_address::ContractAddress"
           },
           {
-            "name": "is_open",
-            "type": "core::bool"
+            "name": "recipient",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u128"
+          }
+        ],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "set_available",
+        "inputs": [
+          {
+            "name": "token_contract_address",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "available_supply",
+            "type": "core::integer::u128"
           }
         ],
         "outputs": [],
@@ -293,21 +299,61 @@
           }
         ],
         "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "set_purchase_price",
+        "inputs": [
+          {
+            "name": "token_contract_address",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "purchase_coin_address",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "purchase_price_eth",
+            "type": "core::integer::u8"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "set_royalty",
+        "inputs": [
+          {
+            "name": "token_contract_address",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "royalty_receiver",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "royalty_fraction",
+            "type": "core::integer::u128"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
       }
     ]
   },
   {
     "type": "impl",
-    "name": "PainterImpl",
-    "interface_name": "karat::systems::minter::IPainter"
+    "name": "RendererImpl",
+    "interface_name": "karat::systems::minter::IRenderer"
   },
   {
     "type": "interface",
-    "name": "karat::systems::minter::IPainter",
+    "name": "karat::systems::minter::IRenderer",
     "items": [
       {
         "type": "function",
-        "name": "paint",
+        "name": "render_uri",
         "inputs": [
           {
             "name": "token_id",

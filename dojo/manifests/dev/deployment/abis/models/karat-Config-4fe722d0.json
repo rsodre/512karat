@@ -407,6 +407,22 @@
       {
         "name": "cool_down",
         "type": "core::bool"
+      },
+      {
+        "name": "royalty_receiver",
+        "type": "core::starknet::contract_address::ContractAddress"
+      },
+      {
+        "name": "royalty_fraction",
+        "type": "core::integer::u128"
+      },
+      {
+        "name": "purchase_coin_address",
+        "type": "core::starknet::contract_address::ContractAddress"
+      },
+      {
+        "name": "purchase_price_eth",
+        "type": "core::integer::u8"
       }
     ]
   },

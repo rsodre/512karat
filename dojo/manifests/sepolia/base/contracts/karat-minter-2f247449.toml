@@ -1,6 +1,6 @@
 kind = "DojoContract"
-class_hash = "0x3070ef774baee12e79e80b64f1ebec122da9000a980560fcceb524ad353e7de"
-original_class_hash = "0x3070ef774baee12e79e80b64f1ebec122da9000a980560fcceb524ad353e7de"
+class_hash = "0x1ed6b52b827b9b6ff423dbb52c01b5c8cbe641d1cafcbb88dfd6253dccf8653"
+original_class_hash = "0x1ed6b52b827b9b6ff423dbb52c01b5c8cbe641d1cafcbb88dfd6253dccf8653"
 base_class_hash = "0x0"
 abi = "manifests/sepolia/base/abis/contracts/karat-minter-2f247449.json"
 reads = []
@@ -8,7 +8,9 @@ writes = []
 init_calldata = []
 tag = "karat-minter"
 systems = [
-    "set_open",
-    "assert_caller_is_owner",
+    "set_available",
+    "set_purchase_price",
+    "set_royalty",
+    "_assert_caller_is_owner",
 ]
 manifest_name = "karat-minter-2f247449"

@@ -1,6 +1,6 @@
 kind = "DojoModel"
-class_hash = "0xe95c66e083e2544e59253769427187d7e3b046326261277454c67bcc7af4d0"
-original_class_hash = "0xe95c66e083e2544e59253769427187d7e3b046326261277454c67bcc7af4d0"
+class_hash = "0x208ffca74448e858688c0a40d040dc4255edb9952ea7185711f3763c9b413b4"
+original_class_hash = "0x208ffca74448e858688c0a40d040dc4255edb9952ea7185711f3763c9b413b4"
 abi = "manifests/dev/base/abis/models/karat-Config-4fe722d0.json"
 tag = "karat-Config"
 qualified_path = "karat::models::config::config"
@@ -34,4 +34,24 @@ key = false
 [[members]]
 name = "cool_down"
 type = "bool"
+key = false
+
+[[members]]
+name = "royalty_receiver"
+type = "ContractAddress"
+key = false
+
+[[members]]
+name = "royalty_fraction"
+type = "u128"
+key = false
+
+[[members]]
+name = "purchase_coin_address"
+type = "ContractAddress"
+key = false
+
+[[members]]
+name = "purchase_price_eth"
+type = "u8"
 key = false

@@ -1,11 +1,11 @@
 [world]
 kind = "WorldContract"
-class_hash = "0xa349b743d361ce4567361475a89b84a386bb383448c6926954e5fe0b525597"
-original_class_hash = "0xa349b743d361ce4567361475a89b84a386bb383448c6926954e5fe0b525597"
+class_hash = "0x6f4515274ee23404789c3351a77107d0ec07508530119822046600ca6948d6e"
+original_class_hash = "0x6f4515274ee23404789c3351a77107d0ec07508530119822046600ca6948d6e"
 abi = "manifests/sepolia/deployment/abis/dojo-world.json"
-address = "0x200d01c9f8cffdc13fa0d9aed9b8c5729659b67ee6ad68c6d5fa2e519825bf3"
-transaction_hash = "0x71683e57bfbca18b4cde4b50bf7085512369939ad09531fa204f27087faf7f1"
-seed = "512karat_6"
+address = "0x6d0ec058817299691fd3ddb7b07c263524f5e2f6cb53c59528ec0b62ccdf4ae"
+transaction_hash = "0x5bd465cd803dd2e5eb8dd6a1af6e05a0dc80600fed9498c42136ee6804aece"
+seed = "karat_6"
 manifest_name = "dojo-world"
 
 [world.metadata]
@@ -22,9 +22,9 @@ manifest_name = "dojo-base"
 
 [[contracts]]
 kind = "DojoContract"
-address = "0x5a2c005d0d50fcd19828cb0af4252a9dcd980d196676d441a200b1a0ed0b252"
-class_hash = "0x54594a464d9ff3985eb3312f93e8b1220b13b71cc5b357d1f395b03c20c46f"
-original_class_hash = "0x54594a464d9ff3985eb3312f93e8b1220b13b71cc5b357d1f395b03c20c46f"
+address = "0x7983f8670a1ad69e289ba6ab8fff66ce92d4e7a560be51d977081f1317f614"
+class_hash = "0x7fcc518a71ac318b166d697ede3454335af09c2f8475b15fc237f48ad66a4b0"
+original_class_hash = "0x7fcc518a71ac318b166d697ede3454335af09c2f8475b15fc237f48ad66a4b0"
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/sepolia/deployment/abis/contracts/karat-karat_token-6eea4d34.json"
 reads = []
@@ -45,17 +45,19 @@ writes = [
 init_calldata = []
 tag = "karat-karat_token"
 systems = [
-    "initialize",
     "mint",
     "burn",
+    "karat_init",
+    "emit_metadata_update",
+    "emit_batch_metadata_update",
 ]
 manifest_name = "karat-karat_token-6eea4d34"
 
 [[contracts]]
 kind = "DojoContract"
-address = "0x6ec76c43746c44ec8edd8317400579685c7b0506a8a84f1bb8bbf341310d5e4"
-class_hash = "0x3070ef774baee12e79e80b64f1ebec122da9000a980560fcceb524ad353e7de"
-original_class_hash = "0x3070ef774baee12e79e80b64f1ebec122da9000a980560fcceb524ad353e7de"
+address = "0x6e01c1e3f9f9379171e8aa28a045eeb9d71475a88031bf3c31ac4b3a880d73a"
+class_hash = "0x1ed6b52b827b9b6ff423dbb52c01b5c8cbe641d1cafcbb88dfd6253dccf8653"
+original_class_hash = "0x1ed6b52b827b9b6ff423dbb52c01b5c8cbe641d1cafcbb88dfd6253dccf8653"
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/sepolia/deployment/abis/contracts/karat-minter-2f247449.json"
 reads = []
@@ -66,19 +68,21 @@ writes = [
 init_calldata = [
     "$contract_address:karat-karat_token",
     "512",
-    "1",
+    "0",
 ]
 tag = "karat-minter"
 systems = [
-    "set_open",
-    "assert_caller_is_owner",
+    "set_available",
+    "set_purchase_price",
+    "set_royalty",
+    "_assert_caller_is_owner",
 ]
 manifest_name = "karat-minter-2f247449"
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x68a476d1a6443fdf9be1883ab0169929af2871ac9257bd091201eb292b9653b"
-original_class_hash = "0x68a476d1a6443fdf9be1883ab0169929af2871ac9257bd091201eb292b9653b"
+class_hash = "0x208ffca74448e858688c0a40d040dc4255edb9952ea7185711f3763c9b413b4"
+original_class_hash = "0x208ffca74448e858688c0a40d040dc4255edb9952ea7185711f3763c9b413b4"
 abi = "manifests/sepolia/deployment/abis/models/karat-Config-4fe722d0.json"
 tag = "karat-Config"
 qualified_path = "karat::models::config::config"
@@ -95,7 +99,7 @@ type = "ContractAddress"
 key = false
 
 [[models.members]]
-name = "painter_address"
+name = "renderer_address"
 type = "ContractAddress"
 key = false
 
@@ -105,13 +109,33 @@ type = "u128"
 key = false
 
 [[models.members]]
+name = "available_supply"
+type = "u128"
+key = false
+
+[[models.members]]
 name = "cool_down"
 type = "bool"
 key = false
 
 [[models.members]]
-name = "is_open"
-type = "bool"
+name = "royalty_receiver"
+type = "ContractAddress"
+key = false
+
+[[models.members]]
+name = "royalty_fraction"
+type = "u128"
+key = false
+
+[[models.members]]
+name = "purchase_coin_address"
+type = "ContractAddress"
+key = false
+
+[[models.members]]
+name = "purchase_price_eth"
+type = "u8"
 key = false
 
 [[models]]
@@ -131,6 +155,112 @@ key = true
 [[models.members]]
 name = "seed"
 type = "u128"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x4afc8a9db9e30cfb32c262778190aeb6b53d45fcb6dc8b6c455c462c2ab3542"
+original_class_hash = "0x4afc8a9db9e30cfb32c262778190aeb6b53d45fcb6dc8b6c455c462c2ab3542"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-ERC20AllowanceModel-3dd6a62f.json"
+tag = "origami_karat-ERC20AllowanceModel"
+qualified_path = "origami_token::components::token::erc20::erc20_allowance::erc_20_allowance_model"
+manifest_name = "origami_karat-ERC20AllowanceModel-3dd6a62f"
+
+[[models.members]]
+name = "token"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "owner"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "spender"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "amount"
+type = "u256"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x63c13636f27db77008be1318900ec3c4e08f6cb1b3167d7dbd147f89ff2d4fb"
+original_class_hash = "0x63c13636f27db77008be1318900ec3c4e08f6cb1b3167d7dbd147f89ff2d4fb"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-ERC20BalanceModel-434aacb2.json"
+tag = "origami_karat-ERC20BalanceModel"
+qualified_path = "origami_token::components::token::erc20::erc20_balance::erc_20_balance_model"
+manifest_name = "origami_karat-ERC20BalanceModel-434aacb2"
+
+[[models.members]]
+name = "token"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "account"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "amount"
+type = "u256"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x4d42eba0c0ea583530693481ee899f7cedfa70ceefb67a328175c8bcb799d3e"
+original_class_hash = "0x4d42eba0c0ea583530693481ee899f7cedfa70ceefb67a328175c8bcb799d3e"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-ERC20BridgeableModel-47e92f47.json"
+tag = "origami_karat-ERC20BridgeableModel"
+qualified_path = "origami_token::components::token::erc20::erc20_bridgeable::erc_20_bridgeable_model"
+manifest_name = "origami_karat-ERC20BridgeableModel-47e92f47"
+
+[[models.members]]
+name = "token"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "l2_bridge_address"
+type = "ContractAddress"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x1ec2e5684b7c6fbdcf40e98a125447b1e383659091229f4795009b64822c595"
+original_class_hash = "0x1ec2e5684b7c6fbdcf40e98a125447b1e383659091229f4795009b64822c595"
+abi = "manifests/sepolia/deployment/abis/models/origami_karat-ERC20MetadataModel-57cc5c8d.json"
+tag = "origami_karat-ERC20MetadataModel"
+qualified_path = "origami_token::components::token::erc20::erc20_metadata::erc_20_metadata_model"
+manifest_name = "origami_karat-ERC20MetadataModel-57cc5c8d"
+
+[[models.members]]
+name = "token"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "name"
+type = "ByteArray"
+key = false
+
+[[models.members]]
+name = "symbol"
+type = "ByteArray"
+key = false
+
+[[models.members]]
+name = "decimals"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "total_supply"
+type = "u256"
 key = false
 
 [[models]]

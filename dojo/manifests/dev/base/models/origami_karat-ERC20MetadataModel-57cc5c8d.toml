@@ -1,0 +1,32 @@
+kind = "DojoModel"
+class_hash = "0x1ec2e5684b7c6fbdcf40e98a125447b1e383659091229f4795009b64822c595"
+original_class_hash = "0x1ec2e5684b7c6fbdcf40e98a125447b1e383659091229f4795009b64822c595"
+abi = "manifests/dev/base/abis/models/origami_karat-ERC20MetadataModel-57cc5c8d.json"
+tag = "origami_karat-ERC20MetadataModel"
+qualified_path = "origami_token::components::token::erc20::erc20_metadata::erc_20_metadata_model"
+manifest_name = "origami_karat-ERC20MetadataModel-57cc5c8d"
+
+[[members]]
+name = "token"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "name"
+type = "ByteArray"
+key = false
+
+[[members]]
+name = "symbol"
+type = "ByteArray"
+key = false
+
+[[members]]
+name = "decimals"
+type = "u8"
+key = false
+
+[[members]]
+name = "total_supply"
+type = "u256"
+key = false

@@ -1,6 +1,6 @@
 kind = "DojoContract"
-class_hash = "0x54594a464d9ff3985eb3312f93e8b1220b13b71cc5b357d1f395b03c20c46f"
-original_class_hash = "0x54594a464d9ff3985eb3312f93e8b1220b13b71cc5b357d1f395b03c20c46f"
+class_hash = "0x7fcc518a71ac318b166d697ede3454335af09c2f8475b15fc237f48ad66a4b0"
+original_class_hash = "0x7fcc518a71ac318b166d697ede3454335af09c2f8475b15fc237f48ad66a4b0"
 base_class_hash = "0x0"
 abi = "manifests/sepolia/base/abis/contracts/karat-karat_token-6eea4d34.json"
 reads = []
@@ -8,8 +8,10 @@ writes = []
 init_calldata = []
 tag = "karat-karat_token"
 systems = [
-    "initialize",
     "mint",
     "burn",
+    "karat_init",
+    "emit_metadata_update",
+    "emit_batch_metadata_update",
 ]
 manifest_name = "karat-karat_token-6eea4d34"

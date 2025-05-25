@@ -44,7 +44,10 @@ fi
 echo "------------------------------------------------------------------------------"
 echo ">>> Migrate plan..."
 sozo -P $PROFILE migrate plan --world $WORLD_ADDRESS
-# exit 0
+
+echo "-- EXIT!"
+exit 0
+
 echo ">>> Migrate apply..."
 sozo -P $PROFILE migrate apply --world $WORLD_ADDRESS -vvv
 echo "👍"

@@ -9,12 +9,12 @@ export function defineContractComponents(world: World) {
     Config: (() => {
       return defineComponent(
         world,
-        { token_address: RecsType.BigInt, minter_address: RecsType.BigInt, renderer_address: RecsType.BigInt, max_supply: RecsType.BigInt, available_supply: RecsType.BigInt, cool_down: RecsType.Boolean },
+        { token_address: RecsType.BigInt, minter_address: RecsType.BigInt, renderer_address: RecsType.BigInt, max_supply: RecsType.BigInt, available_supply: RecsType.BigInt, cool_down: RecsType.Boolean, royalty_receiver: RecsType.BigInt, royalty_fraction: RecsType.BigInt, purchase_coin_address: RecsType.BigInt, purchase_price_eth: RecsType.Number },
         {
           metadata: {
             namespace: "karat",
             name: "Config",
-            types: ["contractaddress","contractaddress","contractaddress","u128","u128","bool"],
+            types: ["contractaddress","contractaddress","contractaddress","u128","u128","bool","contractaddress","u128","contractaddress","u8"],
             customTypes: [],
           },
         }
@@ -29,6 +29,62 @@ export function defineContractComponents(world: World) {
             namespace: "karat",
             name: "Seed",
             types: ["u128","u128"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC20AllowanceModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, owner: RecsType.BigInt, spender: RecsType.BigInt, amount: RecsType.BigInt },
+        {
+          metadata: {
+            namespace: "origami_karat",
+            name: "ERC20AllowanceModel",
+            types: ["contractaddress","contractaddress","contractaddress","u256"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC20BalanceModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, account: RecsType.BigInt, amount: RecsType.BigInt },
+        {
+          metadata: {
+            namespace: "origami_karat",
+            name: "ERC20BalanceModel",
+            types: ["contractaddress","contractaddress","u256"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC20BridgeableModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, l2_bridge_address: RecsType.BigInt },
+        {
+          metadata: {
+            namespace: "origami_karat",
+            name: "ERC20BridgeableModel",
+            types: ["contractaddress","contractaddress"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    ERC20MetadataModel: (() => {
+      return defineComponent(
+        world,
+        { token: RecsType.BigInt, name: RecsType.String, symbol: RecsType.String, decimals: RecsType.Number, total_supply: RecsType.BigInt },
+        {
+          metadata: {
+            namespace: "origami_karat",
+            name: "ERC20MetadataModel",
+            types: ["contractaddress","u8","u256"],
             customTypes: [],
           },
         }
