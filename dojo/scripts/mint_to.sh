@@ -15,4 +15,4 @@ pushd $(dirname "$0")/..
 
 # sozo execute --world <WORLD_ADDRESS> <CONTRACT> <ENTRYPOINT>
 echo "> minting to: $RECIPIENT_ADDRESS"
-sozo execute katat-minter mint_to --calldata $TOKEN_ADDRESS,$RECIPIENT_ADDRESS --world $WORLD_ADDRESS --wait
+sozo execute karat-minter mint_to --calldata $TOKEN_ADDRESS,$RECIPIENT_ADDRESS --world $WORLD_ADDRESS --wait

@@ -15,4 +15,4 @@ pushd $(dirname "$0")/..
 
 # sozo execute --world <WORLD_ADDRESS> <CONTRACT> <ENTRYPOINT>
 echo "> new available supply: $AMOUNT"
-sozo execute katat-minter set_available --calldata $TOKEN_ADDRESS,$AMOUNT --world $WORLD_ADDRESS --wait
+sozo execute karat-minter set_available --calldata $TOKEN_ADDRESS,$AMOUNT --world $WORLD_ADDRESS --wait

@@ -45,7 +45,7 @@ echo "--------------------------------------------------------------------------
 echo ">>> Migrate plan..."
 sozo -P $PROFILE migrate plan --world $WORLD_ADDRESS
 
-echo "-- EXIT!"
+echo "-- EXITING BEFORE DEPLOYMENT!"
 exit 0
 
 echo ">>> Migrate apply..."
