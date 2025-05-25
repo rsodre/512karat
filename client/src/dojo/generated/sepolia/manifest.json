@@ -1256,8 +1256,8 @@
     {
       "kind": "DojoContract",
       "address": "0x7983f8670a1ad69e289ba6ab8fff66ce92d4e7a560be51d977081f1317f614",
-      "class_hash": "0x7fcc518a71ac318b166d697ede3454335af09c2f8475b15fc237f48ad66a4b0",
-      "original_class_hash": "0x7fcc518a71ac318b166d697ede3454335af09c2f8475b15fc237f48ad66a4b0",
+      "class_hash": "0xb847ef6966ef8362687eb3d06041e335d81b0f2c0521ffe0ca5801fa8660bc",
+      "original_class_hash": "0xb847ef6966ef8362687eb3d06041e335d81b0f2c0521ffe0ca5801fa8660bc",
       "base_class_hash": "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2",
       "abi": [
         {
@@ -2549,8 +2549,8 @@
     {
       "kind": "DojoContract",
       "address": "0x6e01c1e3f9f9379171e8aa28a045eeb9d71475a88031bf3c31ac4b3a880d73a",
-      "class_hash": "0x1ed6b52b827b9b6ff423dbb52c01b5c8cbe641d1cafcbb88dfd6253dccf8653",
-      "original_class_hash": "0x1ed6b52b827b9b6ff423dbb52c01b5c8cbe641d1cafcbb88dfd6253dccf8653",
+      "class_hash": "0x4bc8242eb6cf9a94410b4a0e3e5fbeb09510d70ad097f8fe0a3a184fa951ade",
+      "original_class_hash": "0x4bc8242eb6cf9a94410b4a0e3e5fbeb09510d70ad097f8fe0a3a184fa951ade",
       "base_class_hash": "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2",
       "abi": [
         {
@@ -2850,6 +2850,22 @@
               "outputs": [
                 {
                   "type": "karat::models::token_data::TokenData"
+                }
+              ],
+              "state_mutability": "view"
+            },
+            {
+              "type": "function",
+              "name": "get_price",
+              "inputs": [
+                {
+                  "name": "token_contract_address",
+                  "type": "core::starknet::contract_address::ContractAddress"
+                }
+              ],
+              "outputs": [
+                {
+                  "type": "(core::starknet::contract_address::ContractAddress, core::integer::u128)"
                 }
               ],
               "state_mutability": "view"
