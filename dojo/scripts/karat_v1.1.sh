@@ -28,14 +28,14 @@ pushd $(dirname "$0")/..
 
 # sozo execute --world <WORLD_ADDRESS> <CONTRACT> <ENTRYPOINT>
 echo "> karat_init()"
-sozo execute karat-karat_token karat_init --world $WORLD_ADDRESS --wait
+sozo execute karat-karat_token --world $WORLD_ADDRESS --wait karat_init
 echo "> set_royalty()"
-sozo execute karat-minter set_royalty --calldata $TOKEN_ADDRESS,$TREASURY_ADDRESS,250 --world $WORLD_ADDRESS --wait
+sozo execute karat-minter --world $WORLD_ADDRESS --wait set_royalty $TOKEN_ADDRESS,$TREASURY_ADDRESS,250
 echo "> set_purchase_price()"
-sozo execute karat-minter set_purchase_price --calldata $TOKEN_ADDRESS,$STRK_ADDRESS,100 --world $WORLD_ADDRESS --wait
+sozo execute karat-minter --world $WORLD_ADDRESS --wait set_purchase_price $TOKEN_ADDRESS,$STRK_ADDRESS,100
 
 sozo -P $PROFILE model get karat-Config $TOKEN_ADDRESS
-sozo -P $PROFILE call karat-karat_token supports_interface --calldata 0x2d3414e45a8700c29f119a54b9f11dca0e29e06ddcb214018fc37340e165ed6 --world $WORLD_ADDRESS
-sozo -P $PROFILE call karat-karat_token supports_interface --calldata 0x12c8405df0790491b695f1b5bf7d22c855ae0b1745deaa890f763bb9d0a06ca --world $WORLD_ADDRESS
-sozo -P $PROFILE call karat-minter get_price --calldata $TOKEN_ADDRESS --world $WORLD_ADDRESS
+sozo -P $PROFILE call karat-karat_token --world $WORLD_ADDRESS supports_interface 0x2d3414e45a8700c29f119a54b9f11dca0e29e06ddcb214018fc37340e165ed6
+sozo -P $PROFILE call karat-karat_token --world $WORLD_ADDRESS supports_interface 0x12c8405df0790491b695f1b5bf7d22c855ae0b1745deaa890f763bb9d0a06ca
+sozo -P $PROFILE call karat-minter --world $WORLD_ADDRESS get_price $TOKEN_ADDRESS 
 # sozo -P $PROFILE call karat-karat_token contract_uri

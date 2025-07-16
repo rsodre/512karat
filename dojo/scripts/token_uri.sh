@@ -15,4 +15,4 @@ pushd $(dirname "$0")/..
 
 # sozo execute --world <WORLD_ADDRESS> <CONTRACT> <ENTRYPOINT>
 echo "> token_uri($TOKEN_ID)..."
-sozo call karat-karat_token token_uri -v --calldata u256:$TOKEN_ID --world $WORLD_ADDRESS
+sozo call karat-karat_token --world $WORLD_ADDRESS token_uri u256:$TOKEN_ID

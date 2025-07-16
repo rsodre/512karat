@@ -13,6 +13,15 @@ if ! [ -x "$(command -v toml)" ]; then
   exit 1
 fi
 
+get_contract_address () {
+  local TAG=$1
+  local RESULT=$(cat $MANIFEST_FILE_PATH | jq -r ".contracts[] | select(.tag == \"$TAG\" ).address")
+  if [[ -z "$RESULT" ]]; then # if not set
+    >&2 echo "get_contract_address($TAG) not found! 👎"
+  fi
+  echo $RESULT
+}
+
 get_profile_env () {
   local ENV_NAME=$1
   local RESULT=$(toml get $DOJO_PROFILE_FILE --raw env.$ENV_NAME)
@@ -32,8 +41,8 @@ export ACCOUNT_ADDRESS=${DOJO_ACCOUNT_ADDRESS:-$(get_profile_env "account_addres
 export MANIFEST_FILE_PATH="./manifests/$PROFILE/deployment/manifest.json"
 export RPC_URL=${STARKNET_RPC_URL:-$(get_profile_env "rpc_url")}
 
-export TOKEN_ADDRESS=$(cat $MANIFEST_FILE_PATH | jq -r '.contracts[] | select(.tag == "karat-karat_token" ).address')
-export MINTER_ADDRESS=$(cat $MANIFEST_FILE_PATH | jq -r '.contracts[] | select(.tag == "karat-minter" ).address')
+export TOKEN_ADDRESS=$(get_contract_address "karat-karat_token")
+export MINTER_ADDRESS=$(get_contract_address "karat-minter")
 
 echo "------------------------------------------------------------------------------"
 echo "PROFILE: $PROFILE"

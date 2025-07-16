@@ -20,7 +20,7 @@ code + art: **Roger S.** aka **Mataleone** ([@matalecode](https://x.com/mataleco
 
 > **NOTICE**: This project was deployed using Dojo v1.0.0-alpha.11 and Origami tokens, which are deprecated and not supported anymore.
 
-> Please refer to *UPCOMING* project for a modern example using Dojo 1.5 and OpenZeppelin components.
+> Please refer to [512karat-v2](https://github.com/rsodre/512karat-v2) project for a modern example using Dojo 1.5 and OpenZeppelin components.
 
 * `/dojo`: Dojo contracts (deprecated with Origami)
 * `/dojo/scripts`: Scripts to interact with the contracts
