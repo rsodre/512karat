@@ -328,7 +328,7 @@ mod karat_token {
         // IERC7572ContractMetadata
         //
         fn contract_uri(self: @ContractState) -> ByteArray {
-            let contract_data = ContractData{
+            let contract_data = @ContractData{
                 name: CONST::const_string(CONST::TOKEN_NAME),
                 symbol: CONST::const_string(CONST::TOKEN_SYMBOL),
                 description: CONST::const_string(CONST::METADATA_DESCRIPTION),

@@ -50,10 +50,10 @@ impl TokenDataTraitImpl of TokenDataTrait {
             class,
         })
     }
-    fn get_name(self: TokenData) -> ByteArray {
-        (format!("{} #{}", CONST::const_string(CONST::TOKEN_NAME), self.token_id))
+    fn get_name(self: TokenData) -> @ByteArray {
+        @(format!("{} #{}", CONST::const_string(CONST::TOKEN_NAME), self.token_id))
     }
-    fn get_description(self: TokenData) -> ByteArray {
-        (CONST::const_string(CONST::METADATA_DESCRIPTION))
+    fn get_description(self: TokenData) -> @ByteArray {
+        @(CONST::const_string(CONST::METADATA_DESCRIPTION))
     }
 }

@@ -27,25 +27,27 @@ mod renderer {
     // const SIZE: usize = 24;
     // const SCALED_SIZE: usize = 14;
 
-    fn build_uri(token_data: TokenData) -> ByteArray {
-        let name_tag = _value_tag("name", token_data.get_name());
-        let desc_tag = _value_tag("description", token_data.get_description());
-        let attributes_tag = _array_tag("attributes", _attributes_array(token_data));
-        let image_tag = _value_tag("image", _encode_svg(_svg(token_data)));
-        (_encode_uri(format!("{{{},{},{},{}}}",
+    fn build_uri(token_data: @TokenData) -> ByteArray {
+        let name_tag = _value_tag(@"name", (*token_data).get_name());
+        let desc_tag = _value_tag(@"description", (*token_data).get_description());
+        let attributes_tag = _array_tag(@"attributes", _attributes_array(token_data));
+        let metadata_tag = _array_tag(@"metadata", _metadata_dict(token_data));
+        let image_tag = _value_tag(@"image", _encode_svg(_svg(token_data)));
+        (_encode_uri(format!("{{{},{},{},{},{}}}",
             name_tag,
             desc_tag,
             attributes_tag,
+            metadata_tag,
             image_tag,
         )))
     }
 
-    fn build_contract_uri(contract_data: ContractData) -> ByteArray {
-        let name_tag = _value_tag("name", contract_data.name);
-        let symbol_tag = _value_tag("symbol", contract_data.symbol);
-        let desc_tag = _value_tag("description", contract_data.description);
-        let link_tag = _value_tag("external_link", contract_data.external_link);
-        let image_tag = _value_tag("image", contract_data.image);
+    fn build_contract_uri(contract_data: @ContractData) -> ByteArray {
+        let name_tag = _value_tag(@"name", contract_data.name);
+        let symbol_tag = _value_tag(@"symbol", contract_data.symbol);
+        let desc_tag = _value_tag(@"description", contract_data.description);
+        let link_tag = _value_tag(@"external_link", contract_data.external_link);
+        let image_tag = _value_tag(@"image", contract_data.image);
         (_encode_uri(format!("{{{},{},{},{},{}}}",
             name_tag,
             symbol_tag,
@@ -55,32 +57,55 @@ mod renderer {
         )))
     }
 
-    fn _attributes_array(token_data: TokenData) -> ByteArray {
+    fn _attributes_array(token_data: @TokenData) -> @ByteArray {
         let mut result = "[";
         let mut n: u32 = 0;
         loop {
-            if (n == token_data.trait_names.len() || n == token_data.trait_values.len()) {
+            if (n == (*token_data).trait_names.len() || n == (*token_data).trait_values.len()) {
                 break;
             }
             if (n > 0) {
                 result += ",";
             }
-            let name: @ByteArray = token_data.trait_names.at(n);
-            let value: @ByteArray = token_data.trait_values.at(n);
+            let name: @ByteArray = (*token_data).trait_names.at(n);
+            let value: @ByteArray = (*token_data).trait_values.at(n);
             result += _format_trait(name, value);
             n += 1;
         };
         result += "]";
-        (result)
+        @(result)
+    }
+
+    fn _metadata_dict(token_data: @TokenData) -> @ByteArray {
+        let mut result = "{";
+        let mut n: u32 = 0;
+        loop {
+            if (n == (*token_data).trait_names.len() || n == (*token_data).trait_values.len()) {
+                break;
+            }
+            if (n > 0) {
+                result += ",";
+            }
+            let name: @ByteArray = (*token_data).trait_names.at(n);
+            let value: @ByteArray = (*token_data).trait_values.at(n);
+            result += _value_tag(name, value);
+            n += 1;
+        };
+        result += "," + _value_tag(
+            @"seed",
+            @format!("{}", token_data.seed),
+        );
+        result += "}";
+        @(result)
     }
 
     #[inline(always)]
-    fn _value_tag(name: ByteArray, value: ByteArray) -> ByteArray {
+    fn _value_tag(name: @ByteArray, value: @ByteArray) -> ByteArray {
         (format!("\"{}\":\"{}\"", name, value))
     }
 
     #[inline(always)]
-    fn _array_tag(name: ByteArray, value: ByteArray) -> ByteArray {
+    fn _array_tag(name: @ByteArray, value: @ByteArray) -> ByteArray {
         (format!("\"{}\":{}", name, value))
     }
 
@@ -90,9 +115,9 @@ mod renderer {
     }
 
     #[inline(always)]
-    fn _encode_svg(data: ByteArray) -> ByteArray {
-        (format!("data:image/svg+xml;base64,{}", bytes_base64_encode(data)))
-        // (format!("data:image/svg+xml,{}", data)) // not encoded
+    fn _encode_svg(data: ByteArray) -> @ByteArray {
+        @(format!("data:image/svg+xml;base64,{}", bytes_base64_encode(data)))
+        // @(format!("data:image/svg+xml,{}", data)) // not encoded
     }
 
     #[inline(always)]
@@ -105,7 +130,7 @@ mod renderer {
     //------------------------
     // SVG builder
     //
-    fn _svg(token_data: TokenData) -> ByteArray {
+    fn _svg(token_data: @TokenData) -> ByteArray {
         let mut result: ByteArray = "";
         let _WIDTH: usize = (GAP + SIZE + GAP);
         result.append(@format!(
@@ -118,7 +143,7 @@ mod renderer {
                 _WIDTH,
         ));
         result.append(@"<style>.BG{fill:#00000b;}.NORMAL{letter-spacing:0;}.SCALED{transform:scaleX(1.667);}text{fill:#c2e0fd;font-size:1px;font-family:'Courier New',monospace;dominant-baseline:hanging;shape-rendering:crispEdges;white-space:pre;cursor:default;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>");
-        let class_name: ByteArray = if (token_data.class.is_scaled()) {"SCALED"} else {"NORMAL"};
+        let class_name: ByteArray = if ((*token_data.class).is_scaled()) {"SCALED"} else {"NORMAL"};
         result.append(@format!(
             "<g><rect class=\"BG\" x=\"-{}\" y=\"-{}\" width=\"{}\" height=\"{}\" /><g class=\"{}\">",
                 GAP,
@@ -130,11 +155,11 @@ mod renderer {
         //---------------------------
         // Build text tags
         //
-        let text_length: usize = if (token_data.class.is_scaled()) {SCALED_SIZE} else {SIZE};
-        let char_set: Span<felt252> = token_data.class.get_char_set();
-        let char_set_sizes: Span<usize> = token_data.class.get_char_set_sizes();
+        let text_length: usize = if ((*token_data.class).is_scaled()) {SCALED_SIZE} else {SIZE};
+        let char_set: Span<felt252> = (*token_data.class).get_char_set();
+        let char_set_sizes: Span<usize> = (*token_data.class).get_char_set_sizes();
         let char_count: usize = char_set.len();
-        let cells: Span<usize> = _make_cells(token_data.seed, char_count);
+        let cells: Span<usize> = _make_cells(*token_data.seed, char_count);
         let mut y: usize = 0;
         loop {
             if (y == SIZE) { break; }

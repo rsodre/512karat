@@ -228,8 +228,8 @@ mod minter {
     impl RendererImpl of super::IRenderer<ContractState> {
         fn render_uri(world: @IWorldDispatcher, token_id: u128) -> ByteArray {
             WORLD(world);
-            let token_data = self.get_token_data(token_id);
-            return renderer::build_uri(token_data);
+            let token_data: TokenData = self.get_token_data(token_id);
+            return renderer::build_uri(@token_data);
         }
     }
 }
