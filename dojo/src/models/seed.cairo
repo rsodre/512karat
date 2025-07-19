@@ -15,6 +15,7 @@ trait SeedTrait {
     fn new(token_id: u128) -> Seed;
     fn get_class(self: Seed) -> Class;
     fn get_realm_id(self: Seed) -> felt252;
+    fn get_matrix(self: Seed) -> ByteArray;
 }
 
 impl SeedTraitImpl of SeedTrait {
@@ -34,6 +35,17 @@ impl SeedTraitImpl of SeedTrait {
     }
     fn get_realm_id(self: Seed) -> felt252 {
         ((self.seed % 8_000).into() + 1)
+    }
+    fn get_matrix(self: Seed) -> ByteArray {
+        // same as renderer.cairo
+        let fade_type: usize = ((self.seed / 0x100000000000000) % 10).try_into().unwrap();
+        (if (fade_type >= 1 && fade_type <= 3) {
+            ("Karat") // inverted border
+        } else if (fade_type == 0) {
+            ("Hollow") // normal+inside-out
+        } else {
+            ("Glow") // normal
+        })
     }
 }
 

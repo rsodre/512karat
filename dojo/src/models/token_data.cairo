@@ -39,10 +39,12 @@ impl TokenDataTraitImpl of TokenDataTrait {
             seed: seed.seed,
             trait_names: array![
                 "Class",
+                "Matrix",
                 "Realm",
             ].span(),
             trait_values: array![
                 class.name(),
+                seed.get_matrix(),
                 format!("{}", seed.get_realm_id()),
             ].span(),
             class,

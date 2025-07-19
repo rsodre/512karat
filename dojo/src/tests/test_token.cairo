@@ -54,7 +54,7 @@ mod tests {
         sys.minter.mint(sys.karat.contract_address);
         let uri: ByteArray = sys.karat.token_uri(1);
         let uri_camel = sys.karat.tokenURI(1);
-        // println!("___contract_uri_none(1):[{}]", uri);
+// println!("___contract_uri_none(1):[{}]", uri);
         assert!(uri.len() > 0, "contract_uri() should not be empty");
         assert!(uri == uri_camel, "contractURI() == contract_uri()");
         assert!(tester::starts_with(uri, "data:"), "contract_uri() should be a json string");
@@ -90,7 +90,7 @@ mod tests {
         let sys: Systems = tester::spawn_systems(false);
         let uri: ByteArray = sys.karat.contract_uri();
         let uri_camel = sys.karat.contractURI();
-        // println!("___contract_uri_none(1):[{}]", uri);
+// println!("___contract_uri: [{}]", uri);
         assert_ne!(uri, "", "contract_uri() should not be empty");
         assert_eq!(uri, uri_camel, "contractURI() == contract_uri()");
         assert!(tester::starts_with(uri, "data:"), "contract_uri() should be a json string");

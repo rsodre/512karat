@@ -48,7 +48,7 @@ The steps for Mainnet are exactly the same, just replace the chain name and ID w
 # get dojoup
 curl -L https://install.dojoengine.org | bash
 # install the correct dojo version
-dojoup install v1.0.0-alpha.11
+dojoup component add sozo v1.0.0-alpha.11
 ```
 
 
